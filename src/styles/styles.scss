@@ -1,0 +1,27 @@
+//Configuraciones iniciales para node-sass
+@import './base/settings';
+@import './base/base';
+//stylos del componentes importaciones de todos los stilos parciales de scss
+//Estilos de los componentes login y registro
+@import './components/auth/registerScreen';
+@import './components/auth/loginScreen';
+//Estilos del home como el nabvar, intro, popol y modales
+@import './components/home/intro';
+@import './components/home/navbar';
+@import './components/home/menu';
+@import './components/home/popolProfile';
+@import './components/home/popolNotification';
+@import './components/home/popolMessage.scss';
+@import './components/calendar';
+@import './components/modal';
+@import './components/content';
+//Estilos de los componenetes de documentMaster tablas, tarjetas, previous
+@import './components/documentMaster/documentMasterCard';
+@import './components/documentMaster/documentMasterForm';
+@import './components/documentMaster/documentMasterFormPreviow';
+@import './components/documentMaster/documentMasterTable';
+@import './components/documentMaster/documentMasterOptionTable';
+//Css de el translate screen 
+@import './components/translate/translate';
+//Botones flotantes
+@import './components/bellboy/btn-float.scss';

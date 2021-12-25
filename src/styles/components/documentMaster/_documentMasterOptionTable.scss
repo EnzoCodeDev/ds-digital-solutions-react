@@ -1,0 +1,38 @@
+.option_table {
+    height: 50px;
+    width: 100%;
+    .option_sub_table {
+        height: 50px;
+        margin: auto;
+        width: 80%;
+        .container_filter {
+            display: flex;
+            justify-content: space-around;
+            .filter_global {
+                .input_global_filter {
+                    margin-top: 10px;
+                }
+                .search {
+                    margin-left: 15px;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+            .resuls {
+                margin-top: 10px;
+            }
+            .option {
+                margin-top: 10px;
+                .option_parrafo {
+                    margin-right: 15px;
+                }
+                .option_icon {
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}

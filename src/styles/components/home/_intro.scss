@@ -1,0 +1,31 @@
+.section_intro {
+    height: 100vh;
+    overflow-x: hidden;
+    .section_unique {
+        width: 100%;
+        height: calc(100vh - 60px);
+        background-color: rgb(255, 255, 255);
+        position: relative;
+        transition: all 0.400s ease;
+        top: 60px;
+        scroll-behavior: smooth;
+        scroll-snap-type: y mandatory;
+        scrollbar-width: none; //for firefox
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        &.active {
+            margin-left: 250px;
+            >* {
+                width: calc(100vw - 250px);
+                transition: all 0.400s ease-in;
+            }
+        }
+        >* {
+            width: 100vw;
+            height: calc(100vh - 60px);
+            scroll-snap-align: start;
+            transition: all 0.400s ease-in;
+        }
+    }
+}

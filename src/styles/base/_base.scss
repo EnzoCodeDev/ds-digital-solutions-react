@@ -1,0 +1,17 @@
+//Estilos prederterminados que queremos aplicar
+* {
+    font-family: sans-serif, Helvetica, Arial;
+    margin: 0px;
+    //Es para poder agregarle la transicion el tiempo de transiccion 
+    //de la libreria de animaciones
+    .animate__animated.animate__slideInUp {
+        --animate-duration: 0.4s;
+    }
+}
+
+html,
+body {
+    height: 100vh;
+    overflow-x: hidden;
+    width: 100vw;
+}
