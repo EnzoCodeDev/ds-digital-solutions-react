@@ -58,7 +58,7 @@ export const AppRouter = () => {
             component={DocumentMasterForm}
             isAuthenticaded={checking}
           />
-          <PrivateRoute
+          {/* <PrivateRoute
             exact
             path="/documentMasterExecutionTable"
             component={DocumentMasterExecutionTable}
@@ -69,7 +69,7 @@ export const AppRouter = () => {
             path="/documentMasterExecutionTable/:uuid"
             component={DocumentMasterExecutionFill}
             isAuthenticaded={checking}
-          />
+          /> */}
           <PrivateRoute
             exact
             path="/translate"
