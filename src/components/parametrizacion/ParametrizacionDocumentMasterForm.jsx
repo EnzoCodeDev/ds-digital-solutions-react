@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { KeyboardBackspace, AddBox, RemoveCircle } from "@material-ui/icons";
 import { useForm } from "../../hooks/useForm";
 import { DocumentMasterPaginateInit } from "../../redux/actions/formDocumentTableActions";
-import { DocumentMasterFormPreviow } from "./DocumentMasterFormPreviow";
+import { ParametrizacionDocumentMasterFormPreviow } from "./ParametrizacionDocumentMasterFormPreviow";
 import {
   ViewDocumentMaster,
   NewDocumetMaster,
   UpdateDocumentMaster,
 } from "../../redux/actions/formDocumentMasterAction";
-import { DocumentMasterCard } from "./DocumentMasterCard";
+import { ParametrizacionDocumentMasterCard } from "./ParametrizacionDocumentMasterCard";
 // import { InputText } from "../mainInput/InputText";
 import { InputLink } from "../mainInput/InputLink";
 import { BtnFloat } from "../bellboy float/btn-float";
@@ -23,7 +23,7 @@ import {
   indexTypeCelda,
   typeCelda,
 } from "./typeCelda";
-export const DocumentMasterForm = () => {
+export const ParametrizacionDocumentMasterForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { uuid } = useParams();
@@ -527,7 +527,7 @@ export const DocumentMasterForm = () => {
     <div>
       <Navbar />
       {/* pasar propiedades para visualizacion del formulario  */}
-      <DocumentMasterFormPreviow
+      <ParametrizacionDocumentMasterFormPreviow
         lista={lista}
         codigo={codigo}
         option={option}
@@ -707,7 +707,7 @@ export const DocumentMasterForm = () => {
             </div>
             {/* Pasar propiedades para el componentes de la tarjetas */}
             <div className="animate__animated animate__slideInUp">
-              <DocumentMasterCard
+              <ParametrizacionDocumentMasterCard
                 lista={lista}
                 option={option}
                 ultime={ultime}

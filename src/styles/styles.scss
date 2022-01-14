@@ -16,11 +16,11 @@
 @import './components/modal';
 @import './components/content';
 //Estilos de los componenetes de documentMaster tablas, tarjetas, previous
-@import './components/documentMaster/documentMasterCard';
-@import './components/documentMaster/documentMasterForm';
-@import './components/documentMaster/documentMasterFormPreviow';
-@import './components/documentMaster/documentMasterTable';
-@import './components/documentMaster/documentMasterOptionTable';
+@import './components/parametrizacion/parametrizacionDocumentMasterCard';
+@import './components/parametrizacion/parametrizacionDocumentMasterForm';
+@import './components/parametrizacion/parametrizacionDocumentMasterFormPreviow';
+@import './components/parametrizacion/parametrizacionDocumentMasterTable';
+@import './components/parametrizacion/parametrizacionDocumentMasterOptionTable';
 //Css de el translate screen 
 @import './components/translate/translate';
 //Botones flotantes

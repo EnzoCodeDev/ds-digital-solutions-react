@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Print } from "@material-ui/icons";
@@ -6,6 +6,7 @@ import moment from "moment";
 import { ViewDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
 export const DocumentMasterExecutionFill = () => {
   const { uuid } = useParams();
+  // const [state, setstate] = useState('');
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ViewDocumentMaster(uuid));
@@ -16,11 +17,15 @@ export const DocumentMasterExecutionFill = () => {
   const DocumentMasterBody = useSelector(
     (state) => state.documentMaster.documentMaster.DocumentMasterBody
   );
-  //   console.log(DocumentMasterHead);
-  console.log(DocumentMasterBody);
+  // if (5 > 4){
+  //   setstate('Hola buenos dias');
+  // }else{
+  //   setstate('Hola buenos noches ')
+  // };
+  // console.log(state);
   return (
     <div>
-      <div className={"form-previow active"}>
+      {/* <div className={"form-previow active"}>
         <div className="header-container">
           <div className="header-1">
             <span className="a">
@@ -119,7 +124,7 @@ export const DocumentMasterExecutionFill = () => {
           </div>
           <div className="border_bottom"></div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { Print } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import moment from "moment";
-export const DocumentMasterFormPreviow = ({
+export const ParametrizacionDocumentMasterFormPreviow = ({
   codigo,
   option,
   formato,

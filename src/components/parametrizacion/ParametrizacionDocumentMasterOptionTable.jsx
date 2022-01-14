@@ -1,6 +1,6 @@
 import React from "react";
 // import { Search, ArrowDropDown } from "@material-ui/icons";
-export const DocumentMasterOptionTable = ({ total }) => {
+export const ParametrizacionDocumentMasterOptionTable = ({ total }) => {
   return (
     <div className="option_table">
       <div className="option_sub_table">

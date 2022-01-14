@@ -18,7 +18,7 @@ import {
   titleColumns,
   indexTypeCelda,
 } from "./typeCelda";
-export const DocumentMasterCard = ({
+export const ParametrizacionDocumentMasterCard = ({
   lista,
   ultime,
   option,

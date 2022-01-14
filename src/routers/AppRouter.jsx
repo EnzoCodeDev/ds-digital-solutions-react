@@ -9,8 +9,9 @@ import { CalendarScreen } from "../components/calendary/CalendarScreen";
 import { Intro } from "../components/intro/Intro";
 import { DocumentMasterExecutionTable } from '../components/documentMasterExecution/documentMasterExecutionTable';
 import { DocumentMasterExecutionFill } from '../components/documentMasterExecution/DocumentMasterExecutionFill';
-import { DocumentMasterTable } from "../components/documentMaster/DocumentMasterTable";
-import { DocumentMasterForm } from "../components/documentMaster/DocumentMasterForm";
+import { ParametrizacionDocumentMasterTable } from "../components/parametrizacion/ParametrizacionDocumentMasterTable";
+import { ParametrizacionDocumentMasterForm } from "../components/parametrizacion/ParametrizacionDocumentMasterForm";
+import { DocumentMasterIndex } from "../components/documentMaster/DocumentMasterIndex";
 import { TranslateScreen } from "../components/translate/TranslateScreen";
 export const AppRouter = () => {
   const dispatch = useDispatch();
@@ -43,22 +44,22 @@ export const AppRouter = () => {
           <PrivateRoute
             exact
             path="/documentation-master-list"
-            component={DocumentMasterTable}
+            component={ParametrizacionDocumentMasterTable}
             isAuthenticaded={checking}
           />
           <PrivateRoute
             exact
             path="/newDocument/:uuid"
-            component={DocumentMasterForm}
+            component={ParametrizacionDocumentMasterForm}
             isAuthenticaded={checking}
           />
           <PrivateRoute
             exact
             path="/newDocument"
-            component={DocumentMasterForm}
+            component={ParametrizacionDocumentMasterForm}
             isAuthenticaded={checking}
           />
-          {/* <PrivateRoute
+          <PrivateRoute
             exact
             path="/documentMasterExecutionTable"
             component={DocumentMasterExecutionTable}
@@ -69,11 +70,17 @@ export const AppRouter = () => {
             path="/documentMasterExecutionTable/:uuid"
             component={DocumentMasterExecutionFill}
             isAuthenticaded={checking}
-          /> */}
+          />
           <PrivateRoute
             exact
             path="/translate"
             component={TranslateScreen}
+            isAuthenticaded={checking}
+          />
+          <PrivateRoute
+            exact
+            path="/documentMaster"
+            component={DocumentMasterIndex}
             isAuthenticaded={checking}
           />
           <Redirect to="/auth/login" />

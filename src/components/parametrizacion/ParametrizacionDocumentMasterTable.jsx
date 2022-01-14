@@ -10,10 +10,10 @@ import { Navbar } from "../navbar/Navbar";
 import { ButtonOpen } from "../../helpers/ButtomOpen";
 import { DocumentMasterPaginateNavigate } from "../../redux/actions/formDocumentTableActions";
 import { DefaultValueDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
-import { DocumentMasterOptionTable } from "./DocumentMasterOptionTable";
+import { ParametrizacionDocumentMasterOptionTable } from "./ParametrizacionDocumentMasterOptionTable";
 //Documentacion de react-table-v6
 // https://github.com/tannerlinsley/react-table/tree/v6#
-export const DocumentMasterTable = () => {
+export const  ParametrizacionDocumentMasterTable = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   let datas = useSelector((state) => state.document.document.data);
@@ -66,7 +66,7 @@ export const DocumentMasterTable = () => {
     <div>
       <Navbar />
       <div className="documentMaster">
-        <DocumentMasterOptionTable total={total} />
+        <ParametrizacionDocumentMasterOptionTable total={total} />
         <ReactTable
           data={data}
           columns={columns}
