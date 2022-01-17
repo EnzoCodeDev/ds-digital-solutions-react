@@ -10,10 +10,11 @@ import { Navbar } from "../navbar/Navbar";
 import { ViewDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
 // import { InputText } from "../mainInput/InputText";
 import {
+  typeCelda,
+  infoCelda,
   listArray,
   titleColumns,
   indexTypeCelda,
-  typeCelda,
 } from "../../helpers/typeCelda";
 export const DocumentMasterView = () => {
   //Manejo de que tipo es cada celda
@@ -41,6 +42,7 @@ export const DocumentMasterView = () => {
           type: [],
           lista: [],
           celdaType: [],
+          typeCeldaInfo: [infoCelda],
         },
       },
     ],
@@ -63,6 +65,7 @@ export const DocumentMasterView = () => {
           type: indexTypeCelda,
           lista: listArray,
           celdaType: JSON.stringify(["0", ...celdass]),
+          typeCeldaInfo: [infoCelda],
         },
       },
     ],
@@ -187,6 +190,7 @@ export const DocumentMasterView = () => {
             type: [],
             lista: [],
             celdaType: [],
+            typeCeldaInfo: [],
           },
           linkTitle: "",
           link: "",
@@ -258,6 +262,7 @@ export const DocumentMasterView = () => {
                 DocumentMasterBody.type_celda !== null
                   ? DocumentMasterBody.type_celda
                   : JSON.stringify(["0", ...celdass]),
+              typeCeldaInfo: [infoCelda],
             },
           },
         ]);
@@ -308,6 +313,42 @@ export const DocumentMasterView = () => {
   const handleOnchangeArchivo = (e, id) => {
     let optionInfo = [...option];
     optionInfo[id][0].archivo = e.target.value;
+    setOption(optionInfo);
+  };
+  //Vigila que titulo de cada columna
+  const handletitleColumns = (e, id, parametro_opcional) => {
+    let optionInfo = [...option];
+    optionInfo[id][0].tablaTypeCelda.title_columna[
+      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    ] = e.target.value;
+    setOption(optionInfo);
+  };
+  const handletitleCelda = (e, id, parametro_opcional) => {
+    let optionInfo = [...option];
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
+      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    ].titleCelda = e.target.value;
+    setOption(optionInfo);
+  };
+  const handletextCelda = (e, id, parametro_opcional) => {
+    let optionInfo = [...option];
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
+      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    ].textDescription = e.target.value;
+    setOption(optionInfo);
+  };
+  const handleLink = (e, id, parametro_opcional) => {
+    let optionInfo = [...option];
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
+      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    ].link = e.target.value;
+    setOption(optionInfo);
+  };
+  const handleLinkDescription = (e, id, parametro_opcional) => {
+    let optionInfo = [...option];
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
+      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    ].linkDescription = e.target.value;
     setOption(optionInfo);
   };
   return (
@@ -465,27 +506,15 @@ export const DocumentMasterView = () => {
           <div key={card_id}>
             {option[card_id][0].optionValue === "Tabla" && (
               <>
-                {option[card_id][0].titleCard.trim().length === 0 ? (
-                  <input
-                    type="text"
-                    state={option}
-                    className={"input1"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"Ingresa información aquí(Obligatorio)"}
-                    defaultValue={option[card_id][0].titleCard}
-                  ></input>
-                ) : (
-                  <input
-                    type="text"
-                    state={option}
-                    className={"input1"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"Ingresa información aquí(Obligatorio)"}
-                    defaultValue={option[card_id][0].titleCard}
-                  ></input>
-                )}
+                <input
+                  type="text"
+                  state={option}
+                  className={"titleColumn"}
+                  name={`text${card_id}`}
+                  onChange={(e) => handleOnChangeTitleCard(e, card_id)}
+                  placeholder={"Ingresa el titulo de la columna aqui"}
+                  defaultValue={option[card_id][0].titleCard}
+                ></input>
               </>
             )}
             <div className="tabla-container ">
@@ -507,66 +536,41 @@ export const DocumentMasterView = () => {
                           ></div>
                           {id_column === 1 && (
                             <>
-                              {option[card_id][0].tablaTypeCelda.title_columna[
-                                option[card_id][0].tablaTypeCelda.type.indexOf(
-                                  parseInt(`${id_column}${id_row}`)
-                                )
-                              ] === "NO" ? (
-                                <>
-                                  <div className="header_title">
-                                    <h6 className={"celda_title_input"}>
-                                      <input
-                                        type="text"
-                                        state={option}
-                                        className={"input1"}
-                                        name={`text${card_id}`}
-                                        onChange={(e) =>
-                                          handleOnChangeTitleCard(e, card_id)
-                                        }
-                                        placeholder={
-                                          "Ingresa información aquí(Obligatorio)"
-                                        }
-                                        defaultValue={
-                                          option[card_id][0].titleCard
-                                        }
-                                      ></input>
-                                    </h6>
-                                  </div>
-                                  <div className="linea"></div>
-                                </>
-                              ) : (
-                                <>
-                                  <div className="header_title">
-                                    <input
-                                      type="text"
-                                      state={option}
-                                      className={"input1"}
-                                      name={`text${card_id}`}
-                                      onChange={(e) =>
-                                        handleOnChangeTitleCard(e, card_id)
-                                      }
-                                      placeholder={
-                                        "Ingresa información aquí(Obligatorio)"
-                                      }
-                                      // defaultValue={option[card_id][0].titleCard}
-                                    ></input>
-
-                                    {/* <h6 className={"celda_title_input"}>
-                                      {
-                                        option[card_id][0].tablaTypeCelda
-                                          .title_columna[
-                                          option[
-                                            card_id
-                                          ][0].tablaTypeCelda.type.indexOf(
-                                            parseInt(`${id_column}${id_row}`)
-                                          )
-                                        ]
-                                      }
-                                    </h6> */}
-                                  </div>
-                                  <div className="linea"></div>
-                                </>
-                              )}
+                              <div className="header_title">
+                                <input
+                                  type="text"
+                                  className={"celda_title_input"}
+                                  name={parseInt(`${id_row}${id_column}`)}
+                                  onChange={(e) =>
+                                    handletitleColumns(
+                                      e,
+                                      card_id,
+                                      `${id_column}${id_row}`
+                                    )
+                                  }
+                                  placeholder={"*Titulo de columna"}
+                                  // defaultValue={
+                                  //   option[card_id][0].tablaTypeCelda
+                                  //     .title_columna[
+                                  //     option[
+                                  //       card_id
+                                  //     ][0].tablaTypeCelda.type.indexOf(
+                                  //       parseInt(`${id_row}${id_column}`)
+                                  //     )
+                                  //   ] === "No"
+                                  //     ? ""
+                                  //     : option[card_id][0].tablaTypeCelda
+                                  //         .title_columna[
+                                  //         option[
+                                  //           card_id
+                                  //         ][0].tablaTypeCelda.type.indexOf(
+                                  //           parseInt(`${id_row}${id_column}`)
+                                  //         )
+                                  //       ]
+                                  // }
+                                ></input>
+                              </div>
+                              <div className="linea"></div>
                             </>
                           )}
                           {option[card_id][0].tablaTypeCelda.celda[
@@ -576,23 +580,40 @@ export const DocumentMasterView = () => {
                           ] === "Título" && (
                             <div className="celda_title">
                               <div className="header_title">
+                                {/* <h6 className={"celda_title_inputt"}> */}
                                 <input
                                   type="text"
-                                  state={option}
-                                  className={"celda_title_input"}
-                                  name={`text${card_id}`}
+                                  className={"celda_title_inputt"}
+                                  name={parseInt(`${id_row}${id_column}`)}
                                   onChange={(e) =>
-                                    handleOnChangeTitleCard(e, card_id)
+                                    handletitleCelda(
+                                      e,
+                                      card_id,
+                                      `${id_column}${id_row}`
+                                    )
                                   }
-                                  placeholder={
-                                    "Ingresa información aquí(Obligatorio)"
-                                  }
-                                  defaultValue={option[card_id][0].titleCard}
+                                  placeholder={"*Titulo de la celda"}
+                                  // defaultValue={
+                                  //   option[card_id][0].tablaTypeCelda
+                                  //     .title_columna[
+                                  //     option[
+                                  //       card_id
+                                  //     ][0].tablaTypeCelda.type.indexOf(
+                                  //       parseInt(`${id_row}${id_column}`)
+                                  //     )
+                                  //   ] === "No"
+                                  //     ? ""
+                                  //     : option[card_id][0].tablaTypeCelda
+                                  //         .title_columna[
+                                  //         option[
+                                  //           card_id
+                                  //         ][0].tablaTypeCelda.type.indexOf(
+                                  //           parseInt(`${id_row}${id_column}`)
+                                  //         )
+                                  //       ]
+                                  // }
                                 ></input>
-                                {/* <input
-                                  defaultValue="Título de prueba:"
-                                  className={"celda_title_input"}
-                                ></input> */}
+                                {/* </h6> */}
                               </div>
                               <div className="linea"></div>
                             </div>
@@ -606,36 +627,72 @@ export const DocumentMasterView = () => {
                               <div className="header_titlee">
                                 <input
                                   type="text"
-                                  state={option}
-                                  className={"celda_title_input"}
-                                  name={`text${card_id}`}
+                                  className={"celda_title_inputt"}
+                                  name={parseInt(`${id_row}${id_column}`)}
                                   onChange={(e) =>
-                                    handleOnChangeTitleCard(e, card_id)
+                                    handletitleCelda(
+                                      e,
+                                      card_id,
+                                      `${id_column}${id_row}`
+                                    )
                                   }
-                                  placeholder={
-                                    "Ingresa información aquí(Obligatorio)"
-                                  }
-                                  defaultValue={option[card_id][0].titleCard}
+                                  placeholder={"*Titulo de la celda"}
+                                  // defaultValue={
+                                  //   option[card_id][0].tablaTypeCelda
+                                  //     .title_columna[
+                                  //     option[
+                                  //       card_id
+                                  //     ][0].tablaTypeCelda.type.indexOf(
+                                  //       parseInt(`${id_row}${id_column}`)
+                                  //     )
+                                  //   ] === "No"
+                                  //     ? ""
+                                  //     : option[card_id][0].tablaTypeCelda
+                                  //         .title_columna[
+                                  //         option[
+                                  //           card_id
+                                  //         ][0].tablaTypeCelda.type.indexOf(
+                                  //           parseInt(`${id_row}${id_column}`)
+                                  //         )
+                                  //       ]
+                                  // }
                                 ></input>
-                                {/* <h6 className="celda_title_inputt">
-                                  {" "}
-                                  Título de texto:
-                                </h6> */}
                               </div>
                               <div className="text_body">
                                 <div className="linea"></div>
                                 <textarea
-                                  rows={"3"}
-                                  cols={"30"}
                                   className={"textarea"}
-                                  name={`textarea${card_id}`}
-                                  placeholder={"Escribe el texto"}
+                                  name={parseInt(`${id_row}${id_column}`)}
                                   onChange={(e) =>
-                                    handleOnChangeText(e, card_id)
+                                    handletextCelda(
+                                      e,
+                                      card_id,
+                                      `${id_column}${id_row}`
+                                    )
                                   }
-                                  defaultValue={"Lorem ipsum dolor sit amet"}
+                                  placeholder={"Descripcion"}
+                                  // defaultValue={
+                                  //   option[card_id][0].tablaTypeCelda
+                                  //     .title_columna[
+                                  //     option[
+                                  //       card_id
+                                  //     ][0].tablaTypeCelda.type.indexOf(
+                                  //       parseInt(`${id_row}${id_column}`)
+                                  //     )
+                                  //   ] === "No"
+                                  //     ? ""
+                                  //     : option[card_id][0].tablaTypeCelda
+                                  //         .title_columna[
+                                  //         option[
+                                  //           card_id
+                                  //         ][0].tablaTypeCelda.type.indexOf(
+                                  //           parseInt(`${id_row}${id_column}`)
+                                  //         )
+                                  //       ]
+                                  // }
+                                  rows={"7"}
+                                  cols={"30"}
                                 ></textarea>
-                                {/* <p>Lorem ipsum dolor sit amet, </p> */}
                               </div>
                             </div>
                           )}
@@ -659,25 +716,38 @@ export const DocumentMasterView = () => {
                           ] === "Imagen título" && (
                             <div className="imagen_title">
                               <div className="header_titleee">
-                                {/* <h6 className="celda_title_inputtt">
-                                    </h6> */}
                                 <input
                                   type="text"
-                                  state={option}
-                                  className={"celda_title_input"}
-                                  name={`text${card_id}`}
+                                  className={"celda_title_inputtt"}
+                                  name={parseInt(`${id_row}${id_column}`)}
                                   onChange={(e) =>
-                                    handleOnChangeTitleCard(e, card_id)
+                                    handletitleCelda(
+                                      e,
+                                      card_id,
+                                      `${id_column}${id_row}`
+                                    )
                                   }
-                                  placeholder={
-                                    "Ingresa información aquí(Obligatorio)"
-                                  }
-                                  defaultValue={option[card_id][0].titleCard}
+                                  placeholder={"*Titulo de la imagen"}
+                                  // defaultValue={
+                                  //   option[card_id][0].tablaTypeCelda
+                                  //     .title_columna[
+                                  //     option[
+                                  //       card_id
+                                  //     ][0].tablaTypeCelda.type.indexOf(
+                                  //       parseInt(`${id_row}${id_column}`)
+                                  //     )
+                                  //   ] === "No"
+                                  //     ? ""
+                                  //     : option[card_id][0].tablaTypeCelda
+                                  //         .title_columna[
+                                  //         option[
+                                  //           card_id
+                                  //         ][0].tablaTypeCelda.type.indexOf(
+                                  //           parseInt(`${id_row}${id_column}`)
+                                  //         )
+                                  //       ]
+                                  // }
                                 ></input>
-                                {/* <input
-                                  defaultValue="Título de imagen:"
-                                  className={"celda_title_input"}
-                                ></input> */}
                               </div>
                               <div className="imagen_container">
                                 <img
@@ -737,6 +807,86 @@ export const DocumentMasterView = () => {
                               <div className="celda_container_link">
                                 <input
                                   type="text"
+                                  className={"celda_title_inputt"}
+                                  name={parseInt(`${id_row}${id_column}`)}
+                                  onChange={(e) =>
+                                    handleLink(
+                                      e,
+                                      card_id,
+                                      `${id_column}${id_row}`
+                                    )
+                                  }
+                                  placeholder={"Titulo de la celda"}
+                                  // defaultValue={
+                                  //   option[card_id][0].tablaTypeCelda
+                                  //     .title_columna[
+                                  //     option[
+                                  //       card_id
+                                  //     ][0].tablaTypeCelda.type.indexOf(
+                                  //       parseInt(`${id_row}${id_column}`)
+                                  //     )
+                                  //   ] === "No"
+                                  //     ? ""
+                                  //     : option[card_id][0].tablaTypeCelda
+                                  //         .title_columna[
+                                  //         option[
+                                  //           card_id
+                                  //         ][0].tablaTypeCelda.type.indexOf(
+                                  //           parseInt(`${id_row}${id_column}`)
+                                  //         )
+                                  //       ]
+                                  // }
+                                  // className={"InputLink"}
+                                  // name={`archivo${card_id}`}
+                                  // type="url"
+                                  // defaultValue={option[card_id][0].archivo}
+                                  // //   onChange={(e) =>
+                                  // //     handleOnchangeArchivo(e, card_id)
+                                  // //   }
+                                  // placeholder={"Agrega tu enlace aqui"}
+                                ></input>
+                                <input
+                                  type="text"
+                                  className={"celda_title_inputt"}
+                                  name={parseInt(`${id_row}${id_column}`)}
+                                  onChange={(e) =>
+                                    handleLinkDescription(
+                                      e,
+                                      card_id,
+                                      `${id_column}${id_row}`
+                                    )
+                                  }
+                                  placeholder={"Titulo de la celda"}
+                                  // defaultValue={
+                                  //   option[card_id][0].tablaTypeCelda
+                                  //     .title_columna[
+                                  //     option[
+                                  //       card_id
+                                  //     ][0].tablaTypeCelda.type.indexOf(
+                                  //       parseInt(`${id_column}${id_row}`)
+                                  //     )
+                                  //   ] === "No"
+                                  //     ? ""
+                                  //     : option[card_id][0].tablaTypeCelda
+                                  //         .title_columna[
+                                  //         option[
+                                  //           card_id
+                                  //         ][0].tablaTypeCelda.type.indexOf(
+                                  //           parseInt(`${id_row}${id_column}`)
+                                  //         )
+                                  //       ]
+                                  // }
+                                  // className={"InputLink"}
+                                  // name={`archivo${card_id}`}
+                                  // type="url"
+                                  // defaultValue={option[card_id][0].archivo}
+                                  // //   onChange={(e) =>
+                                  // //     handleOnchangeArchivo(e, card_id)
+                                  // //   }
+                                  // placeholder={"Agrega tu enlace aqui"}
+                                ></input>
+                                {/* <input
+                                  type="text"
                                   state={option}
                                   className={"celda_title_input"}
                                   name={`text${card_id}`}
@@ -747,14 +897,14 @@ export const DocumentMasterView = () => {
                                     "Ingresa información aquí(Obligatorio)"
                                   }
                                   defaultValue={option[card_id][0].titleCard}
-                                ></input>
+                                ></input> */}
                                 {/* <h6 className="celda_title_input">
                                   Título del link:
                                 </h6> */}
                               </div>
                               <div className="link_body">
                                 <div className="linea"></div>
-                                <input
+                                {/* <input
                                   className={"InputLink"}
                                   name={`archivo${card_id}`}
                                   type="url"
@@ -774,19 +924,32 @@ export const DocumentMasterView = () => {
                                   //   onChange={(e) =>
                                   //     handleDescripcionArchivoChange(e, card_id)
                                   //   }
-                                ></input>
+                                ></input> */}
                                 <a
                                   target="_blank"
                                   className="title"
                                   rel="noopener noreferrer"
-                                  // href={option[card_id][0].link.link}
                                   href={
-                                    "https://www.youtube.com/watch?v=6ONRf7h3Mdk"
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].link
                                   }
                                 >
-                                  {/* Diagrama de Flujo Procedimiento Acreditación
-                                  DAGRD */}
-                                  {/* {option[card_id][0].link.link} */}
+                                  {
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].linkDescription
+                                  }
                                 </a>
                               </div>
                             </div>
@@ -826,7 +989,6 @@ export const DocumentMasterView = () => {
               )}
               {option[card_id][0].optionValue === "Link" && (
                 <div className="container_link">
-                  {/* <h6 className="textt">Titulo del link no introducido</h6> */}
                   <input
                     type="text"
                     state={option}
@@ -883,15 +1045,15 @@ export const DocumentMasterView = () => {
               )}
               {option[card_id][0].optionValue === "Archivo" && (
                 <div className="container_archivo">
-                    <input
-                      type="text"
-                      state={option}
-                      className={"textt"}
-                      name={`text${card_id}`}
-                      onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                      placeholder={"*Ingrese el titulo del archivo aqui"}
-                      defaultValue={option[card_id][0].titleCard}
-                    ></input>
+                  <input
+                    type="text"
+                    state={option}
+                    className={"textt"}
+                    name={`text${card_id}`}
+                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
+                    placeholder={"*Ingrese el titulo del archivo aqui"}
+                    defaultValue={option[card_id][0].titleCard}
+                  ></input>
                   <div className="container_sub_archivo">
                     <input
                       className={"InputLink"}
