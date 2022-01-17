@@ -15,13 +15,16 @@
 @import './components/calendar';
 @import './components/modal';
 @import './components/content';
-//Estilos de los componenetes de documentMaster tablas, tarjetas, previous
+//Css de el translate screen 
+@import './components/translate/translate';
+//Estilos de los componenetes del parametrizador documentMaster tablas, tarjetas, previous
 @import './components/parametrizacion/parametrizacionDocumentMasterCard';
 @import './components/parametrizacion/parametrizacionDocumentMasterForm';
 @import './components/parametrizacion/parametrizacionDocumentMasterFormPreviow';
 @import './components/parametrizacion/parametrizacionDocumentMasterTable';
 @import './components/parametrizacion/parametrizacionDocumentMasterOptionTable';
-//Css de el translate screen 
-@import './components/translate/translate';
+//Estilos para el css del document master
+@import './components/documentMaster/documentIndex';
+@import './components/documentMaster/documentView';
 //Botones flotantes
 @import './components/bellboy/btn-float.scss';

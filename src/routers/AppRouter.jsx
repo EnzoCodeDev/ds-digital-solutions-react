@@ -12,6 +12,7 @@ import { DocumentMasterExecutionFill } from '../components/documentMasterExecuti
 import { ParametrizacionDocumentMasterTable } from "../components/parametrizacion/ParametrizacionDocumentMasterTable";
 import { ParametrizacionDocumentMasterForm } from "../components/parametrizacion/ParametrizacionDocumentMasterForm";
 import { DocumentMasterIndex } from "../components/documentMaster/DocumentMasterIndex";
+import { DocumentMasterView } from "../components/documentMaster/DocumentMasterView";
 import { TranslateScreen } from "../components/translate/TranslateScreen";
 export const AppRouter = () => {
   const dispatch = useDispatch();
@@ -81,6 +82,12 @@ export const AppRouter = () => {
             exact
             path="/documentMaster"
             component={DocumentMasterIndex}
+            isAuthenticaded={checking}
+          />
+          <PrivateRoute
+            exact
+            path="/viewDocument/:uuid"
+            component={DocumentMasterView}
             isAuthenticaded={checking}
           />
           <Redirect to="/auth/login" />

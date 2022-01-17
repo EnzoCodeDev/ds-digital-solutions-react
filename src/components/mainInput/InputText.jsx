@@ -1,11 +1,9 @@
 import React from "react";
-
+//A este input se llama y se le pueden pasar cierta clase de parametros
 export const InputText = ({
   id,
   name,
   value,
-  state,
-  setState,
   onChange,
   className,
   placeholder,

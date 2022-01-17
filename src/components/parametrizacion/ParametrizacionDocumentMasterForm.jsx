@@ -22,7 +22,7 @@ import {
   titleColumns,
   indexTypeCelda,
   typeCelda,
-} from "./typeCelda";
+} from "../../helpers/typeCelda";
 export const ParametrizacionDocumentMasterForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();

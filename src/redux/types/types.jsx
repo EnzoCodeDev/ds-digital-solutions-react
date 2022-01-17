@@ -26,4 +26,6 @@ export const types ={
     documentDeletedDocumentMaster: '[documentMaster] Deleted documentMaster',
     //Eventos de documentos para la tabla como el paginate y mas
     DocumentMasterPaginateInit:'[document] Paginate',
+    //Eventos para deligenciar los formularios
+    DocumentMastersearch: '[documentMaster] search',
 }

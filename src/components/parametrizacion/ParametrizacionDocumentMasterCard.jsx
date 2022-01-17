@@ -17,7 +17,7 @@ import {
   typeCelda,
   titleColumns,
   indexTypeCelda,
-} from "./typeCelda";
+} from "../../helpers/typeCelda";
 export const ParametrizacionDocumentMasterCard = ({
   lista,
   ultime,
