@@ -690,7 +690,7 @@ export const DocumentMasterView = () => {
                                   //         )
                                   //       ]
                                   // }
-                                  rows={"7"}
+                                  rows={"3"}
                                   cols={"30"}
                                 ></textarea>
                               </div>
@@ -786,7 +786,7 @@ export const DocumentMasterView = () => {
                                           handleOnChangeTitleCard(e, card_id)
                                         }
                                         placeholder={
-                                          "Ingresa información aquí(Obligatorio)"
+                                          `Ingresa lista: ${listCelda + 1}`
                                         }
                                         // defaultValue={
                                         //   option[card_id][0].titleCard
@@ -807,6 +807,7 @@ export const DocumentMasterView = () => {
                               <div className="celda_container_link">
                                 <input
                                   type="text"
+                                  autoComplete="off"
                                   className={"celda_title_inputt"}
                                   name={parseInt(`${id_row}${id_column}`)}
                                   onChange={(e) =>
@@ -816,7 +817,7 @@ export const DocumentMasterView = () => {
                                       `${id_column}${id_row}`
                                     )
                                   }
-                                  placeholder={"Titulo de la celda"}
+                                  placeholder={"Agrega tu enlace aqui"}
                                   // defaultValue={
                                   //   option[card_id][0].tablaTypeCelda
                                   //     .title_columna[
@@ -836,17 +837,10 @@ export const DocumentMasterView = () => {
                                   //         )
                                   //       ]
                                   // }
-                                  // className={"InputLink"}
-                                  // name={`archivo${card_id}`}
-                                  // type="url"
-                                  // defaultValue={option[card_id][0].archivo}
-                                  // //   onChange={(e) =>
-                                  // //     handleOnchangeArchivo(e, card_id)
-                                  // //   }
-                                  // placeholder={"Agrega tu enlace aqui"}
                                 ></input>
                                 <input
                                   type="text"
+                                  autoComplete="off"
                                   className={"celda_title_inputt"}
                                   name={parseInt(`${id_row}${id_column}`)}
                                   onChange={(e) =>
@@ -856,7 +850,7 @@ export const DocumentMasterView = () => {
                                       `${id_column}${id_row}`
                                     )
                                   }
-                                  placeholder={"Titulo de la celda"}
+                                  placeholder={"Descripción del enlace aqui"}
                                   // defaultValue={
                                   //   option[card_id][0].tablaTypeCelda
                                   //     .title_columna[
@@ -876,55 +870,10 @@ export const DocumentMasterView = () => {
                                   //         )
                                   //       ]
                                   // }
-                                  // className={"InputLink"}
-                                  // name={`archivo${card_id}`}
-                                  // type="url"
-                                  // defaultValue={option[card_id][0].archivo}
-                                  // //   onChange={(e) =>
-                                  // //     handleOnchangeArchivo(e, card_id)
-                                  // //   }
-                                  // placeholder={"Agrega tu enlace aqui"}
                                 ></input>
-                                {/* <input
-                                  type="text"
-                                  state={option}
-                                  className={"celda_title_input"}
-                                  name={`text${card_id}`}
-                                  onChange={(e) =>
-                                    handleOnChangeTitleCard(e, card_id)
-                                  }
-                                  placeholder={
-                                    "Ingresa información aquí(Obligatorio)"
-                                  }
-                                  defaultValue={option[card_id][0].titleCard}
-                                ></input> */}
-                                {/* <h6 className="celda_title_input">
-                                  Título del link:
-                                </h6> */}
                               </div>
                               <div className="link_body">
                                 <div className="linea"></div>
-                                {/* <input
-                                  className={"InputLink"}
-                                  name={`archivo${card_id}`}
-                                  type="url"
-                                  defaultValue={option[card_id][0].archivo}
-                                  //   onChange={(e) =>
-                                  //     handleOnchangeArchivo(e, card_id)
-                                  //   }
-                                  placeholder={"Agrega tu enlace aqui"}
-                                ></input>
-                                <input
-                                  name={`text${card_id}`}
-                                  className={"input-title-img"}
-                                  placeholder={"Descripción del link"}
-                                  defaultValue={
-                                    option[card_id][0].descripcionArchivo
-                                  }
-                                  //   onChange={(e) =>
-                                  //     handleDescripcionArchivoChange(e, card_id)
-                                  //   }
-                                ></input> */}
                                 <a
                                   target="_blank"
                                   className="title"
@@ -971,7 +920,6 @@ export const DocumentMasterView = () => {
                     placeholder={"*Ingresa el titulo del texto aqui"}
                     defaultValue={option[card_id][0].titleCard}
                   ></input>
-                  {/* <h6 className="textt">Titulo del texto no introducido</h6> */}
                   <div className="container_sub_text">
                     <div className="subContainer">
                       <textarea
@@ -1029,11 +977,15 @@ export const DocumentMasterView = () => {
               )}
               {option[card_id][0].optionValue === "Imagen" && (
                 <div className="container_imagen_previous">
-                  {option[card_id][0].titleCard.trim().length === 0 ? (
-                    <h6 className="textt">Titulo del imagen no introducido</h6>
-                  ) : (
-                    <h6 className="textt">{option[card_id][0].titleCard}</h6>
-                  )}
+                  <input
+                    type="text"
+                    state={option}
+                    className={"textt"}
+                    name={`text${card_id}`}
+                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
+                    placeholder={"*Ingresa el titulo de la imagen aqui"}
+                    defaultValue={option[card_id][0].titleCard}
+                  ></input>
                   <div className="container_imagen_sub_previous">
                     <img
                       className="imagen"

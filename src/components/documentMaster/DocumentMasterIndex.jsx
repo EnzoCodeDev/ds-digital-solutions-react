@@ -29,7 +29,7 @@ export const DocumentMasterIndex = () => {
         />
         {dataDocument.map((document) => (
           <div key={document.id} onClick={(e) => viewDocument(document.uuid)}>
-            {document.id}
+            {document.format}
           </div>
         ))}
       </div>
