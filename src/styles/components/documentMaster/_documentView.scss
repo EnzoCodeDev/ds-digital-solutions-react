@@ -285,8 +285,8 @@
         justify-content: space-around;
         margin: auto;
         margin-top: 13px;
-        height: auto;
         width: 90%;
+        height: auto;
         .tabla-subContainer {
             justify-content: space-around;
             width: 100%;
@@ -294,7 +294,9 @@
                 flex-wrap: nowrap;
                 margin: 0;
                 width: 100%;
-                max-height: 207px;
+                &.active {
+                    height: 100%;
+                }
                 .column {
                     box-sizing: content-box;
                     border: 1px solid black;
@@ -672,6 +674,15 @@
                 max-height: 90%;
                 height: auto;
             }
+        }
+    }
+    .boton_save {
+        border-radius: 4px;
+        width: 100px;
+        height: 40px;
+        background-color: green;
+        span {
+            font-size: 12px;
         }
     }
 }

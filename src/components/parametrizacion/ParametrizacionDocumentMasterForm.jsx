@@ -83,10 +83,10 @@ export const ParametrizacionDocumentMasterForm = () => {
         tabla: { column: [1], row: [1] },
         tablaTypeCelda: {
           title_columna: titleColumns,
-          celda: ["0", ...celdass],
+          celda: typeCelda,
           type: indexTypeCelda,
           lista: listArray,
-          celdaType: JSON.stringify(["0", ...celdass]),
+          celdaType: JSON.stringify(typeCelda),
         },
       },
     ],
@@ -442,6 +442,7 @@ export const ParametrizacionDocumentMasterForm = () => {
       ],
     ];
     if (documentMaster.res === "success_view") {
+      console.log(documentMaster);
       //Renderiazado de los datos de la cabeza del formulario
       setCodigo(documentMaster.DocumentMasterHead.code);
       setFormato(documentMaster.DocumentMasterHead.format);

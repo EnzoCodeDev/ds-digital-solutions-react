@@ -38,6 +38,12 @@ export const documentMaster = (state = initialState, action) => {
         ...state,
         documentMaster: action.payload,
       };
+    case types.DocumentMasterSave:
+      return {
+        ...state,
+        documentMaster: action.payload,
+      };
+
     default:
       return state;
   }

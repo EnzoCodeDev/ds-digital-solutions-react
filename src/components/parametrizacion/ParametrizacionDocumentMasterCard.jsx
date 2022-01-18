@@ -6,9 +6,6 @@ import {
   ArrowBackIos,
 } from "@material-ui/icons";
 //importaciones de los inputs
-import { InputImg } from "../mainInput/InputImg";
-import { InputLink } from "../mainInput/InputLink";
-import { InputText } from "../mainInput/InputText";
 import { InputSelect } from "../mainInput/InputSelect";
 // import { InputTextearea } from "../mainInput/InputTextearea";
 //importacion de tipos de celda por defecto
@@ -54,7 +51,7 @@ export const ParametrizacionDocumentMasterCard = ({
           tabla: { column: [1], row: [1] },
           tablaTypeCelda: {
             title_columna: titleColumns,
-            celda: [],
+            celda: typeCelda,
             celdaType: JSON.stringify(typeCelda),
             type: indexTypeCelda,
             lista: listArray,
@@ -74,7 +71,7 @@ export const ParametrizacionDocumentMasterCard = ({
       arrayCard.splice(item, 1);
       optionArrayy.splice(card_id, 1, [
         {
-          card: 0,
+          card: "inhabilidado",
           optionValue: "no",
           titleCard: "no",
           linkDescription: "",
@@ -190,14 +187,15 @@ export const ParametrizacionDocumentMasterCard = ({
     setOption(optionInfo);
   };
   //Agregar que tipo de celda quiere cada usuario
-  const handleFileValuesCelda = (e, id) => {
+  const handleFileValuesCelda = (e, id, parametro_opcional) => {
+    console.log(parametro_opcional);
     let optionInfo = [...option];
     e.stopPropagation();
-    let celdas = Object.values(tableColumnsTypeValue);
-    optionInfo[id][0].tablaTypeCelda.celda = ["0", ...celdas];
+    optionInfo[id][0].tablaTypeCelda.celda[
+      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    ] = e.target.value;
     optionInfo[id][0].tablaTypeCelda.celdaType = JSON.stringify([
-      "0",
-      ...celdas,
+      ...optionInfo[id][0].tablaTypeCelda.celda,
     ]);
     setOption(optionInfo);
   };
@@ -215,27 +213,27 @@ export const ParametrizacionDocumentMasterCard = ({
     setOption(optionInfo);
   };
   //Vigilar el estado del input del link
-  const handleDescripcionLinkChange = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].linkDescription = e.target.value;
-    setOption(optionInfo);
-  };
-  const handleOnchangeLink = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].link = e.target.value;
-    setOption(optionInfo);
-  };
-  //Vigilar el estado de los input de archivo
-  const handleDescripcionArchivoChange = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].descripcionArchivo = e.target.value;
-    setOption(optionInfo);
-  };
-  const handleOnchangeArchivo = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].archivo = e.target.value;
-    setOption(optionInfo);
-  };
+  // const handleDescripcionLinkChange = (e, id) => {
+  //   let optionInfo = [...option];
+  //   optionInfo[id][0].linkDescription = e.target.value;
+  //   setOption(optionInfo);
+  // };
+  // const handleOnchangeLink = (e, id) => {
+  //   let optionInfo = [...option];
+  //   optionInfo[id][0].link = e.target.value;
+  //   setOption(optionInfo);
+  // };
+  // //Vigilar el estado de los input de archivo
+  // const handleDescripcionArchivoChange = (e, id) => {
+  //   let optionInfo = [...option];
+  //   optionInfo[id][0].descripcionArchivo = e.target.value;
+  //   setOption(optionInfo);
+  // };
+  // const handleOnchangeArchivo = (e, id) => {
+  //   let optionInfo = [...option];
+  //   optionInfo[id][0].archivo = e.target.value;
+  //   setOption(optionInfo);
+  // };
   //Guardar que tipo de lista por celda
   const handleSelectList = (e, id, parametro_opcional) => {
     e.stopPropagation();
@@ -254,7 +252,7 @@ export const ParametrizacionDocumentMasterCard = ({
     let optionInfo = [...option];
     optionInfo[id][0].tablaTypeCelda.title_columna[
       option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ] = e.target.value;
+    ] = e.target.value === "" ? "No" : e.target.value;
     setOption(optionInfo);
   };
   return (
@@ -291,30 +289,6 @@ export const ParametrizacionDocumentMasterCard = ({
                 placeholder={"Ingresa información aquí(Obligatorio)"}
                 defaultValue={option[card_id][0].titleCard}
               ></input>
-              {/* <InputText
-                id={card_id}
-                state={option}
-                className={"input1"}
-                setState={setOption}
-                name={`text${card_id}`}
-                defaultValue={option[card_id][0].text}
-                onChange={handleOnChangeTitleCard}
-                placeholder={"Ingresa información aquí(Obligatorio)"}
-              /> */}
-              {/* que tipo de card es */}
-              {/* <select
-                  name={"optionValue"}
-                  className={"select"}
-                  defaultValue={option[card_id][0].optionValue}
-                  onClick={(e) => handleTarget(e, card_id)}
-                >
-                  <option value="Texto">{"Texto"}</option>
-                  <option value="Tabla">{"Tabla"}</option>
-                  <option value="Imagen">{"Imagen"}</option>
-                  <option value="Link">{"Link"}</option>
-                  <option value="Archivo">{"Archivo"}</option>
-                  <option value="Lista">{"Lista"}</option>
-                </select> */}
               <InputSelect
                 id={card_id}
                 className={"select"}
@@ -345,15 +319,6 @@ export const ParametrizacionDocumentMasterCard = ({
                     onChange={(e) => handleOnChangeText(e, card_id)}
                     defaultValue={option[card_id][0].text}
                   ></textarea>
-                  {/* <InputTextearea
-                    id={card_id}
-                    rows={"3"}
-                    cols={"30"}
-                    className={"textarea"}
-                    name={`textarea${card_id}`}
-                    onChange={handleOnChangeText}
-                    placeholder={"Escribe el texto"}
-                  /> */}
                 </div>
               </div>
             )}
@@ -445,16 +410,6 @@ export const ParametrizacionDocumentMasterCard = ({
                                               ]
                                         }
                                       ></input>
-                                      {/* <InputText
-                                        id={card_id}
-                                        state={option}
-                                        setState={setOption}
-                                        className={"title_columns"}
-                                        onChange={handletitleColumns}
-                                        placeholder={"Titulo de columna"}
-                                        name={parseInt(`${id_row}${id_column}`)}
-                                        parametro_opcional={`${id_row}${id_column}`}
-                                      /> */}
                                     </div>
                                     <div className="linea"></div>
                                   </>
@@ -514,42 +469,11 @@ export const ParametrizacionDocumentMasterCard = ({
             )}
             {/* Renderizar campo de las imagenes*/}
             {option[card_id][0].optionValue === "Imagen" && (
-              <div className="inputImg animate__animated animate__fadeIn">
-                <InputImg
-                  classNameForm={"img-form"}
-                  classNameInput1={"input1"}
-                  classNameInput2={"input2"}
-                />
-                <InputText
-                  id={card_id}
-                  state={option}
-                  setState={setOption}
-                  name={`text${card_id}`}
-                  className={"input-title-img"}
-                  // onChange={handleTextValueChange}
-                  placeholder={"Titulo de la imagen"}
-                />
-              </div>
+              <div className="inputImg animate__animated animate__fadeIn"></div>
             )}
             {/* Renderizar campo del link*/}
             {option[card_id][0].optionValue === "Link" && (
-              <div>
-                {/* <input
-                  name={`text${card_id}`}
-                  className={"input-title-img"}
-                  placeholder={"Descripción del link"}
-                  defaultValue={option[card_id][0].linkDescription}
-                  onChange={(e) => handleDescripcionLinkChange(e, card_id)}
-                ></input>
-                <input
-                  className={"InputLink"}
-                  name={`link${card_id}`}
-                  type='url'
-                  defaultValue={option[card_id][0].link}
-                  onChange={(e) => handleOnchangeLink(e, card_id)}
-                  placeholder={"Agrega tu enlace aqui"}
-                ></input> */}
-              </div>
+              <div className="inputImg animate__animated animate__fadeIn"></div>
             )}
             {/* Renderizar campo del lista*/}
             {option[card_id][0].optionValue === "Lista" && (
@@ -564,43 +488,7 @@ export const ParametrizacionDocumentMasterCard = ({
               </div>
             )}
             {option[card_id][0].optionValue === "Archivo" && (
-              <div>
-                {/* <input
-                  name={`text${card_id}`}
-                  className={"input-title-img"}
-                  placeholder={"Descripción del link"}
-                  defaultValue={option[card_id][0].linkDescription}
-                  onChange={(e) => handleDescripcionLinkChange(e, card_id)}
-                ></input>
-                <input
-                  className={"InputLink"}
-                  name={`link${card_id}`}
-                  type='url'
-                  defaultValue={option[card_id][0].link}
-                  onChange={(e) => handleOnchangeLink(e, card_id)}
-                  placeholder={"Agrega tu enlace aqui"}
-                ></input> */}
-                {/* <InputText
-                  id={card_id}
-                  state={option}
-                  setState={setOption}
-                  name={`text${card_id}`}
-                  className={"input-title-img"}
-                  onChange={handleDescripcionArchivoChange}
-                  placeholder={"Descripción del archivo"}
-                />
-                <InputLink
-                  id={card_id}
-                  className={"InputLink"}
-                  name={`link${card_id}`}
-                  onChange={handleOnchangeArchivo}
-                  classNameLabel={"classNameLabel"}
-                  placeholder={"Enlace del archivo"}
-                  classNameContainer={
-                    "inputLinkContainer animate__animated animate__fadeIn"
-                  }
-                /> */}
-              </div>
+              <div className="inputImg animate__animated animate__fadeIn"></div>
             )}
           </div>
           <div className="add-remove">

@@ -27,5 +27,6 @@ export const types ={
     //Eventos de documentos para la tabla como el paginate y mas
     DocumentMasterPaginateInit:'[document] Paginate',
     //Eventos para deligenciar los formularios
-    DocumentMastersearch: '[documentMaster] search',
+    DocumentMastersearch: '[documentMaster] Search',
+    DocumentMasterSave: '[documentMaster] Save',
 }

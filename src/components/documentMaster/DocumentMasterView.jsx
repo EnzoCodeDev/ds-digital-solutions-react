@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useForm } from "../../hooks/useForm";
 // import { useHistory } from "react-router";
-// import { DocumentSearch } from '../../redux/actions/documentMasterAction';
+import { DocumentMasterInfoNew } from "../../redux/actions/documentMasterAction";
 import { Navbar } from "../navbar/Navbar";
 import { ViewDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
 // import { InputText } from "../mainInput/InputText";
@@ -25,7 +25,7 @@ export const DocumentMasterView = () => {
   const inicialStateOption = [
     [
       {
-        card: 0,
+        card: 'inhabilidado',
         optionValue: "undefined",
         titleCard: "",
         text: "",
@@ -289,27 +289,31 @@ export const DocumentMasterView = () => {
     optionInfo[id][0].titleCard = e.target.value;
     setOption(optionInfo);
   };
+  //Vigilar los estados de los input de descripcion del texto
   const handleOnChangeText = (e, id) => {
     let optionInfo = [...option];
     optionInfo[id][0].text = e.target.value;
     setOption(optionInfo);
   };
-  //Vigilar el estado del input del link
+  //Vigilar el estado del input del link descripcion
   const handleDescripcionLinkChange = (e, id) => {
     let optionInfo = [...option];
     optionInfo[id][0].linkDescription = e.target.value;
     setOption(optionInfo);
   };
+  //Vigilar el estado del input link
   const handleOnchangeLink = (e, id) => {
     let optionInfo = [...option];
     optionInfo[id][0].link = e.target.value;
     setOption(optionInfo);
   };
+  //Vigilar el estado del input del archivo descripcion
   const handleDescripcionArchivoChange = (e, id) => {
     let optionInfo = [...option];
     optionInfo[id][0].descripcionArchivo = e.target.value;
     setOption(optionInfo);
   };
+  //Vigilar el estado del input del archivo
   const handleOnchangeArchivo = (e, id) => {
     let optionInfo = [...option];
     optionInfo[id][0].archivo = e.target.value;
@@ -323,6 +327,7 @@ export const DocumentMasterView = () => {
     ] = e.target.value;
     setOption(optionInfo);
   };
+  //Vigilar el estado de cada titulo de cada celda
   const handletitleCelda = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
     optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
@@ -330,6 +335,7 @@ export const DocumentMasterView = () => {
     ].titleCelda = e.target.value;
     setOption(optionInfo);
   };
+  //vigilar el estado del text de cada celda
   const handletextCelda = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
     optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
@@ -337,6 +343,7 @@ export const DocumentMasterView = () => {
     ].textDescription = e.target.value;
     setOption(optionInfo);
   };
+  //Vigilar el estado del link de cada celda
   const handleLink = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
     optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
@@ -344,12 +351,23 @@ export const DocumentMasterView = () => {
     ].link = e.target.value;
     setOption(optionInfo);
   };
+  //Vigilar el estado de cada descripcion del link de cada celda
   const handleLinkDescription = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
     optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
       option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ].linkDescription = e.target.value;
     setOption(optionInfo);
+  };
+  //Guarda informacion
+  const handleSaveInfo = () => {
+    dispatch(
+      DocumentMasterInfoNew(
+        documentMasterHead.id,
+        documentMasterHead.version,
+        option
+      )
+    );
   };
   return (
     <div>
@@ -521,17 +539,20 @@ export const DocumentMasterView = () => {
               {option[card_id][0].optionValue === "Tabla" && (
                 <div className="tabla-subContainer animate__animated animate__fadeIn">
                   {option[card_id][0].tabla.row.map((id_column) => (
-                    <div className="row" key={id_column}>
+                    <div
+                      className={
+                        "row " +
+                        (option[card_id][0].tabla.row.length === 1
+                          ? "active"
+                          : "")
+                      }
+                      key={id_column}
+                    >
                       {option[card_id][0].tabla.column.map((id_row) => (
                         <div className="column" key={id_row}>
                           <div
                             className={
-                              "columns " +
-                              (option[card_id][0].tablaTypeCelda.celda[
-                                option[card_id][0].tablaTypeCelda.type.indexOf(
-                                  parseInt(`${id_column}${id_row}`)
-                                )
-                              ] === "Título" && "active")
+                              "columns " + (id_column === 1 && "active")
                             }
                           ></div>
                           {id_column === 1 && (
@@ -690,7 +711,11 @@ export const DocumentMasterView = () => {
                                   //         )
                                   //       ]
                                   // }
-                                  rows={"3"}
+                                  rows={
+                                    option[card_id][0].tabla.row.length === 1
+                                      ? "17"
+                                      : "6"
+                                  }
                                   cols={"30"}
                                 ></textarea>
                               </div>
@@ -785,9 +810,9 @@ export const DocumentMasterView = () => {
                                         onChange={(e) =>
                                           handleOnChangeTitleCard(e, card_id)
                                         }
-                                        placeholder={
-                                          `Ingresa lista: ${listCelda + 1}`
-                                        }
+                                        placeholder={`Ingresa lista: ${
+                                          listCelda + 1
+                                        }`}
                                         // defaultValue={
                                         //   option[card_id][0].titleCard
                                         // }
@@ -1045,6 +1070,11 @@ export const DocumentMasterView = () => {
             </div>
           </div>
         ))}
+        <button className="btn-float boton_save" onClick={handleSaveInfo}>
+          {" "}
+          <span>Guardar</span>
+          {/* <Visibility /> */}
+        </button>
       </div>
     </div>
   );
