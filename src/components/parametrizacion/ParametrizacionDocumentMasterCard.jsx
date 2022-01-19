@@ -7,11 +7,11 @@ import {
 } from "@material-ui/icons";
 //importaciones de los inputs
 import { InputSelect } from "../mainInput/InputSelect";
-// import { InputTextearea } from "../mainInput/InputTextearea";
 //importacion de tipos de celda por defecto
 import {
   listArray,
   typeCelda,
+  infoCelda,
   titleColumns,
   indexTypeCelda,
 } from "../../helpers/typeCelda";
@@ -55,6 +55,7 @@ export const ParametrizacionDocumentMasterCard = ({
             celdaType: JSON.stringify(typeCelda),
             type: indexTypeCelda,
             lista: listArray,
+            typeCeldaInfo: [infoCelda],
           },
         },
       ],
@@ -173,6 +174,40 @@ export const ParametrizacionDocumentMasterCard = ({
       arraycolumns.push(i);
     }
     optionInfo[id][0].tabla.column = arraycolumns;
+    let number = optionInfo[id][0].tabla.row.length * 10;
+    let arrayTypeColumns = [];
+    arrayTypeColumns.push("0");
+    for (let i = 1; i <= number; i++) {
+      arrayTypeColumns.push(
+        optionInfo[id][0].tablaTypeCelda.celda[i] === undefined
+          ? "Título"
+          : optionInfo[id][0].tablaTypeCelda.celda[i]
+      );
+    }
+    optionInfo[id][0].tablaTypeCelda.celda = arrayTypeColumns;
+    let arrayTypeList = [];
+    arrayTypeList.push([0]);
+    for (let i = 1; i <= number; i++) {
+      arrayTypeList.push(
+        optionInfo[id][0].tablaTypeCelda.lista[i] === undefined
+          ? [0]
+          : optionInfo[id][0].tablaTypeCelda.lista[i]
+      );
+    }
+    optionInfo[id][0].tablaTypeCelda.lista = arrayTypeList;
+    let arrayTypeCeldaInfo = [];
+    for (let i = 0; i <= number; i++) {
+      arrayTypeCeldaInfo.push({
+        celda: "",
+        titleCelda: "",
+        textDescription: "",
+        link: "",
+        linkDescription: "",
+        img: "",
+        lista: ["", "", "", "", "", "", "", "", "", ""],
+      });
+    }
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo = arrayTypeCeldaInfo;
     setOption(optionInfo);
   };
   //Guardar en el state filas columnas quiere el usuario
@@ -184,6 +219,45 @@ export const ParametrizacionDocumentMasterCard = ({
       arrayRows.push(i);
     }
     optionInfo[id][0].tabla.row = arrayRows;
+    //Si se van agregar mas columnas o filas en la tabla validar esta multiplicacion
+    //Ya que esta multiplicacion identifica el valor de cuantas filas multiplicado por 10
+    //Que es maximo de columnas si quieres mas columnas aumenta el resultado
+    //Se hixo con el fin de un bug que es del recorrer los datos no dan y a la hora de guardar no guardan bien.
+    //Tambien para evitar gastar recursos en la base de datos
+    let number = optionInfo[id][0].tabla.row.length * 10;
+    let arrayTypeColumns = [];
+    arrayTypeColumns.push("0");
+    for (let i = 1; i <= number; i++) {
+      arrayTypeColumns.push(
+        optionInfo[id][0].tablaTypeCelda.celda[i] === undefined
+          ? "Título"
+          : optionInfo[id][0].tablaTypeCelda.celda[i]
+      );
+    }
+    optionInfo[id][0].tablaTypeCelda.celda = arrayTypeColumns;
+    let arrayTypeList = [];
+    arrayTypeList.push([0]);
+    for (let i = 1; i <= number; i++) {
+      arrayTypeList.push(
+        optionInfo[id][0].tablaTypeCelda.lista[i] === undefined
+          ? [0]
+          : optionInfo[id][0].tablaTypeCelda.lista[i]
+      );
+    }
+    optionInfo[id][0].tablaTypeCelda.lista = arrayTypeList;
+    let arrayTypeCeldaInfo = [];
+    for (let i = 0; i <= number; i++) {
+      arrayTypeCeldaInfo.push({
+        celda: "",
+        titleCelda: "",
+        textDescription: "",
+        link: "",
+        linkDescription: "",
+        img: "",
+        lista: ["", "", "", "", "", "", "", "", "", ""],
+      });
+    }
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo = arrayTypeCeldaInfo;
     setOption(optionInfo);
   };
   //Agregar que tipo de celda quiere cada usuario

@@ -2,29 +2,99 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { types } from "../types/types";
 const baseUrl = process.env.REACT_APP_API_URL;
+export const DocumentMasterPaginateInit = () => {
+  let token = localStorage.getItem("token_bearer");
+  return async (dispatch) => {
+    axios
+      .get(`${baseUrl}/documentMaster/index`, {
+        headers: {
+          //En la peticion get se tuvieron que enviar estos encabezados
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        let documentMaster = response.data;
+        dispatch(documentMasterPaginateInit(documentMaster));
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+  };
+};
+//Esta es la peticion para paginar la peticion
+export const DocumentMasterPaginateNavigate = (paginate) => {
+  return async (dispatch) => {
+    let token = localStorage.getItem("token_bearer");
+    axios
+      .get(paginate, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        if (response) {
+          let document = response.data;
+          dispatch(documentMasterPaginateInit(document));
+        }
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+  };
+};
+const documentMasterPaginateInit = (document) => ({
+  type: types.DocumentMasterPaginateInit,
+  payload: document,
+});
+
 export const DocumentSearch = (parametro) => {
   return async (dispatch) => {
     if (parametro === undefined) {
       return;
     }
+    if (parametro.length <= 2) {
+      return;
+    }
     let token = localStorage.getItem("token_bearer");
     axios
-      .post(
-        `${baseUrl}/documentMaster/search`,
-        {
-          search: parametro,
+      .get(`${baseUrl}/documentMaster/search/${parametro}`, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        }
-      )
+        timeout: 1500,
+      })
       .then(function (response) {
         let documentMaster = response.data;
         dispatch(documentSearch(documentMaster));
+      })
+      .catch(function (response) {});
+  };
+};
+const documentSearch = (documentMaster) => ({
+  type: types.DocumentMastersearch,
+  payload: documentMaster,
+});
+//Este es el dispach para ver el formulario,
+export const ViewDocumentMaster = (uuid) => {
+  return async (dispatch) => {
+    if (uuid === undefined) {
+      return;
+    }
+    let token = localStorage.getItem("token_bearer");
+    axios
+      .get(`${baseUrl}/documentMaster/index/${uuid}`, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        // let documentMaster = response.data;
+        console.log(response);
+        // dispatch(viewDocumentMaster(documentMaster));
       })
       .catch(function (response) {
         console.log(response);
@@ -36,11 +106,11 @@ export const DocumentSearch = (parametro) => {
       });
   };
 };
-const documentSearch = (documentMaster) => ({
-  type: types.DocumentMastersearch,
+const viewDocumentMaster = (documentMaster) => ({
+  type: types.documentViewDocumentMaster,
   payload: documentMaster,
 });
-export const DocumentMasterInfoNew = (id_header, version, option) => {
+export const DocumentMasterInfoNew = (documentHead, option) => {
   return async (dispatch) => {
     for (let i = 0; i < option.length; i++) {
       if (option[i][0].optionValue === "Tabla") {
@@ -117,8 +187,7 @@ export const DocumentMasterInfoNew = (id_header, version, option) => {
       .post(
         `${baseUrl}/documentMaster/store `,
         {
-          id_header,
-          version,
+          documentHead,
           option,
         },
         {

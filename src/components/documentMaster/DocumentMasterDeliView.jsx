@@ -7,7 +7,7 @@ import { useForm } from "../../hooks/useForm";
 // import { useHistory } from "react-router";
 import { DocumentMasterInfoNew } from "../../redux/actions/documentMasterAction";
 import { Navbar } from "../navbar/Navbar";
-import { ViewDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
+import { ViewDocumentMaster } from "../../redux/actions/documentMasterAction";
 // import { InputText } from "../mainInput/InputText";
 import {
   typeCelda,
@@ -16,7 +16,7 @@ import {
   titleColumns,
   indexTypeCelda,
 } from "../../helpers/typeCelda";
-export const DocumentMasterView = () => {
+export const DocumentMasterDeliView = () => {
   //Manejo de que tipo es cada celda
   const [tableColumnsTypeValue, handletableColumnsTypeValueChange] =
     useForm(typeCelda);

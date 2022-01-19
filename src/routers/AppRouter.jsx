@@ -7,12 +7,11 @@ import { AuthRouter } from "./AuthRouter";
 import { startChecking } from "../redux/actions/auth";
 import { CalendarScreen } from "../components/calendary/CalendarScreen";
 import { Intro } from "../components/intro/Intro";
-import { DocumentMasterExecutionTable } from '../components/documentMasterExecution/documentMasterExecutionTable';
-import { DocumentMasterExecutionFill } from '../components/documentMasterExecution/DocumentMasterExecutionFill';
 import { ParametrizacionDocumentMasterTable } from "../components/parametrizacion/ParametrizacionDocumentMasterTable";
 import { ParametrizacionDocumentMasterForm } from "../components/parametrizacion/ParametrizacionDocumentMasterForm";
 import { DocumentMasterIndex } from "../components/documentMaster/DocumentMasterIndex";
 import { DocumentMasterView } from "../components/documentMaster/DocumentMasterView";
+import { DocumentMasterDeliView } from "../components/documentMaster/DocumentMasterDeliView";
 import { TranslateScreen } from "../components/translate/TranslateScreen";
 export const AppRouter = () => {
   const dispatch = useDispatch();
@@ -62,18 +61,6 @@ export const AppRouter = () => {
           />
           <PrivateRoute
             exact
-            path="/documentMasterExecutionTable"
-            component={DocumentMasterExecutionTable}
-            isAuthenticaded={checking}
-          />
-          <PrivateRoute
-            exact
-            path="/documentMasterExecutionTable/:uuid"
-            component={DocumentMasterExecutionFill}
-            isAuthenticaded={checking}
-          />
-          <PrivateRoute
-            exact
             path="/translate"
             component={TranslateScreen}
             isAuthenticaded={checking}
@@ -88,6 +75,12 @@ export const AppRouter = () => {
             exact
             path="/viewDocument/:uuid"
             component={DocumentMasterView}
+            isAuthenticaded={checking}
+          />
+          <PrivateRoute
+            exact
+            path="/viewDocumentDeli/:uuid"
+            component={DocumentMasterDeliView}
             isAuthenticaded={checking}
           />
           <Redirect to="/auth/login" />

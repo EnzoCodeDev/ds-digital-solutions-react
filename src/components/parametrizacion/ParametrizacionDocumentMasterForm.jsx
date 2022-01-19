@@ -13,15 +13,15 @@ import {
   UpdateDocumentMaster,
 } from "../../redux/actions/formDocumentMasterAction";
 import { ParametrizacionDocumentMasterCard } from "./ParametrizacionDocumentMasterCard";
-// import { InputText } from "../mainInput/InputText";
 import { InputLink } from "../mainInput/InputLink";
 import { BtnFloat } from "../bellboy float/btn-float";
 import { InputSelect } from "../mainInput/InputSelect";
 import {
+  typeCelda,
+  infoCelda,
   listArray,
   titleColumns,
   indexTypeCelda,
-  typeCelda,
 } from "../../helpers/typeCelda";
 export const ParametrizacionDocumentMasterForm = () => {
   const dispatch = useDispatch();
@@ -65,6 +65,7 @@ export const ParametrizacionDocumentMasterForm = () => {
           type: [],
           lista: [],
           celdaType: [],
+          typeCeldaInfo: [infoCelda],
         },
       },
     ],
@@ -87,6 +88,7 @@ export const ParametrizacionDocumentMasterForm = () => {
           type: indexTypeCelda,
           lista: listArray,
           celdaType: JSON.stringify(typeCelda),
+          typeCeldaInfo: [infoCelda],
         },
       },
     ],
@@ -449,6 +451,7 @@ export const ParametrizacionDocumentMasterForm = () => {
       setTemplate(documentMaster.DocumentMasterHead.template);
       setDescription(documentMaster.DocumentMasterHead.description);
       documentMaster.DocumentMasterBody.map(function (DocumentMasterBody) {
+        console.log(DocumentMasterBody);
         return arrayOptioValue.push([
           {
             card: DocumentMasterBody.number_card,
@@ -499,11 +502,15 @@ export const ParametrizacionDocumentMasterForm = () => {
               lista:
                 DocumentMasterBody.list_value_celda !== null
                   ? JSON.parse(DocumentMasterBody.list_value_celda)
-                  : null,
+                  : listArray,
               celdaType:
                 DocumentMasterBody.type_celda !== null
                   ? DocumentMasterBody.type_celda
                   : JSON.stringify(["0", ...celdass]),
+              typeCeldaInfo:
+                DocumentMasterBody.type_celda !== null
+                  ? JSON.parse(DocumentMasterBody.card_info_table)
+                  : [infoCelda],
             },
           },
         ]);
@@ -699,6 +706,15 @@ export const ParametrizacionDocumentMasterForm = () => {
                             onChange={handleDescripcion}
                             name={`descripcion${proceso_id}`}
                           />
+                          <input
+                            id={proceso_id}
+                            placeholder="Descripcion"
+                            name={`descripcion${proceso_id}`}
+                            onChange={(e) => handleDescripcion(e, proceso_id)}
+                            defaultValue={
+                              dataBasic[proceso_id - 1][0].description
+                            }
+                          ></input>
                         </div>
                       )}
                     </div>

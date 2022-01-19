@@ -3,7 +3,6 @@ import { types } from "../types/types";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { eventLogout } from "./events";
-import { DocumentMasterPaginateInit } from "./formDocumentTableActions";
 const baseUrl = process.env.REACT_APP_API_URL;
 //Login de un usuario
 export const startLogin = (email, password) => {
@@ -29,8 +28,6 @@ export const startLogin = (email, password) => {
               profile_photo: response.data[0].profile_photo_url,
             })
           );
-          //Este dispach es para cargar los datos de la tabla
-          dispatch(DocumentMasterPaginateInit());
         }
       })
       .catch(function (response) {
@@ -103,8 +100,6 @@ export const StartRegister = (email, password, names, lastName) => {
               profile_photo: response.data[0].profile_photo_url,
             })
           );
-          //Este dispach es para cargar los datos de la tabla
-          dispatch(DocumentMasterPaginateInit());
         }
       })
       .catch(function (response) {
@@ -140,8 +135,6 @@ export const startChecking = () => {
               profile_photo: response.data[0].profile_photo_url,
             })
           );
-          //Este dispach es para cargar los datos de la tabla
-          dispatch(DocumentMasterPaginateInit());
         }
       })
       .catch(function (error) {

@@ -214,6 +214,7 @@
             }
             .container_body {
                 display: flex;
+                width: 100%;
                 .celda_title_text {
                     border: 1px solid black;
                     margin-top: 2px;
@@ -225,7 +226,7 @@
                             font-size: 13px;
                             margin-left: 2px;
                             margin-top: 2px;
-                            width: 50%;
+                            width: 30%;
                             height: 100%;
                             outline: none;
                             font-weight: 700;
@@ -235,7 +236,6 @@
                         display: flex;
                         padding-left: 7px;
                         padding-right: 7px;
-                        width: 50%;
                         .linea1 {
                             background-color: red;
                             width: 2px;

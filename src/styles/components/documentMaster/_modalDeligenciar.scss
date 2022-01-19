@@ -1,0 +1,30 @@
+.document_master_index {
+    .container_input {
+        border-radius: 8px;
+        background-color: white;
+        border: 1px solid rgb(0, 0, 0);
+        margin: auto;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        width: 80%;
+        &:focus-within {
+            border: 2px solid black;
+            margin-top: -2px;
+        }
+        .searchDocumentMaster {
+            border: 0px;
+            height: 35px;
+            padding: 8px;
+            width: 100%;
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+    .container_busqueda {
+        .title_search {
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+    }
+}

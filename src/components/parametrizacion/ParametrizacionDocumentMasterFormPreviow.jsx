@@ -25,7 +25,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
             </span>
             <span className="a">
               <span className="b">Version:</span> Versión:{" "}
-              {version.length === 0 ? 1 : version}
+              {version === 0 ? 1 : version}
             </span>
             <span className="a">
               <span className="b">Aprovado:</span> Documento nuevo
@@ -61,7 +61,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
               </div>
               <div className="version">
                 <div className="container_version">
-                  <span>Versión: {version.length === 0 ? 1 : version}</span>
+                  <span>Versión: {version === 0 ? 1 : version}</span>
                 </div>
               </div>
               <div className="date">

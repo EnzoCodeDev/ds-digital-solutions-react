@@ -6,7 +6,7 @@ const initialState = {
       id: "",
       user_id: "",
       uuid: "",
-      version: "",
+      version: 0,
       code: "",
       format: "",
       template: "",

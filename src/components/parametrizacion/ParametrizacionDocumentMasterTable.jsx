@@ -8,6 +8,7 @@ import { useHistory } from "react-router";
 import { COLUMNS } from "./columsDocumentInfo";
 import { Navbar } from "../navbar/Navbar";
 import { ButtonOpen } from "../../helpers/ButtomOpen";
+import { DocumentMasterPaginateInit } from '../../redux/actions/formDocumentTableActions';
 import { DocumentMasterPaginateNavigate } from "../../redux/actions/formDocumentTableActions";
 import { DefaultValueDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
 import { ParametrizacionDocumentMasterOptionTable } from "./ParametrizacionDocumentMasterOptionTable";
@@ -19,7 +20,10 @@ export const  ParametrizacionDocumentMasterTable = () => {
   let datas = useSelector((state) => state.document.document.data);
   useEffect(() => {
     dispatch(DefaultValueDocumentMaster());
-  });
+  },[dispatch]);
+  useEffect(() => {
+    dispatch(DocumentMasterPaginateInit());
+  },[dispatch]);
   //De aqui se desestructura los datos de los datos de laravel donde
   //se destructura tambien los url para la paginacion de laravel
   const { first, last, next, prev } = useSelector(
