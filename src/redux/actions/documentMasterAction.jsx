@@ -92,9 +92,8 @@ export const ViewDocumentMaster = (uuid) => {
         },
       })
       .then(function (response) {
-        // let documentMaster = response.data;
-        console.log(response);
-        // dispatch(viewDocumentMaster(documentMaster));
+        let documentMaster = response.data;
+        dispatch(viewDocumentMaster(documentMaster));
       })
       .catch(function (response) {
         console.log(response);

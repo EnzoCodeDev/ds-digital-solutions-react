@@ -199,6 +199,7 @@ export const ParametrizacionDocumentMasterCard = ({
     for (let i = 0; i <= number; i++) {
       arrayTypeCeldaInfo.push({
         celda: "",
+        titleColumna: "",
         titleCelda: "",
         textDescription: "",
         link: "",
@@ -249,6 +250,7 @@ export const ParametrizacionDocumentMasterCard = ({
     for (let i = 0; i <= number; i++) {
       arrayTypeCeldaInfo.push({
         celda: "",
+        titleColumna: "",
         titleCelda: "",
         textDescription: "",
         link: "",

@@ -101,6 +101,7 @@ export const ParametrizacionDocumentMasterForm = () => {
         type: "Texto",
         title: "Proceso",
         description: "",
+        descriptionLink: "",
       },
     ],
   ];
@@ -165,6 +166,7 @@ export const ParametrizacionDocumentMasterForm = () => {
             type: "Texto",
             title: "",
             description: "",
+            descriptionLink: "",
           },
         ],
       ]);
@@ -190,6 +192,11 @@ export const ParametrizacionDocumentMasterForm = () => {
   const handleDescripcion = (e, id) => {
     let opcionData = [...dataBasic];
     opcionData[id - 1][0].description = e.target.value;
+    setDataBasic(opcionData);
+  };
+  const handleDescripcionLink = (e, id) => {
+    let opcionData = [...dataBasic];
+    opcionData[id - 1][0].descriptionLink = e.target.value;
     setDataBasic(opcionData);
   };
   //Eliminar una tarjeta de datos basicos
@@ -303,6 +310,10 @@ export const ParametrizacionDocumentMasterForm = () => {
       dataBasic[arrayData[0] - 1] === undefined
         ? null
         : dataBasic[arrayData[0] - 1][0].description;
+    // const data_basic_descriptionLink1 =
+    //   dataBasic[arrayData[0] - 1] === undefined
+    //     ? null
+    //     : dataBasic[arrayData[0] - 1][0].descriptionLink;
     const data_basic_type2 =
       dataBasic[[arrayData[1] - 1]] === undefined
         ? null
@@ -641,15 +652,37 @@ export const ParametrizacionDocumentMasterForm = () => {
                       <input defaultValue="Proceso" readOnly></input>
                     </div>
                     <div className="container_inptut2">
-                      <input
-                        type="text"
-                        name={"Proceso"}
-                        onChange={(e) => handleDescripcion(e, 1)}
-                        defaultValue={
-                          documentMaster.DocumentMasterHead.process_description
-                        }
-                        placeholder="Procesos(Obligatorio)"
-                      ></input>
+                      {dataBasic[0][0].type === "Texto" ? (
+                        <input
+                          type="text"
+                          name={"Proceso"}
+                          onChange={(e) => handleDescripcion(e, 1)}
+                          defaultValue={
+                            documentMaster.DocumentMasterHead
+                              .process_description
+                          }
+                          placeholder="Procesos(Obligatorio)"
+                        ></input>
+                      ) : (
+                        <>
+                          <input
+                            type="text"
+                            name={"Proceso"}
+                            onChange={(e) => handleDescripcionLink(e, 1)}
+                            defaultValue={
+                              documentMaster.DocumentMasterHead
+                                .process_description
+                            }
+                            placeholder="Procesos(Obligatorio)"
+                          ></input>
+                          <input
+                            type="url"
+                            placeholder="Url del sitio"
+                            onChange={(e) => handleDescripcion(e, 1)}
+                            name={`descripcionLink`}
+                          />
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -700,21 +733,23 @@ export const ParametrizacionDocumentMasterForm = () => {
                         </div>
                       ) : (
                         <div className="container_inptut2">
+                          <input
+                            id={proceso_id}
+                            placeholder="Descripcion"
+                            name={`descripcion${proceso_id}`}
+                            onChange={(e) =>
+                              handleDescripcionLink(e, proceso_id)
+                            }
+                            defaultValue={
+                              dataBasic[proceso_id - 1][0].description
+                            }
+                          ></input>
                           <InputLink
                             id={proceso_id}
                             placeholder="Url del sitio"
                             onChange={handleDescripcion}
                             name={`descripcion${proceso_id}`}
                           />
-                          <input
-                            id={proceso_id}
-                            placeholder="Descripcion"
-                            name={`descripcion${proceso_id}`}
-                            onChange={(e) => handleDescripcion(e, proceso_id)}
-                            defaultValue={
-                              dataBasic[proceso_id - 1][0].description
-                            }
-                          ></input>
                         </div>
                       )}
                     </div>

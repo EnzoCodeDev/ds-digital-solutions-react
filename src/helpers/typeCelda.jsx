@@ -24,6 +24,7 @@ export const infoCelda = [
   {
     celda: "",
     titleCelda: "",
+    titleColumna: "",
     textDescription: "",
     link: "",
     linkDescription: "",
@@ -32,6 +33,7 @@ export const infoCelda = [
   },
   {
     celda: "",
+    titleColumns: "",
     titleCelda: "",
     textDescription: "",
     link: "",

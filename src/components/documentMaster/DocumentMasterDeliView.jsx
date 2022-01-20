@@ -4,11 +4,8 @@ import { Print } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useForm } from "../../hooks/useForm";
-// import { useHistory } from "react-router";
-import { DocumentMasterInfoNew } from "../../redux/actions/documentMasterAction";
 import { Navbar } from "../navbar/Navbar";
 import { ViewDocumentMaster } from "../../redux/actions/documentMasterAction";
-// import { InputText } from "../mainInput/InputText";
 import {
   typeCelda,
   infoCelda,
@@ -25,7 +22,7 @@ export const DocumentMasterDeliView = () => {
   const inicialStateOption = [
     [
       {
-        card: 'inhabilidado',
+        card: "inhabilidado",
         optionValue: "undefined",
         titleCard: "",
         text: "",
@@ -84,20 +81,15 @@ export const DocumentMasterDeliView = () => {
   //Use state de la cabeza del formulario
   const [codigo, setCodigo] = useState("");
   const [formato, setFormato] = useState("");
-  const [template, setTemplate] = useState("");
-  const [description, setDescription] = useState("");
   //Manejo de que tipo de informacion quiere insertar el usuario en las tarjetas
   const [option, setOption] = useState(inicialStateOption);
   //Manejo de las tarjetas
   const [arrayCard, setArrayCard] = useState([1]);
-  //Control de la ultima tarjeta que se creo
-  const [ultime, setUltime] = useState(1);
   //Manejo de las datas de cada tarjetas
   const [dataBasic, setDataBasic] = useState(initialStateDataBasic);
   //Manejo del id de cada tarjeta del proceso
   const [dataBasicCount, setDataBasicCount] = useState([]);
   //Manejo de la ultima tarjeta que se hizo
-  const [dataBasicUlti, setDataBasicUlti] = useState(1);
   const { uuid } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -107,6 +99,7 @@ export const DocumentMasterDeliView = () => {
     (state) => state.documentMaster.documentMaster
   );
   const documentMasterHead = documentMaster.DocumentMasterHead;
+  const documentMasterInfo = documentMaster.DocumentMasterInfo;
   //Renderizado de los datos basicos de la aplicacion
   useEffect(() => {
     let arrayNumber = [];
@@ -161,7 +154,6 @@ export const DocumentMasterDeliView = () => {
     }
     setDataBasicCount(arrayNumber);
     setDataBasic([...array]);
-    setDataBasicUlti(arrayNumber.length + 1);
   }, [
     documentMaster.DocumentMasterHead.process_type,
     documentMaster.DocumentMasterHead.process_description,
@@ -205,34 +197,50 @@ export const DocumentMasterDeliView = () => {
       //Renderiazado de los datos de la cabeza del formulario
       setCodigo(documentMaster.DocumentMasterHead.code);
       setFormato(documentMaster.DocumentMasterHead.format);
-      setTemplate(documentMaster.DocumentMasterHead.template);
-      setDescription(documentMaster.DocumentMasterHead.description);
       documentMaster.DocumentMasterBody.map(function (DocumentMasterBody) {
+        //Aqui se hace un map para el body y un for eah para verificar que dato es para cada body
+        //Dependiendo el id coincidan con el body
+        const arrayInfo = [];
+        console.log(documentMasterInfo);
+        console.log(documentMasterInfo.length);
+        for (let i = 0; i < documentMasterInfo.length; i++) {
+          if (documentMasterInfo[i].id_card === DocumentMasterBody.id) {
+            arrayInfo.push({
+              id_card: documentMasterInfo[i].id_card,
+              id_header: documentMasterInfo[i].id_header,
+              title_card: documentMasterInfo[i].title_card,
+              text_description: documentMasterInfo[i].text_description,
+              link: documentMasterInfo[i].link,
+              link_description: documentMasterInfo[i].link_description,
+              file: documentMasterInfo[i].file,
+              file_description: documentMasterInfo[i].file_description,
+              card_info_table: documentMasterInfo[i].card_info_table,
+            });
+          }
+        }
         return arrayOptioValue.push([
           {
             card_id: DocumentMasterBody.id,
             card: DocumentMasterBody.number_card,
-            link:
-              DocumentMasterBody.link === null ? "" : DocumentMasterBody.link,
+            titleCard: arrayInfo[0].title_card,
+            text:
+              arrayInfo[0].text_description === null
+                ? ""
+                : arrayInfo[0].text_description,
+            link: arrayInfo[0].link === null ? "" : arrayInfo[0].link,
             linkDescription:
-              DocumentMasterBody.link_description === null
+              arrayInfo[0].link_description === null
                 ? ""
-                : DocumentMasterBody.link_description,
-            archivo:
-              DocumentMasterBody.file === null ? "" : DocumentMasterBody.file,
+                : arrayInfo[0].link_description,
+            archivo: arrayInfo[0].file === null ? "" : arrayInfo[0].file,
             descripcionArchivo:
-              DocumentMasterBody.file_description === null
+              arrayInfo[0].file_description === null
                 ? ""
-                : DocumentMasterBody.file_description,
+                : arrayInfo[0].file_description,
             img:
               DocumentMasterBody.image === null ? "" : DocumentMasterBody.image,
             heigth: { state: true },
-            titleCard: DocumentMasterBody.title_card,
             optionValue: DocumentMasterBody.select_value,
-            text:
-              DocumentMasterBody.text_description === null
-                ? ""
-                : DocumentMasterBody.text_description,
             tabla: {
               column:
                 JSON.parse(DocumentMasterBody.columns) === null
@@ -264,7 +272,7 @@ export const DocumentMasterDeliView = () => {
                 DocumentMasterBody.type_celda !== null
                   ? DocumentMasterBody.type_celda
                   : JSON.stringify(["0", ...celdass]),
-              typeCeldaInfo: [infoCelda],
+              typeCeldaInfo: JSON.parse(arrayInfo[0].card_info_table),
             },
           },
         ]);
@@ -272,9 +280,8 @@ export const DocumentMasterDeliView = () => {
       setOption(arrayOptioValue);
       let newArray = JSON.parse(documentMaster.DocumentMasterHead.position);
       setArrayCard(newArray);
-      setUltime(newArray.length);
     }
-    //Ognorando dependencias para que solo se llame una vez
+    //Ignorando dependencias para que solo se llame una vez
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     documentMaster.DocumentMasterHead.code,
@@ -291,89 +298,10 @@ export const DocumentMasterDeliView = () => {
     optionInfo[id][0].titleCard = e.target.value;
     setOption(optionInfo);
   };
-  //Vigilar los estados de los input de descripcion del texto
-  const handleOnChangeText = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].text = e.target.value;
-    setOption(optionInfo);
-  };
-  //Vigilar el estado del input del link descripcion
-  const handleDescripcionLinkChange = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].linkDescription = e.target.value;
-    setOption(optionInfo);
-  };
-  //Vigilar el estado del input link
-  const handleOnchangeLink = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].link = e.target.value;
-    setOption(optionInfo);
-  };
-  //Vigilar el estado del input del archivo descripcion
-  const handleDescripcionArchivoChange = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].descripcionArchivo = e.target.value;
-    setOption(optionInfo);
-  };
-  //Vigilar el estado del input del archivo
-  const handleOnchangeArchivo = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].archivo = e.target.value;
-    setOption(optionInfo);
-  };
-  //Vigila que titulo de cada columna
-  const handletitleColumns = (e, id, parametro_opcional) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.title_columna[
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ] = e.target.value;
-    setOption(optionInfo);
-  };
-  //Vigilar el estado de cada titulo de cada celda
-  const handletitleCelda = (e, id, parametro_opcional) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ].titleCelda = e.target.value;
-    setOption(optionInfo);
-  };
-  //vigilar el estado del text de cada celda
-  const handletextCelda = (e, id, parametro_opcional) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ].textDescription = e.target.value;
-    setOption(optionInfo);
-  };
-  //Vigilar el estado del link de cada celda
-  const handleLink = (e, id, parametro_opcional) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ].link = e.target.value;
-    setOption(optionInfo);
-  };
-  //Vigilar el estado de cada descripcion del link de cada celda
-  const handleLinkDescription = (e, id, parametro_opcional) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ].linkDescription = e.target.value;
-    setOption(optionInfo);
-  };
-  //Guarda informacion
-  const handleSaveInfo = () => {
-    dispatch(
-      DocumentMasterInfoNew(
-        documentMasterHead,
-        option
-      )
-    );
-  };
   return (
     <div>
       <Navbar />
-      <div className={"form-previow-deli"}>
+      <div className={"form-previow-view-deli"}>
         <div className="header-container">
           <div className="header-1">
             <span className="a">
@@ -524,17 +452,7 @@ export const DocumentMasterDeliView = () => {
         {arrayCard.map((card_id) => (
           <div key={card_id}>
             {option[card_id][0].optionValue === "Tabla" && (
-              <>
-                <input
-                  type="text"
-                  state={option}
-                  className={"titleColumn"}
-                  name={`text${card_id}`}
-                  onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                  placeholder={"Ingresa el titulo de la columna aqui"}
-                  defaultValue={option[card_id][0].titleCard}
-                ></input>
-              </>
+              <h6 className="titleColumn">{option[card_id][0].titleCard}</h6>
             )}
             <div className="tabla-container ">
               {option[card_id][0].optionValue === "Tabla" && (
@@ -559,38 +477,18 @@ export const DocumentMasterDeliView = () => {
                           {id_column === 1 && (
                             <>
                               <div className="header_title">
-                                <input
-                                  type="text"
-                                  className={"celda_title_input"}
-                                  name={parseInt(`${id_row}${id_column}`)}
-                                  onChange={(e) =>
-                                    handletitleColumns(
-                                      e,
-                                      card_id,
-                                      `${id_column}${id_row}`
-                                    )
+                                <h6 className={"celda_title_input"}>
+                                  {
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].titleColumna
                                   }
-                                  placeholder={"*Titulo de columna"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
-                                ></input>
+                                </h6>
                               </div>
                               <div className="linea"></div>
                             </>
@@ -602,40 +500,18 @@ export const DocumentMasterDeliView = () => {
                           ] === "Título" && (
                             <div className="celda_title">
                               <div className="header_title">
-                                {/* <h6 className={"celda_title_inputt"}> */}
-                                <input
-                                  type="text"
-                                  className={"celda_title_inputt"}
-                                  name={parseInt(`${id_row}${id_column}`)}
-                                  onChange={(e) =>
-                                    handletitleCelda(
-                                      e,
-                                      card_id,
-                                      `${id_column}${id_row}`
-                                    )
+                                <h6 className={"celda_title_inputt"}>
+                                  {
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].titleCelda
                                   }
-                                  placeholder={"*Titulo de la celda"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
-                                ></input>
-                                {/* </h6> */}
+                                </h6>
                               </div>
                               <div className="linea"></div>
                             </div>
@@ -647,78 +523,33 @@ export const DocumentMasterDeliView = () => {
                           ] === "Título texto" && (
                             <div className="celda_title_text">
                               <div className="header_titlee">
-                                <input
-                                  type="text"
-                                  className={"celda_title_inputt"}
-                                  name={parseInt(`${id_row}${id_column}`)}
-                                  onChange={(e) =>
-                                    handletitleCelda(
-                                      e,
-                                      card_id,
-                                      `${id_column}${id_row}`
-                                    )
+                                <h6 className="celda_title_inputt">
+                                  {
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].titleCelda
                                   }
-                                  placeholder={"*Titulo de la celda"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
-                                ></input>
+                                </h6>
                               </div>
                               <div className="text_body">
                                 <div className="linea"></div>
-                                <textarea
-                                  className={"textarea"}
-                                  name={parseInt(`${id_row}${id_column}`)}
-                                  onChange={(e) =>
-                                    handletextCelda(
-                                      e,
-                                      card_id,
-                                      `${id_column}${id_row}`
-                                    )
+                                <p>
+                                  {
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].textDescription
                                   }
-                                  placeholder={"Descripcion"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
-                                  rows={
-                                    option[card_id][0].tabla.row.length === 1
-                                      ? "17"
-                                      : "6"
-                                  }
-                                  cols={"30"}
-                                ></textarea>
+                                </p>
                               </div>
                             </div>
                           )}
@@ -742,38 +573,18 @@ export const DocumentMasterDeliView = () => {
                           ] === "Imagen título" && (
                             <div className="imagen_title">
                               <div className="header_titleee">
-                                <input
-                                  type="text"
-                                  className={"celda_title_inputtt"}
-                                  name={parseInt(`${id_row}${id_column}`)}
-                                  onChange={(e) =>
-                                    handletitleCelda(
-                                      e,
-                                      card_id,
-                                      `${id_column}${id_row}`
-                                    )
+                                <h6 className="celda_title_inputtt">
+                                  {
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].titleCelda
                                   }
-                                  placeholder={"*Titulo de la imagen"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
-                                ></input>
+                                </h6>
                               </div>
                               <div className="imagen_container">
                                 <img
@@ -831,72 +642,9 @@ export const DocumentMasterDeliView = () => {
                           ] === "Link" && (
                             <div className="link">
                               <div className="celda_container_link">
-                                <input
-                                  type="text"
-                                  autoComplete="off"
-                                  className={"celda_title_inputt"}
-                                  name={parseInt(`${id_row}${id_column}`)}
-                                  onChange={(e) =>
-                                    handleLink(
-                                      e,
-                                      card_id,
-                                      `${id_column}${id_row}`
-                                    )
-                                  }
-                                  placeholder={"Agrega tu enlace aqui"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
-                                ></input>
-                                <input
-                                  type="text"
-                                  autoComplete="off"
-                                  className={"celda_title_inputt"}
-                                  name={parseInt(`${id_row}${id_column}`)}
-                                  onChange={(e) =>
-                                    handleLinkDescription(
-                                      e,
-                                      card_id,
-                                      `${id_column}${id_row}`
-                                    )
-                                  }
-                                  placeholder={"Descripción del enlace aqui"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_column}${id_row}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
-                                ></input>
+                                <h6 className="celda_title_input">
+                                  Título del link:
+                                </h6>
                               </div>
                               <div className="link_body">
                                 <div className="linea"></div>
@@ -937,57 +685,18 @@ export const DocumentMasterDeliView = () => {
               )}
               {option[card_id][0].optionValue === "Texto" && (
                 <div className="container_text">
-                  <input
-                    type="text"
-                    state={option}
-                    className={"textt"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"*Ingresa el titulo del texto aqui"}
-                    defaultValue={option[card_id][0].titleCard}
-                  ></input>
+                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   <div className="container_sub_text">
                     <div className="subContainer">
-                      <textarea
-                        rows={"3"}
-                        cols={"30"}
-                        className={"text"}
-                        name={`textarea${card_id}`}
-                        placeholder={"Escribe el texto"}
-                        defaultValue={option[card_id][0].text}
-                        onChange={(e) => handleOnChangeText(e, card_id)}
-                      ></textarea>
+                      <h6 className="text">{option[card_id][0].text}</h6>
                     </div>
                   </div>
                 </div>
               )}
               {option[card_id][0].optionValue === "Link" && (
                 <div className="container_link">
-                  <input
-                    type="text"
-                    state={option}
-                    className={"textt"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"*Ingrese el titulo del link aqui"}
-                    defaultValue={option[card_id][0].titleCard}
-                  ></input>
+                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   <div className="container_sub_link">
-                    <input
-                      type="url"
-                      className={"InputLink"}
-                      name={`link${card_id}`}
-                      defaultValue={option[card_id][0].link}
-                      onChange={(e) => handleOnchangeLink(e, card_id)}
-                      placeholder={"Agrega tu enlace aqui"}
-                    ></input>
-                    <input
-                      name={`text${card_id}`}
-                      className={"input-title-img"}
-                      placeholder={"Descripción del enlace"}
-                      defaultValue={option[card_id][0].linkDescription}
-                      onChange={(e) => handleDescripcionLinkChange(e, card_id)}
-                    ></input>
                     <div className="subContainer">
                       <a
                         target="_blank"
@@ -1003,15 +712,7 @@ export const DocumentMasterDeliView = () => {
               )}
               {option[card_id][0].optionValue === "Imagen" && (
                 <div className="container_imagen_previous">
-                  <input
-                    type="text"
-                    state={option}
-                    className={"textt"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"*Ingresa el titulo de la imagen aqui"}
-                    defaultValue={option[card_id][0].titleCard}
-                  ></input>
+                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   <div className="container_imagen_sub_previous">
                     <img
                       className="imagen"
@@ -1023,33 +724,8 @@ export const DocumentMasterDeliView = () => {
               )}
               {option[card_id][0].optionValue === "Archivo" && (
                 <div className="container_archivo">
-                  <input
-                    type="text"
-                    state={option}
-                    className={"textt"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"*Ingrese el titulo del archivo aqui"}
-                    defaultValue={option[card_id][0].titleCard}
-                  ></input>
+                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   <div className="container_sub_archivo">
-                    <input
-                      className={"InputLink"}
-                      name={`archivo${card_id}`}
-                      type="url"
-                      defaultValue={option[card_id][0].archivo}
-                      onChange={(e) => handleOnchangeArchivo(e, card_id)}
-                      placeholder={"Agrega tu enlace aqui"}
-                    ></input>
-                    <input
-                      name={`text${card_id}`}
-                      className={"input-title-img"}
-                      placeholder={"Descripción del archivo"}
-                      defaultValue={option[card_id][0].descripcionArchivo}
-                      onChange={(e) =>
-                        handleDescripcionArchivoChange(e, card_id)
-                      }
-                    ></input>
                     <div className="subContainer">
                       <a
                         target="_blank"
@@ -1071,11 +747,6 @@ export const DocumentMasterDeliView = () => {
             </div>
           </div>
         ))}
-        <button className="btn-float boton_save" onClick={handleSaveInfo}>
-          {" "}
-          <span>Guardar</span>
-          {/* <Visibility /> */}
-        </button>
       </div>
     </div>
   );

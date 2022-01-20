@@ -122,7 +122,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                         rel="noopener noreferrer"
                         href={`${dataBasic[0][0].description}`}
                       >
-                        {dataBasic[0][0].description}{" "}
+                        {dataBasic[0][0].descriptionLink}{" "}
                       </a>
                     </>
                   )}
@@ -155,7 +155,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                             rel="noopener noreferrer"
                             href={`${dataBasic[proceso_id - 1][0].description}`}
                           >
-                            {dataBasic[proceso_id - 1][0].description}
+                            {dataBasic[proceso_id - 1][0].descriptionLink}
                           </a>
                         </>
                       )}
@@ -287,10 +287,6 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                                 <h6 className="celda_title_inputtt">
                                   Título de imagen:
                                 </h6>
-                                {/* <input
-                                  defaultValue="Título de imagen:"
-                                  className={"celda_title_input"}
-                                ></input> */}
                               </div>
                               <div className="imagen_container">
                                 <img

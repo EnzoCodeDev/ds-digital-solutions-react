@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo } from "react";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { DocumentMasterPaginateInit, DocumentMasterPaginateNavigate  } from "../../redux/actions/documentMasterAction";
+import { DocumentMasterPaginateInit, DocumentMasterPaginateNavigate } from "../../redux/actions/documentMasterAction";
+import { DefaultValueDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
 import { Navbar } from "../navbar/Navbar";
 import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
@@ -15,6 +16,9 @@ import { ParametrizacionDocumentMasterOptionTable } from "./ParametrizacionDocum
 export const DocumentMasterIndex = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(DefaultValueDocumentMaster());
+  },[dispatch]);
   useEffect(() => {
     dispatch(DocumentMasterPaginateInit());
   }, [dispatch]);

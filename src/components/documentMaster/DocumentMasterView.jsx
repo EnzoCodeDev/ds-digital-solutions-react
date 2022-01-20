@@ -208,6 +208,7 @@ export const DocumentMasterView = () => {
       setTemplate(documentMaster.DocumentMasterHead.template);
       setDescription(documentMaster.DocumentMasterHead.description);
       documentMaster.DocumentMasterBody.map(function (DocumentMasterBody) {
+        console.log(JSON.parse(DocumentMasterBody.card_info_table));
         return arrayOptioValue.push([
           {
             card_id: DocumentMasterBody.id,
@@ -264,7 +265,7 @@ export const DocumentMasterView = () => {
                 DocumentMasterBody.type_celda !== null
                   ? DocumentMasterBody.type_celda
                   : JSON.stringify(["0", ...celdass]),
-              typeCeldaInfo: [infoCelda],
+              typeCeldaInfo: [JSON.parse(DocumentMasterBody.card_info_table)],
             },
           },
         ]);
@@ -324,9 +325,9 @@ export const DocumentMasterView = () => {
   //Vigila que titulo de cada columna
   const handletitleColumns = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.title_columna[
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
       option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ] = e.target.value;
+    ].titleColumna = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado de cada titulo de cada celda
