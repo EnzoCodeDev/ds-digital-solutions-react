@@ -207,8 +207,8 @@ export const ParametrizacionDocumentMasterForm = () => {
       {
         id: id,
         type: "undefined",
-        title: "undefined",
-        description: "undefined",
+        title: "",
+        description: "",
       },
     ]);
     dataBasicCount.splice(item, 1);
@@ -218,70 +218,26 @@ export const ParametrizacionDocumentMasterForm = () => {
   //Funcion que llama al dispach para crear un nuevo formulario
   const handleDocument = (e) => {
     e.preventDefault();
-    let arrayData = [];
-    dataBasicCount.forEach(function (data, index) {
-      arrayData.push(data);
-    });
     const code = codigo;
     const format = formato;
     const position = arrayCard;
     const process_type = dataBasic[0][0].type;
     const process_description = dataBasic[0][0].description;
-    const data_basic_type1 =
-      dataBasic[arrayData[0] - 1] === undefined
-        ? null
-        : dataBasic[arrayData[0] - 1][0].type;
-    const data_basic_title1 =
-      dataBasic[arrayData[0] - 1] === undefined
-        ? null
-        : dataBasic[arrayData[0] - 1][0].title;
-    const data_basic_description1 =
-      dataBasic[arrayData[0] - 1] === undefined
-        ? null
-        : dataBasic[arrayData[0] - 1][0].description;
-    const data_basic_type2 =
-      dataBasic[[arrayData[1] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[1] - 1][0].type;
-    const data_basic_title2 =
-      dataBasic[[arrayData[1] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[1] - 1][0].title;
-    const data_basic_description2 =
-      dataBasic[[arrayData[1] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[1] - 1][0].description;
-    const data_basic_type3 =
-      dataBasic[[arrayData[2] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[2] - 1][0].type;
-    const data_basic_title3 =
-      dataBasic[[arrayData[2] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[2] - 1][0].title;
-    const data_basic_description3 =
-      dataBasic[[arrayData[2] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[2] - 1][0].description;
+    const process_link =
+      dataBasic[0][0].type === "Texto" ? null : dataBasic[0][0].descriptionLink;
     const optionTarget = [...option];
     dispatch(
       NewDocumetMaster(
         code,
         format,
         template,
-        description,
         position,
+        dataBasic,
+        description,
+        process_link,
         process_type,
+        dataBasicCount,
         process_description,
-        data_basic_type1,
-        data_basic_title1,
-        data_basic_description1,
-        data_basic_type2,
-        data_basic_title2,
-        data_basic_description2,
-        data_basic_type3,
-        data_basic_title3,
-        data_basic_description3,
         optionTarget
       )
     );
@@ -289,55 +245,13 @@ export const ParametrizacionDocumentMasterForm = () => {
   //Esta funcion al dispacth que actualiza un formulario
   const handleDocumentUpdate = (e) => {
     e.preventDefault();
-    let arrayData = [];
-    dataBasicCount.forEach(function (data, index) {
-      arrayData.push(data);
-    });
     const code = codigo;
     const format = formato;
     const position = arrayCard;
     const process_type = dataBasic[0][0].type;
     const process_description = dataBasic[0][0].description;
-    const data_basic_type1 =
-      dataBasic[arrayData[0] - 1] === undefined
-        ? null
-        : dataBasic[arrayData[0] - 1][0].type;
-    const data_basic_title1 =
-      dataBasic[arrayData[0] - 1] === undefined
-        ? null
-        : dataBasic[arrayData[0] - 1][0].title;
-    const data_basic_description1 =
-      dataBasic[arrayData[0] - 1] === undefined
-        ? null
-        : dataBasic[arrayData[0] - 1][0].description;
-    // const data_basic_descriptionLink1 =
-    //   dataBasic[arrayData[0] - 1] === undefined
-    //     ? null
-    //     : dataBasic[arrayData[0] - 1][0].descriptionLink;
-    const data_basic_type2 =
-      dataBasic[[arrayData[1] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[1] - 1][0].type;
-    const data_basic_title2 =
-      dataBasic[[arrayData[1] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[1] - 1][0].title;
-    const data_basic_description2 =
-      dataBasic[[arrayData[1] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[1] - 1][0].description;
-    const data_basic_type3 =
-      dataBasic[[arrayData[2] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[2] - 1][0].type;
-    const data_basic_title3 =
-      dataBasic[[arrayData[2] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[2] - 1][0].title;
-    const data_basic_description3 =
-      dataBasic[[arrayData[2] - 1]] === undefined
-        ? null
-        : dataBasic[arrayData[2] - 1][0].description;
+    const process_link =
+      dataBasic[0][0].type === "Texto" ? null : dataBasic[0][0].descriptionLink;
     const optionTarget = [...option];
     dispatch(
       UpdateDocumentMaster(
@@ -345,26 +259,19 @@ export const ParametrizacionDocumentMasterForm = () => {
         code,
         format,
         template,
-        description,
         position,
+        dataBasic,
+        description,
+        process_link,
         process_type,
+        dataBasicCount,
         process_description,
-        data_basic_type1,
-        data_basic_title1,
-        data_basic_description1,
-        data_basic_type2,
-        data_basic_title2,
-        data_basic_description2,
-        data_basic_type3,
-        data_basic_title3,
-        data_basic_description3,
         optionTarget
       )
     );
   };
   //Renderizado de los datos basicos de la aplicacion
   useEffect(() => {
-    let arrayNumber = [];
     let array = [
       [
         {
@@ -375,60 +282,30 @@ export const ParametrizacionDocumentMasterForm = () => {
               : documentMaster.DocumentMasterHead.process_type,
           title: "Proceso",
           description: documentMaster.DocumentMasterHead.process_description,
+          descriptionLink:
+            documentMaster.DocumentMasterHead.process_link === null
+              ? ""
+              : documentMaster.DocumentMasterHead.process_link,
         },
       ],
     ];
-    if (documentMaster.DocumentMasterHead.data_basic_title1) {
-      array.push([
-        {
-          id: 2,
-          type: documentMaster.DocumentMasterHead.data_basic_type1,
-          title: documentMaster.DocumentMasterHead.data_basic_title1,
-          description:
-            documentMaster.DocumentMasterHead.data_basic_description1,
-        },
-      ]);
-      arrayNumber.push(2);
+    if (documentMaster.DocumentMasterHead.data_basic) {
+      array.push(...JSON.parse(documentMaster.DocumentMasterHead.data_basic));
     }
-    if (documentMaster.DocumentMasterHead.data_basic_title2) {
-      array.push([
-        {
-          id: 3,
-          type: documentMaster.DocumentMasterHead.data_basic_type2,
-          title: documentMaster.DocumentMasterHead.data_basic_title2,
-          description:
-            documentMaster.DocumentMasterHead.data_basic_description2,
-        },
-      ]);
-      arrayNumber.push(3);
-    }
-    if (documentMaster.DocumentMasterHead.data_basic_title3) {
-      array.push([
-        {
-          id: 4,
-          type: documentMaster.DocumentMasterHead.data_basic_type3,
-          title: documentMaster.DocumentMasterHead.data_basic_title3,
-          description:
-            documentMaster.DocumentMasterHead.data_basic_description3,
-        },
-      ]);
-      arrayNumber.push(4);
-    }
-    setDataBasicCount(arrayNumber);
+    setDataBasicCount(
+      JSON.parse(documentMaster.DocumentMasterHead.position_data_basic)
+    );
     setDataBasic([...array]);
-    setDataBasicUlti(arrayNumber.length + 1);
+    setDataBasicUlti(
+      JSON.parse(documentMaster.DocumentMasterHead.position_data_basic).length +
+        1
+    );
   }, [
+    documentMaster.DocumentMasterHead.position_data_basic,
     documentMaster.DocumentMasterHead.process_type,
     documentMaster.DocumentMasterHead.process_description,
-    documentMaster.DocumentMasterHead.data_basic_title1,
-    documentMaster.DocumentMasterHead.data_basic_type1,
-    documentMaster.DocumentMasterHead.data_basic_description1,
-    documentMaster.DocumentMasterHead.data_basic_type2,
-    documentMaster.DocumentMasterHead.data_basic_title2,
-    documentMaster.DocumentMasterHead.data_basic_description2,
-    documentMaster.DocumentMasterHead.data_basic_type3,
-    documentMaster.DocumentMasterHead.data_basic_title3,
-    documentMaster.DocumentMasterHead.data_basic_description3,
+    documentMaster.DocumentMasterHead.data_basic,
+    documentMaster.DocumentMasterHead.process_link,
   ]);
   //Renderizar los datos de la tarjeta de la aplicacion
   useEffect(() => {
@@ -455,7 +332,6 @@ export const ParametrizacionDocumentMasterForm = () => {
       ],
     ];
     if (documentMaster.res === "success_view") {
-      console.log(documentMaster);
       //Renderiazado de los datos de la cabeza del formulario
       setCodigo(documentMaster.DocumentMasterHead.code);
       setFormato(documentMaster.DocumentMasterHead.format);

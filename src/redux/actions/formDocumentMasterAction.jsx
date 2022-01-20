@@ -45,22 +45,17 @@ export const NewDocumetMaster = (
   code,
   format,
   template,
-  description,
   position,
+  dataBasic,
+  description,
+  process_link,
   process_type,
+  dataBasicCount,
   process_description,
-  data_basic_type1,
-  data_basic_title1,
-  data_basic_description1,
-  data_basic_type2,
-  data_basic_title2,
-  data_basic_description2,
-  data_basic_type3,
-  data_basic_title3,
-  data_basic_description3,
   optionTarget
 ) => {
   return async (dispatch) => {
+    //Validacion de los datos del formulario y el proceso
     if (
       code.trim().length === 0 ||
       format.trim().length === 0 ||
@@ -70,10 +65,75 @@ export const NewDocumetMaster = (
       Swal.fire("Error", "Falta informacion del formulario", "error");
       return;
     }
-    if (process_description.trim().length === 0) {
-      Swal.fire("Error", "Falta la descripcion del proceso", "error");
-      return;
+    if (process_type === "Texto") {
+      if (process_description.trim().length === 0) {
+        Swal.fire("Error", "Falta la descripcion del proceso", "error");
+        return;
+      }
     }
+    if (process_type === "Link") {
+      if (process_description.trim().length === 0) {
+        Swal.fire("Error", "Falta el link del proceso", "error");
+        return;
+      }
+      if (process_link === undefined) {
+        Swal.fire(
+          "Error",
+          "Falta la descripcion del link del proceso",
+          "error"
+        );
+        return;
+      }
+      if (process_link.trim().length === 0) {
+        Swal.fire(
+          "Error",
+          "Falta la descripcion del link del proceso",
+          "error"
+        );
+        return;
+      }
+    }
+    //Validacion de los datos basicos
+    for (let i = 0; i < dataBasicCount.length; i++) {
+      if (dataBasic[dataBasicCount[i] - 1][0].title.trim() === "") {
+        Swal.fire(
+          "Error",
+          "Falta el titulo de uno de los datos basicos o remueve el dato basico",
+          "error"
+        );
+        return;
+      }
+      if (dataBasic[dataBasicCount[i] - 1][0].type === "Texto") {
+        if (dataBasic[dataBasicCount[i] - 1][0].description.trim() === "") {
+          Swal.fire(
+            "Error",
+            "Falta la descripcion de uno de los datos basicos o remueve el dato basico",
+            "error"
+          );
+          return;
+        }
+      }
+      if (dataBasic[dataBasicCount[i] - 1][0].type === "Link") {
+        if (dataBasic[dataBasicCount[i] - 1][0].descriptionLink.trim() === "") {
+          Swal.fire(
+            "Error",
+            "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
+            "error"
+          );
+          return;
+        }
+        if (dataBasic[dataBasicCount[i] - 1][0].description.trim() === "") {
+          Swal.fire(
+            "Error",
+            "Falta el link de uno de los datos basicos o remueve el dato basico",
+            "error"
+          );
+          return;
+        }
+      }
+    }
+    const data_basic = [...dataBasic];
+    data_basic.shift();
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario
     axios
@@ -83,19 +143,13 @@ export const NewDocumetMaster = (
           code,
           format,
           template,
-          description,
           position,
+          data_basic,
+          description,
+          process_link,
           process_type,
+          dataBasicCount,
           process_description,
-          data_basic_type1,
-          data_basic_title1,
-          data_basic_description1,
-          data_basic_type2,
-          data_basic_title2,
-          data_basic_description2,
-          data_basic_type3,
-          data_basic_title3,
-          data_basic_description3,
           optionTarget,
         },
         {
@@ -145,23 +199,18 @@ export const UpdateDocumentMaster = (
   code,
   format,
   template,
-  description,
   position,
+  dataBasic,
+  description,
+  process_link,
   process_type,
+  dataBasicCount,
   process_description,
-  data_basic_type1,
-  data_basic_title1,
-  data_basic_description1,
-  data_basic_type2,
-  data_basic_title2,
-  data_basic_description2,
-  data_basic_type3,
-  data_basic_title3,
-  data_basic_description3,
   optionTarget
 ) => {
   return async (dispatch) => {
-    if (
+     //Validacion de los datos del formulario y el proceso
+     if (
       code.trim().length === 0 ||
       format.trim().length === 0 ||
       template.trim().length === 0 ||
@@ -170,33 +219,93 @@ export const UpdateDocumentMaster = (
       Swal.fire("Error", "Falta informacion del formulario", "error");
       return;
     }
-    if (process_description.trim().length === 0) {
-      Swal.fire("Error", "Falta la descripcion del proceso", "error");
-      return;
+    if (process_type === "Texto") {
+      if (process_description.trim().length === 0) {
+        Swal.fire("Error", "Falta la descripcion del proceso", "error");
+        return;
+      }
     }
+    if (process_type === "Link") {
+      if (process_description.trim().length === 0) {
+        Swal.fire("Error", "Falta el link del proceso", "error");
+        return;
+      }
+      if (process_link === undefined) {
+        Swal.fire(
+          "Error",
+          "Falta la descripcion del link del proceso",
+          "error"
+        );
+        return;
+      }
+      if (process_link.trim().length === 0) {
+        Swal.fire(
+          "Error",
+          "Falta la descripcion del link del proceso",
+          "error"
+        );
+        return;
+      }
+    }
+    //Validacion de los datos basicos
+    for (let i = 0; i < dataBasicCount.length; i++) {
+      if (dataBasic[dataBasicCount[i] - 1][0].title.trim() === "") {
+        Swal.fire(
+          "Error",
+          "Falta el titulo de uno de los datos basicos o remueve el dato basico",
+          "error"
+        );
+        return;
+      }
+      if (dataBasic[dataBasicCount[i] - 1][0].type === "Texto") {
+        if (dataBasic[dataBasicCount[i] - 1][0].description.trim() === "") {
+          Swal.fire(
+            "Error",
+            "Falta la descripcion de uno de los datos basicos o remueve el dato basico",
+            "error"
+          );
+          return;
+        }
+      }
+      if (dataBasic[dataBasicCount[i] - 1][0].type === "Link") {
+        if (dataBasic[dataBasicCount[i] - 1][0].descriptionLink.trim() === "") {
+          Swal.fire(
+            "Error",
+            "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
+            "error"
+          );
+          return;
+        }
+        if (dataBasic[dataBasicCount[i] - 1][0].description.trim() === "") {
+          Swal.fire(
+            "Error",
+            "Falta el link de uno de los datos basicos o remueve el dato basico",
+            "error"
+          );
+          return;
+        }
+      }
+    }
+    const data_basic = [...dataBasic];
+    data_basic.shift();
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario
     axios
       .post(
         `${baseUrl}/dataMasterHead/update/${uuid}`,
         {
+          uuid,
           code,
           format,
           template,
-          description,
           position,
+          data_basic,
+          description,
+          process_link,
           process_type,
+          dataBasicCount,
           process_description,
-          data_basic_type1,
-          data_basic_title1,
-          data_basic_description1,
-          data_basic_type2,
-          data_basic_title2,
-          data_basic_description2,
-          data_basic_type3,
-          data_basic_title3,
-          data_basic_description3,
-          optionTarget,
+          optionTarget
         },
         {
           //En la peticion post se tuvo que enviar estos encabezados ya que no los queria recibir
