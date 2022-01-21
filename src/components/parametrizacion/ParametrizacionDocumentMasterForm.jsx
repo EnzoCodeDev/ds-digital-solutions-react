@@ -13,7 +13,6 @@ import {
   UpdateDocumentMaster,
 } from "../../redux/actions/formDocumentMasterAction";
 import { ParametrizacionDocumentMasterCard } from "./ParametrizacionDocumentMasterCard";
-import { InputLink } from "../mainInput/InputLink";
 import { BtnFloat } from "../bellboy float/btn-float";
 import { InputSelect } from "../mainInput/InputSelect";
 import {
@@ -180,6 +179,9 @@ export const ParametrizacionDocumentMasterForm = () => {
   const handleTypeSelect = (e, id) => {
     let opcionData = [...dataBasic];
     opcionData[id - 1][0].type = e.target.value;
+    opcionData[id - 1][0].description = opcionData[id - 1][0].description;
+    opcionData[id - 1][0].descriptionLink =
+      opcionData[id - 1][0].descriptionLink;
     setDataBasic(opcionData);
   };
   //Ttulo de datos basicos
@@ -544,7 +546,7 @@ export const ParametrizacionDocumentMasterForm = () => {
                           <input
                             type="text"
                             name={"Proceso"}
-                            onChange={(e) => handleDescripcionLink(e, 1)}
+                            onChange={(e) => handleDescripcion(e, 1)}
                             defaultValue={
                               documentMaster.DocumentMasterHead
                                 .process_description
@@ -554,8 +556,9 @@ export const ParametrizacionDocumentMasterForm = () => {
                           <input
                             type="url"
                             placeholder="Url del sitio"
-                            onChange={(e) => handleDescripcion(e, 1)}
+                            onChange={(e) => handleDescripcionLink(e, 1)}
                             name={`descripcionLink`}
+                            defaultValue={dataBasic[0][0].descriptionLink}
                           />
                         </>
                       )}
@@ -574,6 +577,9 @@ export const ParametrizacionDocumentMasterForm = () => {
                         <InputSelect
                           id={proceso_id}
                           onclick={handleTypeSelect}
+                          selected={
+                            dataBasic[proceso_id - 1][0].type
+                          }
                           option={["Texto", "Link"]}
                           className={"select_columns"}
                           name={`dataBasic${proceso_id}`}
@@ -613,18 +619,21 @@ export const ParametrizacionDocumentMasterForm = () => {
                             id={proceso_id}
                             placeholder="Descripcion"
                             name={`descripcion${proceso_id}`}
-                            onChange={(e) =>
-                              handleDescripcionLink(e, proceso_id)
-                            }
+                            onChange={handleDescripcion}
                             defaultValue={
                               dataBasic[proceso_id - 1][0].description
                             }
                           ></input>
-                          <InputLink
-                            id={proceso_id}
+                          <input
+                            type="url"
                             placeholder="Url del sitio"
-                            onChange={handleDescripcion}
-                            name={`descripcion${proceso_id}`}
+                            onChange={(e) =>
+                              handleDescripcionLink(e, proceso_id)
+                            }
+                            name={`descripcionLink`}
+                            defaultValue={
+                              dataBasic[proceso_id - 1][0].descriptionLink
+                            }
                           />
                         </div>
                       )}

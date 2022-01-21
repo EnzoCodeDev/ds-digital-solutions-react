@@ -100,9 +100,8 @@ export const DocumentMasterDeliView = () => {
   );
   const documentMasterHead = documentMaster.DocumentMasterHead;
   const documentMasterInfo = documentMaster.DocumentMasterInfo;
-  //Renderizado de los datos basicos de la aplicacion
+  //Renderizado de los datos basicos de la aplicacion si vienen en el dispacth
   useEffect(() => {
-    let arrayNumber = [];
     let array = [
       [
         {
@@ -113,59 +112,26 @@ export const DocumentMasterDeliView = () => {
               : documentMaster.DocumentMasterHead.process_type,
           title: "Proceso",
           description: documentMaster.DocumentMasterHead.process_description,
+          descriptionLink:
+            documentMaster.DocumentMasterHead.process_link === null
+              ? ""
+              : documentMaster.DocumentMasterHead.process_link,
         },
       ],
     ];
-    if (documentMaster.DocumentMasterHead.data_basic_title1) {
-      array.push([
-        {
-          id: 2,
-          type: documentMaster.DocumentMasterHead.data_basic_type1,
-          title: documentMaster.DocumentMasterHead.data_basic_title1,
-          description:
-            documentMaster.DocumentMasterHead.data_basic_description1,
-        },
-      ]);
-      arrayNumber.push(2);
+    if (documentMaster.DocumentMasterHead.data_basic) {
+      array.push(...JSON.parse(documentMaster.DocumentMasterHead.data_basic));
     }
-    if (documentMaster.DocumentMasterHead.data_basic_title2) {
-      array.push([
-        {
-          id: 3,
-          type: documentMaster.DocumentMasterHead.data_basic_type2,
-          title: documentMaster.DocumentMasterHead.data_basic_title2,
-          description:
-            documentMaster.DocumentMasterHead.data_basic_description2,
-        },
-      ]);
-      arrayNumber.push(3);
-    }
-    if (documentMaster.DocumentMasterHead.data_basic_title3) {
-      array.push([
-        {
-          id: 4,
-          type: documentMaster.DocumentMasterHead.data_basic_type3,
-          title: documentMaster.DocumentMasterHead.data_basic_title3,
-          description:
-            documentMaster.DocumentMasterHead.data_basic_description3,
-        },
-      ]);
-      arrayNumber.push(4);
-    }
-    setDataBasicCount(arrayNumber);
+    setDataBasicCount(
+      JSON.parse(documentMaster.DocumentMasterHead.position_data_basic)
+    );
     setDataBasic([...array]);
   }, [
+    documentMaster.DocumentMasterHead.position_data_basic,
     documentMaster.DocumentMasterHead.process_type,
     documentMaster.DocumentMasterHead.process_description,
-    documentMaster.DocumentMasterHead.data_basic_title1,
-    documentMaster.DocumentMasterHead.data_basic_type1,
-    documentMaster.DocumentMasterHead.data_basic_description1,
-    documentMaster.DocumentMasterHead.data_basic_type2,
-    documentMaster.DocumentMasterHead.data_basic_title2,
-    documentMaster.DocumentMasterHead.data_basic_description2,
-    documentMaster.DocumentMasterHead.data_basic_type3,
-    documentMaster.DocumentMasterHead.data_basic_title3,
-    documentMaster.DocumentMasterHead.data_basic_description3,
+    documentMaster.DocumentMasterHead.data_basic,
+    documentMaster.DocumentMasterHead.process_link,
   ]);
   //Renderizar los datos de la tarjeta de la aplicacion
   useEffect(() => {

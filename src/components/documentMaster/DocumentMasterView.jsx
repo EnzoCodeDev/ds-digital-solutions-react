@@ -82,22 +82,15 @@ export const DocumentMasterView = () => {
     ],
   ];
   //Use state de la cabeza del formulario
-  const [codigo, setCodigo] = useState("");
-  const [formato, setFormato] = useState("");
-  const [template, setTemplate] = useState("");
-  const [description, setDescription] = useState("");
   //Manejo de que tipo de informacion quiere insertar el usuario en las tarjetas
   const [option, setOption] = useState(inicialStateOption);
   //Manejo de las tarjetas
   const [arrayCard, setArrayCard] = useState([1]);
-  //Control de la ultima tarjeta que se creo
-  const [ultime, setUltime] = useState(1);
-  //Manejo de las datas de cada tarjetas
+  //Manejo de los datos basicos del documento de cada tarjetas
   const [dataBasic, setDataBasic] = useState(initialStateDataBasic);
   //Manejo del id de cada tarjeta del proceso
   const [dataBasicCount, setDataBasicCount] = useState([]);
   //Manejo de la ultima tarjeta que se hizo
-  const [dataBasicUlti, setDataBasicUlti] = useState(1);
   const { uuid } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -109,71 +102,36 @@ export const DocumentMasterView = () => {
   const documentMasterHead = documentMaster.DocumentMasterHead;
   //Renderizado de los datos basicos de la aplicacion
   useEffect(() => {
-    let arrayNumber = [];
     let array = [
       [
         {
           id: 1,
           type:
-            documentMaster.DocumentMasterHead.process_type.trim().length === 0
+            documentMasterHead.process_type.trim().length === 0
               ? "Texto"
-              : documentMaster.DocumentMasterHead.process_type,
+              : documentMasterHead.process_type,
           title: "Proceso",
-          description: documentMaster.DocumentMasterHead.process_description,
+          description: documentMasterHead.process_description,
+          descriptionLink:
+            documentMasterHead.process_link === null
+              ? ""
+              : documentMasterHead.process_link,
         },
       ],
     ];
-    if (documentMaster.DocumentMasterHead.data_basic_title1) {
-      array.push([
-        {
-          id: 2,
-          type: documentMaster.DocumentMasterHead.data_basic_type1,
-          title: documentMaster.DocumentMasterHead.data_basic_title1,
-          description:
-            documentMaster.DocumentMasterHead.data_basic_description1,
-        },
-      ]);
-      arrayNumber.push(2);
+    if (documentMasterHead.data_basic) {
+      array.push(...JSON.parse(documentMasterHead.data_basic));
     }
-    if (documentMaster.DocumentMasterHead.data_basic_title2) {
-      array.push([
-        {
-          id: 3,
-          type: documentMaster.DocumentMasterHead.data_basic_type2,
-          title: documentMaster.DocumentMasterHead.data_basic_title2,
-          description:
-            documentMaster.DocumentMasterHead.data_basic_description2,
-        },
-      ]);
-      arrayNumber.push(3);
-    }
-    if (documentMaster.DocumentMasterHead.data_basic_title3) {
-      array.push([
-        {
-          id: 4,
-          type: documentMaster.DocumentMasterHead.data_basic_type3,
-          title: documentMaster.DocumentMasterHead.data_basic_title3,
-          description:
-            documentMaster.DocumentMasterHead.data_basic_description3,
-        },
-      ]);
-      arrayNumber.push(4);
-    }
-    setDataBasicCount(arrayNumber);
+    setDataBasicCount(
+      JSON.parse(documentMasterHead.position_data_basic)
+    );
     setDataBasic([...array]);
-    setDataBasicUlti(arrayNumber.length + 1);
   }, [
-    documentMaster.DocumentMasterHead.process_type,
-    documentMaster.DocumentMasterHead.process_description,
-    documentMaster.DocumentMasterHead.data_basic_title1,
-    documentMaster.DocumentMasterHead.data_basic_type1,
-    documentMaster.DocumentMasterHead.data_basic_description1,
-    documentMaster.DocumentMasterHead.data_basic_type2,
-    documentMaster.DocumentMasterHead.data_basic_title2,
-    documentMaster.DocumentMasterHead.data_basic_description2,
-    documentMaster.DocumentMasterHead.data_basic_type3,
-    documentMaster.DocumentMasterHead.data_basic_title3,
-    documentMaster.DocumentMasterHead.data_basic_description3,
+    documentMasterHead.position_data_basic,
+    documentMasterHead.process_type,
+    documentMasterHead.process_description,
+    documentMasterHead.data_basic,
+    documentMasterHead.process_link,
   ]);
   //Renderizar los datos de la tarjeta de la aplicacion
   useEffect(() => {
@@ -202,13 +160,8 @@ export const DocumentMasterView = () => {
       ],
     ];
     if (documentMaster.res) {
-      //Renderiazado de los datos de la cabeza del formulario
-      setCodigo(documentMaster.DocumentMasterHead.code);
-      setFormato(documentMaster.DocumentMasterHead.format);
-      setTemplate(documentMaster.DocumentMasterHead.template);
-      setDescription(documentMaster.DocumentMasterHead.description);
+      //Renderiazado de los datos del las targetas del documento
       documentMaster.DocumentMasterBody.map(function (DocumentMasterBody) {
-        console.log(JSON.parse(DocumentMasterBody.card_info_table));
         return arrayOptioValue.push([
           {
             card_id: DocumentMasterBody.id,
@@ -273,7 +226,6 @@ export const DocumentMasterView = () => {
       setOption(arrayOptioValue);
       let newArray = JSON.parse(documentMaster.DocumentMasterHead.position);
       setArrayCard(newArray);
-      setUltime(newArray.length);
     }
     //Ognorando dependencias para que solo se llame una vez
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -378,7 +330,7 @@ export const DocumentMasterView = () => {
         <div className="header-container">
           <div className="header-1">
             <span className="a">
-              <span className="b">Codigo:</span> {codigo}
+              <span className="b">Codigo:</span> {documentMasterHead.code}
             </span>
             <span className="a">
               <span className="b">Version:</span> Versión:{" "}
@@ -414,7 +366,7 @@ export const DocumentMasterView = () => {
             <div className="part_1">
               <div className="codigo">
                 <div className="container_codigo">
-                  <span>Cód. {codigo}</span>
+                  <span>Cód. {documentMasterHead.code}</span>
                 </div>
               </div>
               <div className="version">
@@ -438,7 +390,7 @@ export const DocumentMasterView = () => {
               <div className="container_format">
                 <div className="container_sub_format">
                   <h5>Formato</h5>
-                  <h6>{formato}</h6>
+                  <h6>{documentMasterHead.format}</h6>
                 </div>
               </div>
             </div>
@@ -572,25 +524,6 @@ export const DocumentMasterView = () => {
                                     )
                                   }
                                   placeholder={"*Titulo de columna"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
                                 ></input>
                               </div>
                               <div className="linea"></div>
@@ -603,7 +536,6 @@ export const DocumentMasterView = () => {
                           ] === "Título" && (
                             <div className="celda_title">
                               <div className="header_title">
-                                {/* <h6 className={"celda_title_inputt"}> */}
                                 <input
                                   type="text"
                                   className={"celda_title_inputt"}
@@ -616,27 +548,7 @@ export const DocumentMasterView = () => {
                                     )
                                   }
                                   placeholder={"*Titulo de la celda"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
                                 ></input>
-                                {/* </h6> */}
                               </div>
                               <div className="linea"></div>
                             </div>
@@ -660,25 +572,6 @@ export const DocumentMasterView = () => {
                                     )
                                   }
                                   placeholder={"*Titulo de la celda"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
                                 ></input>
                               </div>
                               <div className="text_body">
@@ -694,25 +587,6 @@ export const DocumentMasterView = () => {
                                     )
                                   }
                                   placeholder={"Descripcion"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
                                   rows={
                                     option[card_id][0].tabla.row.length === 1
                                       ? "17"
@@ -755,25 +629,6 @@ export const DocumentMasterView = () => {
                                     )
                                   }
                                   placeholder={"*Titulo de la imagen"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
                                 ></input>
                               </div>
                               <div className="imagen_container">
@@ -815,9 +670,6 @@ export const DocumentMasterView = () => {
                                         placeholder={`Ingresa lista: ${
                                           listCelda + 1
                                         }`}
-                                        // defaultValue={
-                                        //   option[card_id][0].titleCard
-                                        // }
                                       ></input>
                                     </li>
                                   </div>
@@ -845,25 +697,6 @@ export const DocumentMasterView = () => {
                                     )
                                   }
                                   placeholder={"Agrega tu enlace aqui"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_row}${id_column}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
                                 ></input>
                                 <input
                                   type="text"
@@ -878,25 +711,6 @@ export const DocumentMasterView = () => {
                                     )
                                   }
                                   placeholder={"Descripción del enlace aqui"}
-                                  // defaultValue={
-                                  //   option[card_id][0].tablaTypeCelda
-                                  //     .title_columna[
-                                  //     option[
-                                  //       card_id
-                                  //     ][0].tablaTypeCelda.type.indexOf(
-                                  //       parseInt(`${id_column}${id_row}`)
-                                  //     )
-                                  //   ] === "No"
-                                  //     ? ""
-                                  //     : option[card_id][0].tablaTypeCelda
-                                  //         .title_columna[
-                                  //         option[
-                                  //           card_id
-                                  //         ][0].tablaTypeCelda.type.indexOf(
-                                  //           parseInt(`${id_row}${id_column}`)
-                                  //         )
-                                  //       ]
-                                  // }
                                 ></input>
                               </div>
                               <div className="link_body">
@@ -945,7 +759,6 @@ export const DocumentMasterView = () => {
                     name={`text${card_id}`}
                     onChange={(e) => handleOnChangeTitleCard(e, card_id)}
                     placeholder={"*Ingresa el titulo del texto aqui"}
-                    defaultValue={option[card_id][0].titleCard}
                   ></input>
                   <div className="container_sub_text">
                     <div className="subContainer">
@@ -955,7 +768,6 @@ export const DocumentMasterView = () => {
                         className={"text"}
                         name={`textarea${card_id}`}
                         placeholder={"Escribe el texto"}
-                        defaultValue={option[card_id][0].text}
                         onChange={(e) => handleOnChangeText(e, card_id)}
                       ></textarea>
                     </div>
@@ -971,14 +783,12 @@ export const DocumentMasterView = () => {
                     name={`text${card_id}`}
                     onChange={(e) => handleOnChangeTitleCard(e, card_id)}
                     placeholder={"*Ingrese el titulo del link aqui"}
-                    defaultValue={option[card_id][0].titleCard}
                   ></input>
                   <div className="container_sub_link">
                     <input
                       type="url"
                       className={"InputLink"}
                       name={`link${card_id}`}
-                      defaultValue={option[card_id][0].link}
                       onChange={(e) => handleOnchangeLink(e, card_id)}
                       placeholder={"Agrega tu enlace aqui"}
                     ></input>
@@ -986,7 +796,6 @@ export const DocumentMasterView = () => {
                       name={`text${card_id}`}
                       className={"input-title-img"}
                       placeholder={"Descripción del enlace"}
-                      defaultValue={option[card_id][0].linkDescription}
                       onChange={(e) => handleDescripcionLinkChange(e, card_id)}
                     ></input>
                     <div className="subContainer">
@@ -1011,7 +820,6 @@ export const DocumentMasterView = () => {
                     name={`text${card_id}`}
                     onChange={(e) => handleOnChangeTitleCard(e, card_id)}
                     placeholder={"*Ingresa el titulo de la imagen aqui"}
-                    defaultValue={option[card_id][0].titleCard}
                   ></input>
                   <div className="container_imagen_sub_previous">
                     <img
@@ -1031,14 +839,12 @@ export const DocumentMasterView = () => {
                     name={`text${card_id}`}
                     onChange={(e) => handleOnChangeTitleCard(e, card_id)}
                     placeholder={"*Ingrese el titulo del archivo aqui"}
-                    defaultValue={option[card_id][0].titleCard}
                   ></input>
                   <div className="container_sub_archivo">
                     <input
                       className={"InputLink"}
                       name={`archivo${card_id}`}
                       type="url"
-                      defaultValue={option[card_id][0].archivo}
                       onChange={(e) => handleOnchangeArchivo(e, card_id)}
                       placeholder={"Agrega tu enlace aqui"}
                     ></input>
@@ -1046,7 +852,6 @@ export const DocumentMasterView = () => {
                       name={`text${card_id}`}
                       className={"input-title-img"}
                       placeholder={"Descripción del archivo"}
-                      defaultValue={option[card_id][0].descripcionArchivo}
                       onChange={(e) =>
                         handleDescripcionArchivoChange(e, card_id)
                       }
@@ -1075,7 +880,6 @@ export const DocumentMasterView = () => {
         <button className="btn-float boton_save" onClick={handleSaveInfo}>
           {" "}
           <span>Guardar</span>
-          {/* <Visibility /> */}
         </button>
       </div>
     </div>

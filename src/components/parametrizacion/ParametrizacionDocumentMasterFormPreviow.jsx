@@ -120,9 +120,9 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={`${dataBasic[0][0].description}`}
+                        href={`${dataBasic[0][0].descriptionLink}`}
                       >
-                        {dataBasic[0][0].descriptionLink}{" "}
+                        {dataBasic[0][0].description}{" "}
                       </a>
                     </>
                   )}
@@ -153,9 +153,9 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                           <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href={`${dataBasic[proceso_id - 1][0].description}`}
+                            href={`${dataBasic[proceso_id - 1][0].descriptionLink}`}
                           >
-                            {dataBasic[proceso_id - 1][0].descriptionLink}
+                            {dataBasic[proceso_id - 1][0].description}
                           </a>
                         </>
                       )}
