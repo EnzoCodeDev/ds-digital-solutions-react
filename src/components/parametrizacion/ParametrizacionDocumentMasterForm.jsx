@@ -340,7 +340,6 @@ export const ParametrizacionDocumentMasterForm = () => {
       setTemplate(documentMaster.DocumentMasterHead.template);
       setDescription(documentMaster.DocumentMasterHead.description);
       documentMaster.DocumentMasterBody.map(function (DocumentMasterBody) {
-        console.log(DocumentMasterBody);
         return arrayOptioValue.push([
           {
             card: DocumentMasterBody.number_card,
