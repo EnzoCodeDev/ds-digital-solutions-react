@@ -174,7 +174,27 @@ export const ParametrizacionDocumentMasterForm = () => {
       setDataBasicUlti(dataBasicUlti + 1);
     }
   };
-
+  //Eliminar una tarjeta de datos basicos
+  const handleRemove = () => {
+    if (dataBasic.length === 1) {
+      return;
+    } else {
+      let opcionData = [...dataBasic];
+      let dataBasicCounts = [...dataBasicCount];
+      dataBasicCounts.pop();
+      opcionData.splice(dataBasicUlti, 1, [
+        {
+          id: "",
+          type: "undefined",
+          title: "",
+          description: "",
+          descriptionLink: "",
+        },
+      ]);
+      setDataBasicCount([...dataBasicCounts]);
+      setDataBasic([...opcionData]);
+    }
+  };
   //vigilar que tipo de select es en datos basicos
   const handleTypeSelect = (e, id) => {
     let opcionData = [...dataBasic];
@@ -200,22 +220,6 @@ export const ParametrizacionDocumentMasterForm = () => {
     let opcionData = [...dataBasic];
     opcionData[id - 1][0].descriptionLink = e.target.value;
     setDataBasic(opcionData);
-  };
-  //Eliminar una tarjeta de datos basicos
-  const handleRemove = (id) => {
-    let opcionData = [...dataBasic];
-    let item = dataBasicCount.indexOf(id);
-    opcionData.splice(id - 1, 1, [
-      {
-        id: id,
-        type: "undefined",
-        title: "",
-        description: "",
-      },
-    ]);
-    dataBasicCount.splice(item, 1);
-    setDataBasicCount([...dataBasicCount]);
-    setDataBasic([...opcionData]);
   };
   //Funcion que llama al dispach para crear un nuevo formulario
   const handleDocument = (e) => {
@@ -506,6 +510,7 @@ export const ParametrizacionDocumentMasterForm = () => {
             <div className="container_icons">
               <span>Agregar(max 4)</span>
               <AddBox className="add" onClick={handleAddDataBasic} />
+              <RemoveCircle className="remove" onClick={handleRemove} />
             </div>
             <div className="input-group-container-2">
               <div className="container_data_basic">
@@ -525,22 +530,12 @@ export const ParametrizacionDocumentMasterForm = () => {
                     </div>
                   </div>
                   <div className="container_body">
+                    {/* El proceso es obligatorio en los datos basicos */}
                     <div className="container_inptut1">
                       <input defaultValue="Proceso" readOnly></input>
                     </div>
                     <div className="container_inptut2">
-                      {dataBasic[0][0].type === "Texto" ? (
-                        <input
-                          type="text"
-                          name={"Proceso"}
-                          onChange={(e) => handleDescripcion(e, 1)}
-                          defaultValue={
-                            documentMaster.DocumentMasterHead
-                              .process_description
-                          }
-                          placeholder="Procesos(Obligatorio)"
-                        ></input>
-                      ) : (
+                      {dataBasic[0][0].type === "Link" ? (
                         <>
                           <input
                             type="text"
@@ -560,6 +555,17 @@ export const ParametrizacionDocumentMasterForm = () => {
                             defaultValue={dataBasic[0][0].descriptionLink}
                           />
                         </>
+                      ) : (
+                        <input
+                          type="text"
+                          name={"Proceso"}
+                          onChange={(e) => handleDescripcion(e, 1)}
+                          defaultValue={
+                            documentMaster.DocumentMasterHead
+                              .process_description
+                          }
+                          placeholder="Procesos(Obligatorio)"
+                        ></input>
                       )}
                     </div>
                   </div>
@@ -576,17 +582,10 @@ export const ParametrizacionDocumentMasterForm = () => {
                         <InputSelect
                           id={proceso_id}
                           onclick={handleTypeSelect}
-                          selected={
-                            dataBasic[proceso_id - 1][0].type
-                          }
+                          selected={dataBasic[proceso_id - 1][0].type}
                           option={["Texto", "Link"]}
                           className={"select_columns"}
                           name={`dataBasic${proceso_id}`}
-                        />
-                      </div>
-                      <div className="container_icons_remove">
-                        <RemoveCircle
-                          onClick={(e) => handleRemove(proceso_id)}
                         />
                       </div>
                     </div>
@@ -600,19 +599,7 @@ export const ParametrizacionDocumentMasterForm = () => {
                           defaultValue={dataBasic[proceso_id - 1][0].title}
                         ></input>
                       </div>
-                      {dataBasic[proceso_id - 1][0].type === "Texto" ? (
-                        <div className="container_inptut2">
-                          <input
-                            id={proceso_id}
-                            placeholder="Descripcion"
-                            name={`descripcion${proceso_id}`}
-                            onChange={(e) => handleDescripcion(e, proceso_id)}
-                            defaultValue={
-                              dataBasic[proceso_id - 1][0].description
-                            }
-                          ></input>
-                        </div>
-                      ) : (
+                      {dataBasic[proceso_id - 1][0].type === "Link" ? (
                         <div className="container_inptut2">
                           <input
                             id={proceso_id}
@@ -634,6 +621,18 @@ export const ParametrizacionDocumentMasterForm = () => {
                               dataBasic[proceso_id - 1][0].descriptionLink
                             }
                           />
+                        </div>
+                      ) : (
+                        <div className="container_inptut2">
+                          <input
+                            id={proceso_id}
+                            placeholder="Descripcion"
+                            name={`descripcion${proceso_id}`}
+                            onChange={(e) => handleDescripcion(e, proceso_id)}
+                            defaultValue={
+                              dataBasic[proceso_id - 1][0].description
+                            }
+                          ></input>
                         </div>
                       )}
                     </div>
