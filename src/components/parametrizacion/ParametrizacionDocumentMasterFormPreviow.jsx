@@ -56,7 +56,9 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
             <div className="part_1">
               <div className="codigo">
                 <div className="container_codigo">
-                  <span>Cód. {codigo.trim().length === 0 ? "AAA111" : codigo}</span>
+                  <span>
+                    Cód. {codigo.trim().length === 0 ? "AAA111" : codigo}
+                  </span>
                 </div>
               </div>
               <div className="version">
@@ -79,7 +81,11 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
               <div className="container_format">
                 <div className="container_sub_format">
                   <h5>Formato</h5>
-                  <h6>{formato.trim().length === 0 ? "Aun no lo haz especificado" : formato }</h6>
+                  <h6>
+                    {formato.trim().length === 0
+                      ? "Aun no lo haz especificado"
+                      : formato}
+                  </h6>
                 </div>
               </div>
             </div>
@@ -153,7 +159,9 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                           <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href={`${dataBasic[proceso_id - 1][0].descriptionLink}`}
+                            href={`${
+                              dataBasic[proceso_id - 1][0].descriptionLink
+                            }`}
                           >
                             {dataBasic[proceso_id - 1][0].description}
                           </a>
@@ -197,38 +205,12 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                           ></div>
                           {id_column === 1 && (
                             <>
-                              {option[card_id][0].tablaTypeCelda.title_columna[
-                                option[card_id][0].tablaTypeCelda.type.indexOf(
-                                  parseInt(`${id_column}${id_row}`)
-                                )
-                              ] === "NO" ? (
-                                <>
-                                  <div className="header_title">
-                                    <h6 className={"celda_title_input"}>
-                                      Título de prueba:
-                                    </h6>
-                                  </div>
-                                  <div className="linea"></div>
-                                </>
-                              ) : (
-                                <>
-                                  <div className="header_title">
-                                    <h6 className={"celda_title_input"}>
-                                      {
-                                        option[card_id][0].tablaTypeCelda
-                                          .title_columna[
-                                          option[
-                                            card_id
-                                          ][0].tablaTypeCelda.type.indexOf(
-                                            parseInt(`${id_column}${id_row}`)
-                                          )
-                                        ]
-                                      }
-                                    </h6>
-                                  </div>
-                                  <div className="linea"></div>
-                                </>
-                              )}
+                              <div className="header_title">
+                                <h6 className={"celda_title_input"}>
+                                  Título de la columna:
+                                </h6>
+                              </div>
+                              <div className="linea"></div>
                             </>
                           )}
                           {option[card_id][0].tablaTypeCelda.celda[
@@ -236,14 +218,13 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Título" && (
-                            <div className="celda_title">
-                              {/* <div className="header_title">
-                                <input
-                                  defaultValue="Título de prueba:"
-                                  className={"celda_title_input"}
-                                ></input>
+                            <div className="celda_titlea">
+                              <div className="header_titlea">
+                                <h6 className={"celda_title_inputa"}>
+                                  Título de la celda:
+                                </h6>
                               </div>
-                              <div className="linea"></div> */}
+                              <div className="linea"></div>
                             </div>
                           )}
                           {option[card_id][0].tablaTypeCelda.celda[
@@ -260,7 +241,15 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                               </div>
                               <div className="text_body">
                                 <div className="linea"></div>
-                                <p>Lorem ipsum dolor sit amet, </p>
+                                <p>
+                                  "Lorem ipsum dolor sit amet, consectetur
+                                  adipiscing elit, sed do eiusmod tempor
+                                  incididunt ut labore et dolore magna aliqua.
+                                  Ut enim ad minim veniam, quis nostrud
+                                  exercitation ullamco laboris nisi ut aliquip
+                                  ex ea commodo consequat. Duis aute irure dolor
+                                  in reprehenderit"
+                                </p>
                               </div>
                             </div>
                           )}
@@ -338,14 +327,12 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                                   target="_blank"
                                   className="title"
                                   rel="noopener noreferrer"
-                                  // href={option[card_id][0].link.link}
                                   href={
-                                    "https://www.youtube.com/watch?v=6ONRf7h3Mdk"
+                                    "https://espanol.cdc.gov/coronavirus/2019-ncov/index.html"
                                   }
                                 >
-                                  Diagrama de Flujo Procedimiento Acreditación
-                                  DAGRD
-                                  {/* {option[card_id][0].link.link} */}
+                                  Pagina de prueba sobre información del covid
+                                  19
                                 </a>
                               </div>
                             </div>
@@ -361,9 +348,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                   {option[card_id][0].titleCard.trim().length === 0 ? (
                     <h6 className="textt">Titulo del texto no introducido</h6>
                   ) : (
-                    <h6 className="textt">
-                      {option[card_id][0].titleCard}
-                    </h6>
+                    <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   )}
                   <div className="container_sub_text">
                     <div className="subContainer">
@@ -377,9 +362,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                   {option[card_id][0].titleCard.trim().length === 0 ? (
                     <h6 className="textt">Titulo del link no introducido</h6>
                   ) : (
-                    <h6 className="textt">
-                      {option[card_id][0].titleCard}
-                    </h6>
+                    <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   )}
                   <div className="container_sub_link">
                     <div className="subContainer">
@@ -387,7 +370,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                         target="_blank"
                         className="title"
                         rel="noopener noreferrer"
-                        href={'https://www.hbomax.com/co/es'}
+                        href={"https://www.hbomax.com/co/es"}
                         // href={option[card_id][0].link}
                       >
                         Pagina de HBO
@@ -402,9 +385,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                   {option[card_id][0].titleCard.trim().length === 0 ? (
                     <h6 className="textt">Titulo del imagen no introducido</h6>
                   ) : (
-                    <h6 className="textt">
-                      {option[card_id][0].titleCard}
-                    </h6>
+                    <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   )}
                   <div className="container_imagen_sub_previous">
                     <img
@@ -420,9 +401,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                   {option[card_id][0].titleCard.trim().length === 0 ? (
                     <h6 className="textt">Titulo del archivo no introducido</h6>
                   ) : (
-                    <h6 className="textt">
-                      {option[card_id][0].titleCard}
-                    </h6>
+                    <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   )}
                   <div className="container_sub_archivo">
                     <div className="subContainer">
@@ -431,10 +410,11 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                         className="title"
                         rel="noopener noreferrer"
                         // href={option[card_id][0].archivo}
-                        href={'http://www.unimetro.edu.co/wp-content/uploads/2019/09/PEI-2019-2-1.pdf'}
+                        href={
+                          "http://www.unimetro.edu.co/wp-content/uploads/2019/09/PEI-2019-2-1.pdf"
+                        }
                       >
-                        {/* {option[card_id][0].descripcionArchivo} */}
-                        Proyecto Educativo Institucional
+                        Pagina de prueba proyecto Educativo Institucional
                       </a>
                     </div>
                   </div>

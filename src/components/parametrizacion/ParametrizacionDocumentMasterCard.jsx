@@ -288,28 +288,6 @@ export const ParametrizacionDocumentMasterCard = ({
     optionInfo[id][0].text = e.target.value;
     setOption(optionInfo);
   };
-  //Vigilar el estado del input del link
-  // const handleDescripcionLinkChange = (e, id) => {
-  //   let optionInfo = [...option];
-  //   optionInfo[id][0].linkDescription = e.target.value;
-  //   setOption(optionInfo);
-  // };
-  // const handleOnchangeLink = (e, id) => {
-  //   let optionInfo = [...option];
-  //   optionInfo[id][0].link = e.target.value;
-  //   setOption(optionInfo);
-  // };
-  // //Vigilar el estado de los input de archivo
-  // const handleDescripcionArchivoChange = (e, id) => {
-  //   let optionInfo = [...option];
-  //   optionInfo[id][0].descripcionArchivo = e.target.value;
-  //   setOption(optionInfo);
-  // };
-  // const handleOnchangeArchivo = (e, id) => {
-  //   let optionInfo = [...option];
-  //   optionInfo[id][0].archivo = e.target.value;
-  //   setOption(optionInfo);
-  // };
   //Guardar que tipo de lista por celda
   const handleSelectList = (e, id, parametro_opcional) => {
     e.stopPropagation();
@@ -321,14 +299,6 @@ export const ParametrizacionDocumentMasterCard = ({
     optionInfo[id][0].tablaTypeCelda.lista[
       option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ] = array;
-    setOption(optionInfo);
-  };
-  //Vigila que titulo de cada columna
-  const handletitleColumns = (e, id, parametro_opcional) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.title_columna[
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ] = e.target.value === "" ? "No" : e.target.value;
     setOption(optionInfo);
   };
   return (
@@ -448,48 +418,6 @@ export const ParametrizacionDocumentMasterCard = ({
                             <div className="columns"></div>
                             <div className="celda_type">
                               <div className="celda_list animate__animated animate__fadeIn">
-                                {id_row === 1 && (
-                                  <>
-                                    {/* renderizar campo del select para el titulo de columna  */}
-                                    <div className="header_title">
-                                      <input
-                                        type="text"
-                                        className={"title_columns"}
-                                        name={parseInt(`${id_row}${id_column}`)}
-                                        onChange={(e) =>
-                                          handletitleColumns(
-                                            e,
-                                            card_id,
-                                            `${id_row}${id_column}`
-                                          )
-                                        }
-                                        placeholder={"Titulo de columna"}
-                                        defaultValue={
-                                          option[card_id][0].tablaTypeCelda
-                                            .title_columna[
-                                            option[
-                                              card_id
-                                            ][0].tablaTypeCelda.type.indexOf(
-                                              parseInt(`${id_row}${id_column}`)
-                                            )
-                                          ] === "No"
-                                            ? ""
-                                            : option[card_id][0].tablaTypeCelda
-                                                .title_columna[
-                                                option[
-                                                  card_id
-                                                ][0].tablaTypeCelda.type.indexOf(
-                                                  parseInt(
-                                                    `${id_row}${id_column}`
-                                                  )
-                                                )
-                                              ]
-                                        }
-                                      ></input>
-                                    </div>
-                                    <div className="linea"></div>
-                                  </>
-                                )}
                                 {/* Renderizar campo del select para cada tipo de celda */}
                                 <InputSelect
                                   id={card_id}
@@ -528,6 +456,23 @@ export const ParametrizacionDocumentMasterCard = ({
                                     id={card_id}
                                     onclick={handleSelectList}
                                     className={"select_columns"}
+                                    selected={
+                                      option[card_id][0].tablaTypeCelda.lista[
+                                        option[
+                                          card_id
+                                        ][0].tablaTypeCelda.type.indexOf(
+                                          parseInt(`${id_row}${id_column}`)
+                                        )
+                                      ][
+                                        option[card_id][0].tablaTypeCelda.lista[
+                                          option[
+                                            card_id
+                                          ][0].tablaTypeCelda.type.indexOf(
+                                            parseInt(`${id_row}${id_column}`)
+                                          )
+                                        ].length - 1
+                                      ] + 1
+                                    }
                                     name={`${`${id_row}${id_column}`}`}
                                     option={["1", "2", "3", "4", "5", "6", "7"]}
                                     parametro_opcional={`${id_row}${id_column}`}

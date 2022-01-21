@@ -199,26 +199,18 @@ export const DocumentMasterInfoNew = (documentHead, option) => {
         }
       )
       .then(function (response) {
-        console.log(response);
-        // if (response) {
-        //   if (response.data.res === "failed code") {
-        //     Swal.fire("Error", "Este codigo ya esta en uso", "error");
-        //     return;
-        //   }
-        //   if (response.data.res === "success_new") {
-        //     Swal.fire(
-        //       "Success",
-        //       "Se ha guardado exitosamente el formulario",
-        //       "success"
-        //     );
-        //     // dispatch(DocumentMasterPaginateInit());
-        //     // dispatch(newDocumetMaster(response.data));
-        //     return;
-        //   }
-        // }
+        if (response) {
+          if (response.data.res) {
+            Swal.fire(
+              "Success",
+              "Se ha deligenciado exitosamente el documento",
+              "success"
+            );
+            return;
+          }
+        }
       })
       .catch(function (response) {
-        console.log(response);
         Swal.fire(
           "Error",
           "No se pudo guardar el formulario, por favor verificalo",
@@ -227,7 +219,3 @@ export const DocumentMasterInfoNew = (documentHead, option) => {
       });
   };
 };
-// const documentSearch = (documentMaster) => ({
-//   type: types.DocumentMastersearch,
-//   payload: documentMaster,
-// });

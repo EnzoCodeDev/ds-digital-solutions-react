@@ -199,9 +199,6 @@ export const ParametrizacionDocumentMasterForm = () => {
   const handleTypeSelect = (e, id) => {
     let opcionData = [...dataBasic];
     opcionData[id - 1][0].type = e.target.value;
-    opcionData[id - 1][0].description = opcionData[id - 1][0].description;
-    opcionData[id - 1][0].descriptionLink =
-      opcionData[id - 1][0].descriptionLink;
     setDataBasic(opcionData);
   };
   //Ttulo de datos basicos
@@ -605,7 +602,7 @@ export const ParametrizacionDocumentMasterForm = () => {
                             id={proceso_id}
                             placeholder="Descripcion"
                             name={`descripcion${proceso_id}`}
-                            onChange={handleDescripcion}
+                            onChange={(e) => handleDescripcion(e, proceso_id)}
                             defaultValue={
                               dataBasic[proceso_id - 1][0].description
                             }
