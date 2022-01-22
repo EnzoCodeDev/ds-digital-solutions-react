@@ -133,7 +133,6 @@ export const NewDocumetMaster = (
       }
     }
     const data_basic = [...dataBasic];
-    data_basic.shift();
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario
     axios
@@ -287,7 +286,6 @@ export const UpdateDocumentMaster = (
       }
     }
     const data_basic = [...dataBasic];
-    data_basic.shift();
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario
     axios

@@ -22,6 +22,7 @@ import {
   titleColumns,
   indexTypeCelda,
 } from "../../helpers/typeCelda";
+//Este es el formulario paraparametrizar un documento
 export const ParametrizacionDocumentMasterForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -275,36 +276,23 @@ export const ParametrizacionDocumentMasterForm = () => {
   };
   //Renderizado de los datos basicos de la aplicacion
   useEffect(() => {
-    let array = [
-      [
-        {
-          id: 1,
-          type:
-            documentMaster.DocumentMasterHead.process_type.trim().length === 0
-              ? "Texto"
-              : documentMaster.DocumentMasterHead.process_type,
-          title: "Proceso",
-          description: documentMaster.DocumentMasterHead.process_description,
-          descriptionLink:
-            documentMaster.DocumentMasterHead.process_link === null
-              ? ""
-              : documentMaster.DocumentMasterHead.process_link,
-        },
-      ],
-    ];
-    if (documentMaster.DocumentMasterHead.data_basic === null) {
-    }else{
-      array.push(...JSON.parse(documentMaster.DocumentMasterHead.data_basic));
-      setDataBasicCount(
-        JSON.parse(documentMaster.DocumentMasterHead.position_data_basic)
-      );
-      setDataBasic([...array]);
-      setDataBasicUlti(
-        JSON.parse(documentMaster.DocumentMasterHead.position_data_basic).length +
-          1
-      );
+    if (documentMaster.res === "success_view") {
+      let array = [];
+      if (documentMaster.DocumentMasterHead.data_basic === null) {
+      } else {
+        array.push(...JSON.parse(documentMaster.DocumentMasterHead.data_basic));
+        setDataBasicCount(
+          JSON.parse(documentMaster.DocumentMasterHead.position_data_basic)
+        );
+        setDataBasic([...array]);
+        setDataBasicUlti(
+          JSON.parse(documentMaster.DocumentMasterHead.position_data_basic)
+            .length + 1
+        );
+      }
     }
   }, [
+    documentMaster.res,
     documentMaster.DocumentMasterHead.position_data_basic,
     documentMaster.DocumentMasterHead.process_type,
     documentMaster.DocumentMasterHead.process_description,
