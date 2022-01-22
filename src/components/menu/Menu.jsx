@@ -21,24 +21,25 @@ import {
   Announcement,
   LocalActivity,
   ContactSupport,
-  CalendarTodayOutlined,
+  FormatIndentIncrease,
+  // CalendarTodayOutlined,
 } from "@material-ui/icons";
 import { useHistory } from "react-router";
 export function Menu({ menuOpen, setMenuOpen }) {
   const history = useHistory();
   //Manejo de enventos del sub menu
-  const handleDocumentMaster = () => {
+  const handleParametrizacion = () => {
     setMenuOpen(false);
     history.push("/documentation-master-list");
   };
-  const handleDocumentMasterExecution = () => {
+  const handleMasterDocument = () => {
     setMenuOpen(false);
-    history.push("/documentMasterExecutionTable");
+    history.push("/documentMaster");
   };
-  const handleCalendar = () => {
-    setMenuOpen(false);
-    history.push("/calendar");
-  };
+  // const handleCalendar = () => {
+  //   setMenuOpen(false);
+  //   history.push("/calendar");
+  // };
   //Manejo de los submenus con los state
   const [SubMenuOpen, setSubMenuOpen] = useState(false);
   const [SubMenuOpen2, setSubMenuOpen2] = useState(false);
@@ -50,35 +51,22 @@ export function Menu({ menuOpen, setMenuOpen }) {
           <span className="maestros_title">DATOS</span>
         </div>
         <ul>
-          <li onClick={handleDocumentMaster}>
+        <li onClick={handleParametrizacion}>
+            <FormatIndentIncrease />
+            <b> Parametrización</b>
+            <ArrowRight className={"icon " + (SubMenuOpen && "active")} />
+          </li>
+          <li onClick={handleMasterDocument}>
             <LibraryBooks />
             <b> Maestro de información</b>
             <ArrowRight className={"icon " + (SubMenuOpen && "active")} />
-            <ul className={"ul-menu " + (SubMenuOpen && "active-sub-menu ")}>
-              {/* <li>
-              <ArrowForwardIos className="icons" />
-              <span className="submenu"> Hola</span>
-            </li>
-            <li>
-              <ArrowForwardIos className="icons" />
-              <span className="submenu"> Hola</span>
-            </li>
-            <li>
-              <ArrowForwardIos className="icons" />
-              <span className="submenu"> Hola</span>
-            </li>
-            <li>
-              <ArrowForwardIos className="icons" />
-              <span className="submenu"> Hola</span>
-            </li> */}
-            </ul>
           </li>
           <li onClick={() => setSubMenuOpen(!SubMenuOpen)}>
             <Code />
             <b> Maestro de indicadores</b>
             <ArrowRight className="icon" />
           </li>
-          <li onClick={handleDocumentMasterExecution}>
+          <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
             <Code />
             <b> Maestro de ejecucion</b>
             <ArrowRight className="icon" />
@@ -106,7 +94,7 @@ export function Menu({ menuOpen, setMenuOpen }) {
               </li> */}
             </ul>
           </li>
-          <li onClick={handleDocumentMaster}>
+          <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
             <BarChart />
             <b> Maestro de evaluación</b>
             <ArrowRight className="icon" />
@@ -157,11 +145,11 @@ export function Menu({ menuOpen, setMenuOpen }) {
             <b> Novedades</b>
             <ArrowRight className="icon" />
           </li>
-          <li onClick={handleCalendar}>
+          {/* <li onClick={handleCalendar}>
             <CalendarTodayOutlined />
             <b> Calendario de eventos</b>
             <ArrowRight className="icon" />
-          </li>
+          </li> */}
         </ul>
       </div>
       <div className="evaluacion_container">

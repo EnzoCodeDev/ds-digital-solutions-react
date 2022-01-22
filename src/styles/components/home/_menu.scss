@@ -21,7 +21,7 @@
     }
     .container_maestros {
         width: 100%;
-        height: 23%;
+        height: 27%;
         margin-top: 5px;
         .header {
             color: #bfc1da;
@@ -176,7 +176,7 @@
     }
     .tareas_container {
         width: 100%;
-        height: 17%;
+        height: 13%;
         .header {
             color: #bfc1da;
             height: 25px;
@@ -222,13 +222,13 @@
                     visibility: hidden;
                     position: fixed;
                     right: 90px;
-                    transition: right 0.2s linear 0.2s;
+                    transition: right 0.2s ease 0.2s;
                     opacity: 0;
                     .icons {
                         font-size: 9px;
                     }
                     &.active-sub-menu {
-                        transition: right 0.2s linear 0.2s;
+                        transition: right 0.2s ease 0.2s;
                         position: relative;
                         right: 0;
                         opacity: 1;
@@ -238,7 +238,7 @@
                         position: relative;
                         visibility: visible;
                         right: 0;
-                        transition: right 0.2s linear 0.2s;
+                        transition: right 0.2s ease 0.2s;
                         opacity: 1;
                     }
                 }
