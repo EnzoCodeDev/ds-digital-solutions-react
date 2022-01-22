@@ -55,7 +55,7 @@ export const NewDocumetMaster = (
   optionTarget
 ) => {
   return async (dispatch) => {
-    //Validacion de los datos del formulario y el proceso
+    //Validacion de los datos del formulario principales
     if (
       code.trim().length === 0 ||
       format.trim().length === 0 ||
@@ -64,7 +64,17 @@ export const NewDocumetMaster = (
     ) {
       Swal.fire("Error", "Falta informacion del formulario", "error");
       return;
-    }
+    };
+    //Validacion de los titulos de la tarjetas
+    for (let i = 0; i < optionTarget.length; i++) {
+      if (optionTarget[i][0].optionValue !== "undefined") {
+        if (optionTarget[i][0].titleCard.length === 0) {
+          Swal.fire("Error", `Falta el titulo en la tarjeta tipo ${optionTarget[i][0].optionValue}`, "error");
+        return;
+        };
+      }
+    };
+    //Validacion de los datos del proceso
     if (process_type === "Texto") {
       if (process_description.trim().length === 0) {
         Swal.fire("Error", "Falta la descripcion del proceso", "error");
@@ -208,8 +218,8 @@ export const UpdateDocumentMaster = (
   optionTarget
 ) => {
   return async (dispatch) => {
-     //Validacion de los datos del formulario y el proceso
-     if (
+    //Validacion de los datos del formulario y el proceso
+    if (
       code.trim().length === 0 ||
       format.trim().length === 0 ||
       template.trim().length === 0 ||
@@ -303,7 +313,7 @@ export const UpdateDocumentMaster = (
           process_type,
           dataBasicCount,
           process_description,
-          optionTarget
+          optionTarget,
         },
         {
           //En la peticion post se tuvo que enviar estos encabezados ya que no los queria recibir
