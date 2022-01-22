@@ -1,8 +1,9 @@
 //scss se gestiona de ./styles/components/home/_menu.scss
 import React, { useState } from "react";
-//iconos gestionados de material ui icons
+//iconos gestionados de material ui icons https://mui.com/components/material-icons/
 import {
   Code,
+  Eject,
   Error,
   Email,
   AllOut,
@@ -67,7 +68,7 @@ export function Menu({ menuOpen, setMenuOpen }) {
             <ArrowRight className="icon" />
           </li>
           <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
-            <Code />
+            <Eject />
             <b> Maestro de ejecucion</b>
             <ArrowRight className="icon" />
           </li>
