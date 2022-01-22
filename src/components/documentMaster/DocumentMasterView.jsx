@@ -25,7 +25,7 @@ export const DocumentMasterView = () => {
   const inicialStateOption = [
     [
       {
-        card: 'inhabilidado',
+        card: "inhabilidado",
         optionValue: "undefined",
         titleCard: "",
         text: "",
@@ -33,8 +33,10 @@ export const DocumentMasterView = () => {
         link: "",
         descripcionArchivo: "",
         archivo: "",
+        archivo_extesion: "",
         heigth: { state: true },
         img: "",
+        img_extesion: "",
         tabla: { column: [], row: [] },
         tablaTypeCelda: {
           title_columna: [],
@@ -55,8 +57,10 @@ export const DocumentMasterView = () => {
         linkDescription: "",
         link: "",
         img: "",
+        img_extesion: "",
         descripcionArchivo: "",
         archivo: "",
+        archivo_extesion: "",
         heigth: { state: true },
         tabla: { column: [1], row: [1] },
         tablaTypeCelda: {
@@ -119,13 +123,12 @@ export const DocumentMasterView = () => {
         },
       ],
     ];
-    if (documentMasterHead.data_basic) {
+    if (documentMasterHead.data_basic === null) {
+    } else {
       array.push(...JSON.parse(documentMasterHead.data_basic));
+      setDataBasicCount(JSON.parse(documentMasterHead.position_data_basic));
+      setDataBasic([...array]);
     }
-    setDataBasicCount(
-      JSON.parse(documentMasterHead.position_data_basic)
-    );
-    setDataBasic([...array]);
   }, [
     documentMasterHead.position_data_basic,
     documentMasterHead.process_type,
@@ -262,17 +265,73 @@ export const DocumentMasterView = () => {
     optionInfo[id][0].link = e.target.value;
     setOption(optionInfo);
   };
-  //Vigilar el estado del input del archivo descripcion
-  const handleDescripcionArchivoChange = (e, id) => {
+  //Convertir imagen a base 64
+  const converterFileBase64 = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].descripcionArchivo = e.target.value;
-    setOption(optionInfo);
+    //EXTENSIONES PERMITIDAS DE LA IMAGEN,
+    var extensiones_permitidas = [".png", ".jpg", ".jpeg"];
+    Array.from(e.target.files).forEach((archive) => {
+      var ultimo_punto = archive.name.lastIndexOf(".");
+      var extension = archive.name.slice(ultimo_punto, archive.name.length);
+      if (extensiones_permitidas.indexOf(extension) === -1) {
+        alert("Extensión de imagen no valida");
+        return;
+      };
+      //Validar tamaño de la imagen en MB
+      var tamano = 5;
+      if (archive.size / 1048576 > tamano) {
+        alert("El archivo no puede superar los " + tamano + "MB");
+        return;
+      };
+      //Convertir imagen a base 64
+      let reader = new FileReader();
+      reader.readAsDataURL(archive);
+      reader.onload = function () {
+        let arrayFile = [];
+        let base64 = reader.result;
+        optionInfo[id][0].img = base64;
+        optionInfo[id][0].img_extesion = extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
+        arrayFile = base64.split(",");
+        console.log(arrayFile[1]);
+        console.log(base64);
+        setOption(optionInfo);
+      };
+    });
   };
-  //Vigilar el estado del input del archivo
-  const handleOnchangeArchivo = (e, id) => {
+  //Convertir archivo a base 64
+  const converterFileBase64Archive = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].archivo = e.target.value;
-    setOption(optionInfo);
+    //EXTENSIONES PERMITIDAS,
+    var extensiones_permitidas = [".xlsx", ".pdf", ".docx", ".pptx"];
+    Array.from(e.target.files).forEach((archive) => {
+      var ultimo_punto = archive.name.lastIndexOf(".");
+      var extension = archive.name.slice(ultimo_punto, archive.name.length);
+      if (extensiones_permitidas.indexOf(extension) === -1) {
+        alert("Extensión de archivo no valida");
+        return;
+      };
+      //Validar tamaño del archivo en MB
+      var tamano = 10;
+      if (archive.size / 1048576 > tamano) {
+        alert("El archivo no puede superar los " + tamano + "MB");
+        return;
+      };
+      //Convertir imagen a base 64
+      let reader = new FileReader();
+      reader.readAsDataURL(archive);
+      reader.onload = function () {
+        let arrayFile = [];
+        let base64 = reader.result;
+        //Archivo
+        optionInfo[id][0].archivo = base64;
+        //Extension
+        optionInfo[id][0].archivo_extesion = extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
+        arrayFile = base64.split(",");
+        console.log(arrayFile[1]);
+        console.log(base64);
+        setOption(optionInfo);
+      };
+    });
   };
   //Vigila que titulo de cada columna
   const handletitleColumns = (e, id, parametro_opcional) => {
@@ -298,6 +357,14 @@ export const DocumentMasterView = () => {
     ].textDescription = e.target.value;
     setOption(optionInfo);
   };
+  //Vigilar el estado de cada de cada lista de la celda
+  const handleOnChangeTextList = (e, id, listCelda, parametro_opcional) => {
+    let optionInfo = [...option];
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
+      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    ].lista[listCelda] = e.target.value;
+    setOption(optionInfo);
+  };
   //Vigilar el estado del link de cada celda
   const handleLink = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
@@ -316,12 +383,7 @@ export const DocumentMasterView = () => {
   };
   //Guarda informacion
   const handleSaveInfo = () => {
-    dispatch(
-      DocumentMasterInfoNew(
-        documentMasterHead,
-        option
-      )
-    );
+    dispatch(DocumentMasterInfoNew(documentMasterHead, option));
   };
   return (
     <div>
@@ -665,11 +727,26 @@ export const DocumentMasterView = () => {
                                         className={"celda_title_input"}
                                         name={`text${card_id}`}
                                         onChange={(e) =>
-                                          handleOnChangeTitleCard(e, card_id)
+                                          handleOnChangeTextList(
+                                            e,
+                                            card_id,
+                                            listCelda,
+                                            parseInt(`${id_column}${id_row}`)
+                                          )
                                         }
                                         placeholder={`Ingresa lista: ${
                                           listCelda + 1
                                         }`}
+                                        defaultValue={
+                                          option[card_id][0].tablaTypeCelda
+                                            .typeCeldaInfo[0][
+                                            option[
+                                              card_id
+                                            ][0].tablaTypeCelda.type.indexOf(
+                                              parseInt(`${id_column}${id_row}`)
+                                            )
+                                          ].lista[listCelda]
+                                        }
                                       ></input>
                                     </li>
                                   </div>
@@ -822,11 +899,22 @@ export const DocumentMasterView = () => {
                     placeholder={"*Ingresa el titulo de la imagen aqui"}
                   ></input>
                   <div className="container_imagen_sub_previous">
-                    <img
-                      className="imagen"
-                      src="https://intersindicalaragon.org/wp-content/uploads/icono-facebook.png"
-                      alt="texto descriptivo"
-                    />
+                    <div className="input_container_img">
+                      <input
+                        className="input_img"
+                        accept=".png, .jpg, .jpeg"
+                        type="file"
+                        onChange={(e) => converterFileBase64(e, card_id)}
+                      ></input>
+                      Cargar Imagen
+                    </div>
+                    {option[card_id][0].img !== "" && (
+                      <img
+                        className="imagen"
+                        src={option[card_id][0].img}
+                        alt="texto descriptivo"
+                      />
+                    )}
                   </div>
                 </div>
               )}
@@ -841,30 +929,14 @@ export const DocumentMasterView = () => {
                     placeholder={"*Ingrese el titulo del archivo aqui"}
                   ></input>
                   <div className="container_sub_archivo">
-                    <input
-                      className={"InputLink"}
-                      name={`archivo${card_id}`}
-                      type="url"
-                      onChange={(e) => handleOnchangeArchivo(e, card_id)}
-                      placeholder={"Agrega tu enlace aqui"}
-                    ></input>
-                    <input
-                      name={`text${card_id}`}
-                      className={"input-title-img"}
-                      placeholder={"Descripción del archivo"}
-                      onChange={(e) =>
-                        handleDescripcionArchivoChange(e, card_id)
-                      }
-                    ></input>
-                    <div className="subContainer">
-                      <a
-                        target="_blank"
-                        className="title"
-                        rel="noopener noreferrer"
-                        href={option[card_id][0].archivo}
-                      >
-                        {option[card_id][0].descripcionArchivo}
-                      </a>
+                    <div className="input_container_file">
+                      <input
+                        accept=".xlsx, .pdf, .docx, .pptx"
+                        className="input_file"
+                        type="file"
+                        onChange={(e) => converterFileBase64Archive(e, card_id)}
+                      ></input>
+                      Cargar Archivo
                     </div>
                   </div>
                 </div>

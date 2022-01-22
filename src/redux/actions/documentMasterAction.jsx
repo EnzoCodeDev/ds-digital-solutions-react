@@ -94,6 +94,7 @@ export const ViewDocumentMaster = (uuid) => {
       .then(function (response) {
         let documentMaster = response.data;
         dispatch(viewDocumentMaster(documentMaster));
+        console.log(documentMaster);
       })
       .catch(function (response) {
         console.log(response);
@@ -162,24 +163,24 @@ export const DocumentMasterInfoNew = (documentHead, option) => {
       }
       // if (option[i][0].optionValue === "Lista") {
       // }
-      if (option[i][0].optionValue === "Archivo") {
-        if (option[i][0].archivo === "") {
-          Swal.fire(
-            "Error",
-            `Falta el link del archivo en una caja texto`,
-            "error"
-          );
-          return;
-        }
-        if (option[i][0].descripcionArchivo === "") {
-          Swal.fire(
-            "Error",
-            `Falta la descripcion del link del archivo en una caja de texto`,
-            "error"
-          );
-          return;
-        }
-      }
+      // if (option[i][0].optionValue === "Archivo") {
+      //   if (option[i][0].archivo === "") {
+      //     Swal.fire(
+      //       "Error",
+      //       `Falta el link del archivo en una caja texto`,
+      //       "error"
+      //     );
+      //     return;
+      //   }
+      //   if (option[i][0].descripcionArchivo === "") {
+      //     Swal.fire(
+      //       "Error",
+      //       `Falta la descripcion del link del archivo en una caja de texto`,
+      //       "error"
+      //     );
+      //     return;
+      //   }
+      // }
     }
     let token = localStorage.getItem("token_bearer");
     axios

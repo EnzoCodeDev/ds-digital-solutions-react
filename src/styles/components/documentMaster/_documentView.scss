@@ -613,40 +613,40 @@
             }
         }
         .container_sub_archivo {
-            width: 100%;
-            border-left: 3px solid rgb(29, 172, 24);
-            input {
-                border: 0px;
-                border-bottom: 1px solid rgb(0, 0, 0);
-                box-sizing: border-box;
-                margin-bottom: 0px;
-                margin-right: 14px;
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: 700;
-                width: 20%;
-                font-size: 13px;
-                transition: all 0.4s ease;
-                &:focus {
-                    outline: none;
-                    border-bottom: 1px solid rgb(0, 0, 0);
-                    width: 28.5%;
-                }
-            }
-            .subContainer {
-                a {
-                    color: rgb(29, 172, 24);
-                    text-decoration: underline;
-                    padding-left: 5px;
-                    font-size: 13px;
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-weight: 400;
+            height: 100%;
+            width: 80%;
+            margin: auto;
+            text-align: center;
+            .input_container_file {
+                background-color: #0d7710;
+                color: #fff;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: bold;
+                margin: 0 auto 0;
+                margin-top: 10px;
+                min-height: 15px;
+                overflow: hidden;
+                padding: 10px;
+                position: relative;
+                width: 200px;
+                .input_file {
+                    border: 10000px solid transparent;
+                    cursor: pointer;
+                    font-size: 10000px;
+                    margin: 0;
+                    opacity: 0;
+                    outline: 0 none;
+                    padding: 0;
+                    position: absolute;
+                    right: -1000px;
+                    top: -1000px;
                 }
             }
         }
     }
     .container_imagen_previous {
         width: 100%;
-        max-height: 200px;
         .textt {
             border: 0px;
             border-bottom: 1px solid rgb(0, 0, 0);
@@ -668,11 +668,38 @@
             width: 80%;
             margin: auto;
             text-align: center;
+            .input_container_img {
+                background-color: #01396A;
+                color: #fff;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: bold;
+                margin: 0 auto 0;
+                margin-top: 10px;
+                min-height: 15px;
+                overflow: hidden;
+                padding: 10px;
+                position: relative;
+                width: 200px;
+                .input_img {
+                    border: 10000px solid transparent;
+                    cursor: pointer;
+                    font-size: 10000px;
+                    margin: 0;
+                    opacity: 0;
+                    outline: 0 none;
+                    padding: 0;
+                    position: absolute;
+                    right: -1000px;
+                    top: -1000px;
+                }
+            }
             .imagen {
+                margin-top: 10px;
                 width: 100%;
                 object-fit: contain;
                 max-height: 90%;
-                height: auto;
+                max-height: 400px;
             }
         }
     }

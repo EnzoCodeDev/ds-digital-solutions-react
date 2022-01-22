@@ -292,17 +292,18 @@ export const ParametrizacionDocumentMasterForm = () => {
         },
       ],
     ];
-    if (documentMaster.DocumentMasterHead.data_basic) {
+    if (documentMaster.DocumentMasterHead.data_basic === null) {
+    }else{
       array.push(...JSON.parse(documentMaster.DocumentMasterHead.data_basic));
+      setDataBasicCount(
+        JSON.parse(documentMaster.DocumentMasterHead.position_data_basic)
+      );
+      setDataBasic([...array]);
+      setDataBasicUlti(
+        JSON.parse(documentMaster.DocumentMasterHead.position_data_basic).length +
+          1
+      );
     }
-    setDataBasicCount(
-      JSON.parse(documentMaster.DocumentMasterHead.position_data_basic)
-    );
-    setDataBasic([...array]);
-    setDataBasicUlti(
-      JSON.parse(documentMaster.DocumentMasterHead.position_data_basic).length +
-        1
-    );
   }, [
     documentMaster.DocumentMasterHead.position_data_basic,
     documentMaster.DocumentMasterHead.process_type,

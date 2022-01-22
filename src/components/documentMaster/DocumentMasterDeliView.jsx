@@ -107,31 +107,32 @@ export const DocumentMasterDeliView = () => {
         {
           id: 1,
           type:
-            documentMaster.DocumentMasterHead.process_type.trim().length === 0
+            documentMasterHead.process_type.trim().length === 0
               ? "Texto"
-              : documentMaster.DocumentMasterHead.process_type,
+              : documentMasterHead.process_type,
           title: "Proceso",
-          description: documentMaster.DocumentMasterHead.process_description,
+          description: documentMasterHead.process_description,
           descriptionLink:
-            documentMaster.DocumentMasterHead.process_link === null
+            documentMasterHead.process_link === null
               ? ""
-              : documentMaster.DocumentMasterHead.process_link,
+              : documentMasterHead.process_link,
         },
       ],
     ];
-    if (documentMaster.DocumentMasterHead.data_basic) {
-      array.push(...JSON.parse(documentMaster.DocumentMasterHead.data_basic));
-    }
-    setDataBasicCount(
-      JSON.parse(documentMaster.DocumentMasterHead.position_data_basic)
-    );
-    setDataBasic([...array]);
+    if (documentMasterHead.data_basic === null) {
+    }else{
+      array.push(...JSON.parse(documentMasterHead.data_basic));
+      setDataBasicCount(
+        JSON.parse(documentMasterHead.position_data_basic)
+      );
+      setDataBasic([...array]);
+    };
   }, [
-    documentMaster.DocumentMasterHead.position_data_basic,
-    documentMaster.DocumentMasterHead.process_type,
-    documentMaster.DocumentMasterHead.process_description,
-    documentMaster.DocumentMasterHead.data_basic,
-    documentMaster.DocumentMasterHead.process_link,
+    documentMasterHead.position_data_basic,
+    documentMasterHead.process_type,
+    documentMasterHead.process_description,
+    documentMasterHead.data_basic,
+    documentMasterHead.process_link,
   ]);
   //Renderizar los datos de la tarjeta de la aplicacion
   useEffect(() => {
@@ -167,8 +168,6 @@ export const DocumentMasterDeliView = () => {
         //Aqui se hace un map para el body y un for eah para verificar que dato es para cada body
         //Dependiendo el id coincidan con el body
         const arrayInfo = [];
-        console.log(documentMasterInfo);
-        console.log(documentMasterInfo.length);
         for (let i = 0; i < documentMasterInfo.length; i++) {
           if (documentMasterInfo[i].id_card === DocumentMasterBody.id) {
             arrayInfo.push({
@@ -584,16 +583,21 @@ export const DocumentMasterDeliView = () => {
                                         type="text"
                                         state={option}
                                         className={"celda_title_input"}
+                                        readOnly
                                         name={`text${card_id}`}
-                                        onChange={(e) =>
-                                          handleOnChangeTitleCard(e, card_id)
-                                        }
                                         placeholder={`Ingresa lista: ${
                                           listCelda + 1
                                         }`}
-                                        // defaultValue={
-                                        //   option[card_id][0].titleCard
-                                        // }
+                                        defaultValue={
+                                          option[card_id][0].tablaTypeCelda
+                                            .typeCeldaInfo[0][
+                                            option[
+                                              card_id
+                                            ][0].tablaTypeCelda.type.indexOf(
+                                              parseInt(`${id_column}${id_row}`)
+                                            )
+                                          ].lista[listCelda]
+                                        }
                                       ></input>
                                     </li>
                                   </div>
@@ -682,7 +686,7 @@ export const DocumentMasterDeliView = () => {
                   <div className="container_imagen_sub_previous">
                     <img
                       className="imagen"
-                      src="https://intersindicalaragon.org/wp-content/uploads/icono-facebook.png"
+                      src={option[card_id][0].img}
                       alt="texto descriptivo"
                     />
                   </div>
