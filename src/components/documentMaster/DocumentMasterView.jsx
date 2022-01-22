@@ -287,13 +287,9 @@ export const DocumentMasterView = () => {
       let reader = new FileReader();
       reader.readAsDataURL(archive);
       reader.onload = function () {
-        let arrayFile = [];
         let base64 = reader.result;
         optionInfo[id][0].img = base64;
         optionInfo[id][0].img_extesion = extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
-        arrayFile = base64.split(",");
-        console.log(arrayFile[1]);
-        console.log(base64);
         setOption(optionInfo);
       };
     });
@@ -320,15 +316,11 @@ export const DocumentMasterView = () => {
       let reader = new FileReader();
       reader.readAsDataURL(archive);
       reader.onload = function () {
-        let arrayFile = [];
         let base64 = reader.result;
         //Archivo
         optionInfo[id][0].archivo = base64;
         //Extension
         optionInfo[id][0].archivo_extesion = extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
-        arrayFile = base64.split(",");
-        console.log(arrayFile[1]);
-        console.log(base64);
         setOption(optionInfo);
       };
     });

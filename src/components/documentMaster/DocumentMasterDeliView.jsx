@@ -257,12 +257,6 @@ export const DocumentMasterDeliView = () => {
     documentMaster.DocumentMasterBody,
     documentMaster.res,
   ]);
-  //Vigilar el estado de los inputs de text
-  const handleOnChangeTitleCard = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].titleCard = e.target.value;
-    setOption(optionInfo);
-  };
   return (
     <div>
       <Navbar />
@@ -320,7 +314,7 @@ export const DocumentMasterDeliView = () => {
                   <span className="caducidad">
                     {moment(documentMasterHead.created_at).format("L") ===
                     "Fecha inválida"
-                      ? moment().format("LLLL")
+                      ? moment().format("L")
                       : moment(documentMasterHead.created_at).format("L")}
                   </span>
                 </div>
