@@ -3,22 +3,16 @@ import { useParams } from "react-router-dom";
 import { Print } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { useForm } from "../../hooks/useForm";
 import { Navbar } from "../navbar/Navbar";
 import { ViewDocumentMaster } from "../../redux/actions/documentMasterAction";
 import {
-  typeCelda,
   infoCelda,
   listArray,
   titleColumns,
   indexTypeCelda,
 } from "../../helpers/typeCelda";
 export const DocumentMasterDeliView = () => {
-  //Manejo de que tipo es cada celda
-  const [tableColumnsTypeValue, handletableColumnsTypeValueChange] =
-    useForm(typeCelda);
   //Inicial state nuevo documento
-  const celdass = Object.values(tableColumnsTypeValue);
   const inicialStateOption = [
     [
       {
@@ -58,10 +52,10 @@ export const DocumentMasterDeliView = () => {
         tabla: { column: [1], row: [1] },
         tablaTypeCelda: {
           title_columna: titleColumns,
-          celda: ["0", ...celdass],
+          celda: ["0", "Título"],
           type: indexTypeCelda,
           lista: listArray,
-          celdaType: JSON.stringify(["0", ...celdass]),
+          celdaType: ["0", "Título"],
           typeCeldaInfo: [infoCelda],
         },
       },
@@ -224,7 +218,7 @@ export const DocumentMasterDeliView = () => {
               celda:
                 DocumentMasterBody.type_celda !== null
                   ? JSON.parse(DocumentMasterBody.type_celda)
-                  : ["0", ...celdass],
+                  : ["0", "Título"],
               type:
                 DocumentMasterBody.identity_data_position !== null
                   ? JSON.parse(DocumentMasterBody.identity_data_position)
@@ -236,7 +230,7 @@ export const DocumentMasterDeliView = () => {
               celdaType:
                 DocumentMasterBody.type_celda !== null
                   ? DocumentMasterBody.type_celda
-                  : JSON.stringify(["0", ...celdass]),
+                  : JSON.stringify(["0", "Título"]),
               typeCeldaInfo: JSON.parse(arrayInfo[0].card_info_table),
             },
           },
