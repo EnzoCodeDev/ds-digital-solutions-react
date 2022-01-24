@@ -178,7 +178,7 @@ export const DocumentMasterView = () => {
             img:
               DocumentMasterBody.image === null ? "" : DocumentMasterBody.image,
             heigth: { state: true },
-            titleCard: DocumentMasterBody.title_card,
+            titleCard: '',
             optionValue: DocumentMasterBody.select_value,
             text:
               DocumentMasterBody.text_description === null
