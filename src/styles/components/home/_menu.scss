@@ -19,9 +19,89 @@
     &.active {
         left: 0;
     }
+    .container_parametrization {
+        width: 100%;
+        height: 12%;
+        margin-top: 5px;
+        .header {
+            color: #bfc1da;
+            height: 25px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 7px;
+            .icon {
+                margin-left: 25px;
+                font-size: 23px;
+            }
+            .maestros_title {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 15px;
+                margin-left: 10px;
+            }
+        }
+        ul {
+            color: white;
+            font-family: sans-serif;
+            font-weight: 250;
+            list-style: none;
+            margin-left: 5%;
+            padding: 0;
+            width: 100%;
+            li {
+                b {
+                    color: inherit;
+                    font-size: 13px;
+                    font-family: sans-serif;
+                    text-decoration: none;
+                    transition: all 0.2s ease;
+                }
+                .icon {
+                    float: right;
+                    margin-right: 10%;
+                    transition: all 0.5s ease;
+                    &.active {
+                        transform: rotate(90deg);
+                    }
+                    &.active {
+                        transform: rotate(90deg);
+                    }
+                }
+                ul {
+                    visibility: hidden;
+                    position: fixed;
+                    right: 90px;
+                    transition: right 0.2s linear 0.2s;
+                    opacity: 0;
+                    .icons {
+                        font-size: 9px;
+                    }
+                    &.active-sub-menu {
+                        transition: right 0.2s linear 0.2s;
+                        position: relative;
+                        right: 0;
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                    &.active-sub-menu2 {
+                        position: relative;
+                        visibility: visible;
+                        right: 0;
+                        transition: right 0.2s linear 0.2s;
+                        opacity: 1;
+                    }
+                }
+                &:hover {
+                    font-weight: 450;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+            }
+        }
+    }
     .container_maestros {
         width: 100%;
-        height: 27%;
+        height: 23%;
         margin-top: 5px;
         .header {
             color: #bfc1da;
@@ -101,7 +181,7 @@
     }
     .visualizacion_container {
         width: 100%;
-        height: 20%;
+        height: 19%;
         .header {
             color: #bfc1da;
             height: 25px;
@@ -176,7 +256,7 @@
     }
     .tareas_container {
         width: 100%;
-        height: 13%;
+        height: 12%;
         .header {
             color: #bfc1da;
             height: 25px;
@@ -251,7 +331,7 @@
     }
     .evaluacion_container {
         width: 100%;
-        height: 13%;
+        height: 12%;
         .header {
             color: #bfc1da;
             height: 25px;

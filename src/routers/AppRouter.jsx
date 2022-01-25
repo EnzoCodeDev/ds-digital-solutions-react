@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { PrivateRoute } from "./routerPermission/PrivateRoute";
 import { PublicRoute } from "./routerPermission/PublicRoute";
-import { AuthRouter } from "./AuthRouter";
 import { startChecking } from "../redux/actions/auth";
+import { AuthRouter } from "./AuthRouter";
 import { CalendarScreen } from "../components/calendary/CalendarScreen";
 import { Intro } from "../components/intro/Intro";
+import { ProfileView } from "../components/Profile/ProfileView";
 import { ParametrizacionDocumentMasterTable } from "../components/parametrizacion/ParametrizacionDocumentMasterTable";
 import { ParametrizacionDocumentMasterForm } from "../components/parametrizacion/ParametrizacionDocumentMasterForm";
 import { DocumentMasterIndex } from "../components/documentMaster/DocumentMasterIndex";
@@ -33,6 +34,12 @@ export const AppRouter = () => {
             exact
             path="/calendar"
             component={CalendarScreen}
+            isAuthenticaded={checking}
+          />
+          <PrivateRoute
+            exact
+            path="/profile/:uuid"
+            component={ProfileView}
             isAuthenticaded={checking}
           />
           <PrivateRoute

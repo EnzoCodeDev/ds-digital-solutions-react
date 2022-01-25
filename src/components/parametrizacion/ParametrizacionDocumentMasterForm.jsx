@@ -39,6 +39,13 @@ export const ParametrizacionDocumentMasterForm = () => {
     dispatch(DocumentMasterPaginateInit());
     history.push("/documentation-master-list");
   }
+  const handleViewEdit = (uuid) => {
+    if(uuid){
+      history.push(`/newDocument/${uuid}`);
+    }else{
+      history.push("/documentation-master-list");
+    };
+  };
   //Manejo de que tipo es cada celda
   const [tableColumnsTypeValue, handletableColumnsTypeValueChange] =
     useForm(typeCelda);
@@ -242,7 +249,8 @@ export const ParametrizacionDocumentMasterForm = () => {
         process_type,
         dataBasicCount,
         process_description,
-        optionTarget
+        optionTarget,
+        handleViewEdit,
       )
     );
   };
@@ -270,7 +278,8 @@ export const ParametrizacionDocumentMasterForm = () => {
         process_type,
         dataBasicCount,
         process_description,
-        optionTarget
+        optionTarget,
+        handleViewEdit,
       )
     );
   };

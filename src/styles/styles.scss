@@ -5,6 +5,8 @@
 //Estilos de los componentes login y registro
 @import './components/auth/registerScreen';
 @import './components/auth/loginScreen';
+//Estilos de la visualizacion de perfilida
+@import './components/profile/profileView';
 //Estilos del home como el nabvar, intro, popol y modales
 @import './components/home/intro';
 @import './components/home/navbar';
@@ -12,6 +14,7 @@
 @import './components/home/popolProfile';
 @import './components/home/popolNotification';
 @import './components/home/popolMessage.scss';
+@import './components/home/popolSistem';
 @import './components/calendar';
 @import './components/modal';
 @import './components/content';

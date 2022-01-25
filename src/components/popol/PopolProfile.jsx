@@ -9,29 +9,32 @@ import {
   ExitToApp,
   Translate
 } from "@material-ui/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { startLogout } from "../../redux/actions/auth";
 export const PopolProfile = ({ infoProfile, setInfoProfile, infoMenssages, setInfoMenssages }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { uuid } = useSelector((state) => state.auth);
   //Eventos del popol del profile 
-  const handleConfig = () => {
-    setInfoProfile(false);
-  }
-  const handleTranslate = () => {
-    setInfoProfile(false);
-    history.push('/translate')
-  };
+  // const handleConfig = () => {
+  //   setInfoProfile(false);
+  // }
+  // const handleTranslate = () => {
+  //   setInfoProfile(false);
+  //   history.push('/translate')
+  // };
   const handleProfile = ()=>{
+    history.push(`profile/${uuid}`);
+    console.log(uuid);
     setInfoProfile(false);
   }
-  const handleMessage = ()=>{
-    setInfoProfile(false);
-    setInfoMenssages(!infoMenssages);
-  }
-  const handleBlock = ()=> {
-    setInfoProfile(false);
-  }
+  // const handleMessage = ()=>{
+  //   setInfoProfile(false);
+  //   setInfoMenssages(!infoMenssages);
+  // }
+  // const handleBlock = ()=> {
+  //   setInfoProfile(false);
+  // }
   const handleLogout = () => {
     setInfoProfile(false);
     dispatch(startLogout());
@@ -40,26 +43,26 @@ export const PopolProfile = ({ infoProfile, setInfoProfile, infoMenssages, setIn
     <div>
       <div className={"modalProfile " + (infoProfile && "active")}>
         <ul>
-          <ol onClick={handleConfig}>
+          {/* <ol onClick={handleConfig}>
             <SettingsOutlined className="icon" />
             <span className="infoModal"> Configuración</span>
           </ol>
           <ol onClick={handleTranslate}>
             <Translate className="icon" />
             <span className="infoModal"> Idiomas</span>
-          </ol>
+          </ol> */}
           <ol onClick={handleProfile}>
             <PersonOutlineOutlined className="icon" />
             <span className="infoModal"> Ver perfil</span>
           </ol>
-          <ol onClick={handleMessage}>
+          {/* <ol onClick={handleMessage}>
             <ForumOutlined className="icon" />
             <span className="infoModal"> Mensajes</span>
           </ol>
           <ol onClick={handleBlock}>
             <LockOpen className="icon" />
             <span className="infoModal"> Bloquear</span>
-          </ol>
+          </ol> */}
           <ol onClick={handleLogout}>
             <ExitToApp className="icon" />
             <span className="infoModal"> Cerrar sesión </span>

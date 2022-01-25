@@ -1,4 +1,5 @@
 import axios from "axios";
+//libreria de swal para mostrar alert https://sweetalert2.github.io/
 import Swal from "sweetalert2";
 import { types } from "../types/types";
 const baseUrl = process.env.REACT_APP_API_URL;

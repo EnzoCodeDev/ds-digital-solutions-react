@@ -20,7 +20,7 @@ export const LoginScreen = () => {
   };
   return (
     <div className="LoginScreen">
-      <h1 className="title">Inicia sesión</h1>
+      <h1 className="title">Iniciar sesión</h1>
       <div className="LoginScreenn">
         <div className="container">
           <form onSubmit={handleLogin}>
@@ -57,16 +57,16 @@ export const LoginScreen = () => {
             </div>
             <div className="containerBottom">
               <button type="submit" className="button">
-                <span className="Button__Content-opcph8-1 fa-duqf">
-                  Inicia sesión
+                <span className="botom_init_seccion">
+                Iniciar sesión
                 </span>
               </button>
             </div>
           </form>
-          <p className="p">
+          {/* <p className="p">
             No tienes una cuenta ?
             <b onClick={handleRegister}> Crea tu cuenta </b>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

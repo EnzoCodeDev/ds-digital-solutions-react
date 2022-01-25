@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Print } from "@material-ui/icons";
+// import { Print } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-// import { useHistory } from "react-router";
 import { DocumentMasterInfoNew } from "../../redux/actions/documentMasterAction";
 import { Navbar } from "../navbar/Navbar";
 import { ViewDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
-// import { InputText } from "../mainInput/InputText";
 import {
   infoCelda,
   listArray,
@@ -97,26 +95,11 @@ export const DocumentMasterView = () => {
   let documentMaster = useSelector(
     (state) => state.documentMaster.documentMaster
   );
+  const { img_header } = useSelector((state) => state.auth);
   const documentMasterHead = documentMaster.DocumentMasterHead;
   //Renderizado de los datos basicos de la aplicacion
   useEffect(() => {
-    let array = [
-      [
-        {
-          id: 1,
-          type:
-            documentMasterHead.process_type.trim().length === 0
-              ? "Texto"
-              : documentMasterHead.process_type,
-          title: "Proceso",
-          description: documentMasterHead.process_description,
-          descriptionLink:
-            documentMasterHead.process_link === null
-              ? ""
-              : documentMasterHead.process_link,
-        },
-      ],
-    ];
+    let array = [];
     if (documentMasterHead.data_basic === null) {
     } else {
       array.push(...JSON.parse(documentMasterHead.data_basic));
@@ -384,17 +367,17 @@ export const DocumentMasterView = () => {
               <span className="b">Version:</span> Versión:{" "}
               {documentMasterHead.version}
             </span>
-            <span className="a">
+            {/* <span className="a">
               <span className="b">Aprovado:</span> Documento nuevo
-            </span>
+            </span> */}
           </div>
           <div className="check-container">
-            <span>Lo eh leido</span>
-            <input type="checkbox"></input>
+            {/* <span>Lo eh leido</span>
+            <input type="checkbox"></input> */}
           </div>
           <div className="imprimir">
-            <Print />
-            <span> Imprimir</span>
+            {/* <Print />
+            <span> Imprimir</span> */}
           </div>
         </div>
         <div className="header-container2">
@@ -446,7 +429,7 @@ export const DocumentMasterView = () => {
               <div className="imagen_container">
                 <img
                   className="imagen"
-                  src="/logo/ds-digital-solutions-logo.png"
+                  src={img_header}
                   alt="logo"
                 />
               </div>

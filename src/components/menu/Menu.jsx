@@ -17,10 +17,12 @@ import {
   ExitToApp,
   ArrowRight,
   Assignment,
+  DonutLarge,
   Description,
   LibraryBooks,
   Announcement,
   LocalActivity,
+  QueuePlayNext,
   ContactSupport,
   FormatIndentIncrease,
   // CalendarTodayOutlined,
@@ -46,17 +48,30 @@ export function Menu({ menuOpen, setMenuOpen }) {
   const [SubMenuOpen2, setSubMenuOpen2] = useState(false);
   return (
     <div className={"menu " + (menuOpen && "active")}>
+      <div className={"container_parametrization"}>
+        <div className="header">
+          <QueuePlayNext className="icon" />
+          <span className="maestros_title">PARAMETRIZACIÓN</span>
+        </div>
+        <ul>
+        <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
+            <DonutLarge />
+            <b> Procesos</b>
+            <ArrowRight className={"icon " + (SubMenuOpen && "active")} />
+          </li>
+          <li onClick={handleParametrizacion}>
+            <FormatIndentIncrease />
+            <b> Parametrización</b>
+            <ArrowRight className={"icon " + (SubMenuOpen && "active")} />
+          </li>
+        </ul>
+      </div>
       <div className="container_maestros">
         <div className="header">
           <Description className="icon" />
           <span className="maestros_title">DATOS</span>
         </div>
         <ul>
-        <li onClick={handleParametrizacion}>
-            <FormatIndentIncrease />
-            <b> Parametrización</b>
-            <ArrowRight className={"icon " + (SubMenuOpen && "active")} />
-          </li>
           <li onClick={handleMasterDocument}>
             <LibraryBooks />
             <b> Maestro de información</b>

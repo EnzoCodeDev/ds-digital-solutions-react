@@ -8,7 +8,8 @@ export const PublicRoute = ({
     component: Component,
     ...rest
 }) => {
-    let lastPath = localStorage.getItem("lastPath") || '/intro';
+    let logout = localStorage.getItem("logout") || 'true';
+    let lastPath = logout === "true" ? '/intro' : localStorage.getItem("lastPath") || '/intro';
     return (
         <Route {...rest}
             component={(props) => (

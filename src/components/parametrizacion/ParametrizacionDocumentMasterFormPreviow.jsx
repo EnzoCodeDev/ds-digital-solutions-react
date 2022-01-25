@@ -1,5 +1,5 @@
 import React from "react";
-import { Print } from "@material-ui/icons";
+// import { Print } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import moment from "moment";
 export const ParametrizacionDocumentMasterFormPreviow = ({
@@ -14,6 +14,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
   const { created_at, version } = useSelector(
     (state) => state.documentMaster.documentMaster.DocumentMasterHead
   );
+  const { img_header } = useSelector((state) => state.auth);
   return (
     <div>
       <div className={"form-previow " + (preview && "active")}>
@@ -27,17 +28,17 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
               <span className="b">Version:</span> Versión:{" "}
               {version === 0 ? 1 : version}
             </span>
-            <span className="a">
+            {/* <span className="a">
               <span className="b">Aprovado:</span> Documento nuevo
-            </span>
+            </span> */}
           </div>
           <div className="check-container">
-            <span>Lo eh leido</span>
-            <input type="checkbox"></input>
+            {/* <span>Lo eh leido</span>
+            <input type="checkbox"></input> */}
           </div>
           <div className="imprimir">
-            <Print />
-            <span> Imprimir</span>
+            {/* <Print />
+            <span> Imprimir</span> */}
           </div>
         </div>
         <div className="header-container2">
@@ -93,7 +94,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
               <div className="imagen_container">
                 <img
                   className="imagen"
-                  src="/logo/ds-digital-solutions-logo.png"
+                  src={img_header}
                   alt="logo"
                 />
               </div>

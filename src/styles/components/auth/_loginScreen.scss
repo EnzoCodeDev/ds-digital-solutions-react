@@ -4,11 +4,9 @@
     width: 100vw;
     .title {
         background-color: #1652f0;
+        color: #ffffff;
         padding-top: 50px;
         text-align: center;
-        h1 {
-            font-size: 15px;
-        }
     }
     .LoginScreenn {
         background-color: #1652f0;
@@ -120,6 +118,9 @@
                         background-color: #0004ff;
                         height: 110%;
                         transition: all 0.6 ease;
+                    }
+                    .botom_init_seccion {
+                        color: #ffffff;
                     }
                 }
             }

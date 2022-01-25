@@ -1,6 +1,7 @@
 //Manejo de la autenticacion
 import { types } from "../types/types";
 import axios from "axios";
+//libreria de swal para mostrar alert https://sweetalert2.github.io/
 import Swal from "sweetalert2";
 import { eventLogout } from "./events";
 const baseUrl = process.env.REACT_APP_API_URL;
@@ -26,6 +27,7 @@ export const startLogin = (email, password) => {
               name: response.data[0].name,
               email: response.data[0].email,
               profile_photo: response.data[0].profile_photo_url,
+              img_header: response.data[0].img_header === null ? '': response.data[0].img_header 
             })
           );
         }
@@ -97,7 +99,8 @@ export const StartRegister = (email, password, names, lastName) => {
               uuid: response.data[0].uuid,
               name: response.data[0].name,
               email: response.data[0].email,
-              profile_photo: response.data[0].profile_photo_url,
+              profile_photo: response.data[0].profile_photo_url,  
+              img_header: response.data[0].img_header === null ? '': response.data[0].img_header     
             })
           );
         }
@@ -127,12 +130,14 @@ export const startChecking = () => {
         if (response.statusText === "OK") {
           localStorage.setItem("token_bearer", response.data.access_token);
           localStorage.setItem("token-init-date", new Date().getTime());
+          localStorage.setItem('logout', 'false');
           dispatch(
             login({
               uuid: response.data[0].uuid,
               name: response.data[0].name,
               email: response.data[0].email,
               profile_photo: response.data[0].profile_photo_url,
+              img_header: response.data[0].img_header === null ? '': response.data[0].img_header ,
             })
           );
         }
@@ -140,6 +145,7 @@ export const startChecking = () => {
       .catch(function (error) {
         console.log(error);
         dispatch(checkingFinish());
+        localStorage.setItem('logout', 'true');
         return;
       });
   };
@@ -164,9 +170,10 @@ export const startLogout = () => {
       .then(function (response) {
         if (response.statusText === "OK") {
           localStorage.clear();
+          localStorage.setItem('logout', 'true');
           dispatch(eventLogout());
           dispatch(logout());
-          Swal.fire("Success", "Seccion finalizada", "success");
+          Swal.fire("Success", "Sesión finalizada", "success");
         }
       })
       .catch(function (error) {

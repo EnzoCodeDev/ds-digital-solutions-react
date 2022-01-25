@@ -1,4 +1,5 @@
 //Manejo de los eventos
+//libreria de swal para mostrar alert https://sweetalert2.github.io/
 import Swal from "sweetalert2";
 import { fetchConToken } from "../../helpers/fetch";
 import {prepareEvents} from '../../helpers/preparEvent';

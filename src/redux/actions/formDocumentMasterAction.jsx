@@ -1,4 +1,5 @@
 import axios from "axios";
+//libreria de swal para mostrar alert https://sweetalert2.github.io/
 import Swal from "sweetalert2";
 import { types } from "../types/types";
 import { DocumentMasterPaginateInit } from "./formDocumentTableActions";
@@ -52,7 +53,8 @@ export const NewDocumetMaster = (
   process_type,
   dataBasicCount,
   process_description,
-  optionTarget
+  optionTarget,
+  handleViewEdit
 ) => {
   return async (dispatch) => {
     //Validacion de los datos del formulario principales
@@ -64,16 +66,20 @@ export const NewDocumetMaster = (
     ) {
       Swal.fire("Error", "Falta informacion del formulario", "error");
       return;
-    };
+    }
     //Validacion de los titulos de la tarjetas
     for (let i = 0; i < optionTarget.length; i++) {
       if (optionTarget[i][0].optionValue !== "undefined") {
         if (optionTarget[i][0].titleCard.length === 0) {
-          Swal.fire("Error", `Falta el titulo en la tarjeta tipo ${optionTarget[i][0].optionValue}`, "error");
-        return;
-        };
+          Swal.fire(
+            "Error",
+            `Falta el titulo en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+            "error"
+          );
+          return;
+        }
       }
-    };
+    }
     //Validacion de los datos del proceso
     if (process_type === "Texto") {
       if (process_description.trim().length === 0) {
@@ -177,14 +183,26 @@ export const NewDocumetMaster = (
             return;
           }
           if (response.data.res === "success_new") {
-            Swal.fire(
-              "Success",
-              "Se ha guardado exitosamente el formulario",
-              "success"
-            );
-            dispatch(DocumentMasterPaginateInit());
-            dispatch(newDocumetMaster(response.data));
-            return;
+            //Crear el DOCUMENTO y corfirmar si seguir editando o volver
+            Swal.fire({
+              title: "Exito",
+              text: "Se ha guardado exitosamente el documento",
+              icon: "success",
+              showDenyButton: true,
+              confirmButtonText: 'Ok y editar',
+              denyButtonText: `Ok y volver`,
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                dispatch(DocumentMasterPaginateInit());
+                dispatch(newDocumetMaster(response.data));
+                handleViewEdit(response.data.DocumentMasterHead.uuid);
+              } else if (result.isDenied) {
+                dispatch(DocumentMasterPaginateInit());
+                dispatch(newDocumetMaster(response.data));
+                handleViewEdit(false);
+              }
+            });
           }
         }
       })
@@ -215,7 +233,8 @@ export const UpdateDocumentMaster = (
   process_type,
   dataBasicCount,
   process_description,
-  optionTarget
+  optionTarget,
+  handleViewEdit
 ) => {
   return async (dispatch) => {
     //Validacion de los datos del formulario y el proceso
@@ -331,14 +350,26 @@ export const UpdateDocumentMaster = (
             return;
           }
           if (response.data.res === "success_update") {
-            Swal.fire(
-              "Success",
-              "Se ha actualizado exitosamente el formulario",
-              "success"
-            );
-            dispatch(DocumentMasterPaginateInit());
-            dispatch(updateDocumetMaster(response.data));
-            return;
+            //Actualizar el documento y corfirmar si seguir editando o volver
+            Swal.fire({
+              title: "Exito",
+              text: "Se ha actualizado exitosamente el documento",
+              icon: "success",
+              showDenyButton: true,
+              confirmButtonText: 'Ok y editar',
+              denyButtonText: `Ok y volver`,
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                dispatch(DocumentMasterPaginateInit());
+                dispatch(updateDocumetMaster(response.data));
+                handleViewEdit(response.data.DocumentMasterHead.uuid);
+              } else if (result.isDenied) {
+                dispatch(DocumentMasterPaginateInit());
+                dispatch(updateDocumetMaster(response.data));
+                handleViewEdit(false);
+              }
+            });
           }
         }
       })
