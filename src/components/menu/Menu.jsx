@@ -59,6 +59,11 @@ export function Menu({ menuOpen, setMenuOpen }) {
             <b> Procesos</b>
             <ArrowRight className={"icon " + (SubMenuOpen && "active")} />
           </li>
+          <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
+            <DonutLarge />
+            <b> SubProcesos</b>
+            <ArrowRight className={"icon " + (SubMenuOpen && "active")} />
+          </li>
           <li onClick={handleParametrizacion}>
             <FormatIndentIncrease />
             <b> Parametrización</b>

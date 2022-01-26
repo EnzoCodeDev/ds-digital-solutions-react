@@ -347,7 +347,7 @@ export const ParametrizacionDocumentMasterCard = ({
                   "Imagen",
                   "Link",
                   "Archivo",
-                  "Lista",
+                  // "Lista",
                 ]}
               />
             </div>
@@ -401,7 +401,7 @@ export const ParametrizacionDocumentMasterCard = ({
                               option[card_id][0].tabla.row.length - 1
                             ]
                       }
-                      option={["1", "2", "N"]}
+                      option={["1", "2", "3", "N"]}
                       onclick={handleTargetRows}
                       name={`tableRows${card_id}`}
                     />

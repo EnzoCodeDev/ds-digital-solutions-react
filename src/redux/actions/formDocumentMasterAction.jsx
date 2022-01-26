@@ -296,10 +296,26 @@ export const UpdateDocumentMaster = (
         }
       }
       if (dataBasic[dataBasicCount[i] - 1][0].type === "Link") {
+        if (dataBasic[dataBasicCount[i] - 1][0].descriptionLink === null) {
+          Swal.fire(
+            "Error",
+            "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
+            "error"
+          );
+          return;
+        }
         if (dataBasic[dataBasicCount[i] - 1][0].descriptionLink.trim() === "") {
           Swal.fire(
             "Error",
             "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
+            "error"
+          );
+          return;
+        }
+        if (dataBasic[dataBasicCount[i] - 1][0].description === null) {
+          Swal.fire(
+            "Error",
+            "Falta el link de uno de los datos basicos o remueve el dato basico",
             "error"
           );
           return;

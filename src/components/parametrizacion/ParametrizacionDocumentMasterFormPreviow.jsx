@@ -421,11 +421,11 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                   </div>
                 </div>
               )}
-              {option[card_id][0].optionValue === "Lista" && (
+              {/* {option[card_id][0].optionValue === "Lista" && (
                 <div>
                   <h1>{`lista${card_id}`}</h1>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         ))}

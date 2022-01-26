@@ -21,6 +21,46 @@
             }
         }
     }
+    .container_input_info {
+        display: flex;
+        justify-content: space-around;
+        .inputCc {
+            border: 0px;
+            background-color: white;
+            border-bottom: 1px solid rgb(0, 0, 0);
+            margin: auto;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            width: 40%;
+            &:focus-within {
+                border: 0px;
+                background-color: white;
+                border-bottom: 1px solid rgb(0, 0, 0);
+                margin: auto;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                width: 40%;
+            }
+        }
+        .inputName {
+            border: 0px;
+            background-color: white;
+            border-bottom: 1px solid rgb(0, 0, 0);
+            margin: auto;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            width: 40%;
+            &:focus-within {
+                border: 0px;
+                background-color: white;
+                border-bottom: 1px solid rgb(0, 0, 0);
+                margin: auto;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                width: 40%;
+            }
+        }
+    }
     .container_busqueda {
         .title_search {
             margin-left: 10px;

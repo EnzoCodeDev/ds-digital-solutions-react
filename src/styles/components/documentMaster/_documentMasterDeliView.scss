@@ -543,8 +543,9 @@
         }
     }
     .container_imagen_previous {
+        height: 100%;
         width: 100%;
-        max-height: 200px;
+        margin: auto;
         .textt {
             margin-bottom: 0px;
             font-family: Arial, Helvetica, sans-serif;
@@ -557,10 +558,11 @@
             margin: auto;
             text-align: center;
             .imagen {
+                margin-top: 10px;
                 width: 100%;
                 object-fit: contain;
                 max-height: 90%;
-                height: auto;
+                max-height: 400px;
             }
         }
     }

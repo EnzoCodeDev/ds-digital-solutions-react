@@ -99,13 +99,11 @@ export const DocumentMasterDeliView = () => {
   useEffect(() => {
     let array = [];
     if (documentMasterHead.data_basic === null) {
-    }else{
+    } else {
       array.push(...JSON.parse(documentMasterHead.data_basic));
-      setDataBasicCount(
-        JSON.parse(documentMasterHead.position_data_basic)
-      );
+      setDataBasicCount(JSON.parse(documentMasterHead.position_data_basic));
       setDataBasic([...array]);
-    };
+    }
   }, [
     documentMasterHead.position_data_basic,
     documentMasterHead.process_type,
@@ -159,6 +157,7 @@ export const DocumentMasterDeliView = () => {
               file: documentMasterInfo[i].file,
               file_description: documentMasterInfo[i].file_description,
               card_info_table: documentMasterInfo[i].card_info_table,
+              img: documentMasterInfo[i].img,
             });
           }
         }
@@ -181,8 +180,7 @@ export const DocumentMasterDeliView = () => {
               arrayInfo[0].file_description === null
                 ? ""
                 : arrayInfo[0].file_description,
-            img:
-              DocumentMasterBody.image === null ? "" : DocumentMasterBody.image,
+            img: arrayInfo[0].img === null ? "" : arrayInfo[0].img,
             heigth: { state: true },
             optionValue: DocumentMasterBody.select_value,
             tabla: {
@@ -309,11 +307,7 @@ export const DocumentMasterDeliView = () => {
             </div>
             <div className="part_3">
               <div className="imagen_container">
-                <img
-                  className="imagen"
-                  src={img_header}
-                  alt="logo"
-                />
+                <img className="imagen" src={img_header} alt="logo" />
               </div>
             </div>
           </div>
