@@ -1,29 +1,30 @@
-import React, { useEffect, useMemo } from "react";
-import { useHistory } from "react-router";
+//Tabla de documentos de la master
+import React, { useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DocumentMasterPaginateInit, DocumentMasterPaginateNavigate } from "../../redux/actions/documentMasterAction";
-import { DefaultValueDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
-import { Navbar } from "../navbar/Navbar";
+// import { useTable } from 'react-table'
 import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
+import { useHistory } from "react-router";
 import { COLUMNS } from "./columsDocumentInfo";
-import { DeligenciarModal } from "./DeligenciarModal";
-import { uiOpenModal } from '../../redux/actions/ui';
-// import { ButtonOpen } from "../../helpers/ButtomOpen";
-// import { DocumentMasterPaginateNavigate } from "../../redux/actions/formDocumentTableActions";
-// import { DefaultValueDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
+import { Navbar } from "../../navbar/Navbar";
+import { ButtonOpen } from "../../../helpers/ButtomOpen";
+import { DocumentMasterPaginateInit } from '../../../redux/actions/formDocumentTableParametrizacionActions';
+import { DocumentMasterPaginateNavigate } from "../../../redux/actions/formDocumentTableParametrizacionActions";
+import { DefaultValueDocumentMaster } from "../../../redux/actions/formDocumentParametrizacionAction";
 import { ParametrizacionDocumentMasterOptionTable } from "./ParametrizacionDocumentMasterOptionTable";
-export const DocumentMasterIndex = () => {
+//Documentacion de react-table-v6
+// https://github.com/tannerlinsley/react-table/tree/v6#
+export const  ParametrizacionDocumentMasterTable = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  let datas = useSelector((state) => state.document.document.data);
   useEffect(() => {
     dispatch(DefaultValueDocumentMaster());
   },[dispatch]);
   useEffect(() => {
     dispatch(DocumentMasterPaginateInit());
-  }, [dispatch]);
-  let datas = useSelector((state) => state.document.document.data);
-   //De aqui se desestructura los datos de los datos de laravel donde
+  },[dispatch]);
+  //De aqui se desestructura los datos de los datos de laravel donde
   //se destructura tambien los url para la paginacion de laravel
   const { first, last, next, prev } = useSelector(
     (state) => state.document.document.links
@@ -57,11 +58,8 @@ export const DocumentMasterIndex = () => {
   const handleTypeColumns = (rowInfo) => {
     if (rowInfo) {
       const uuid = rowInfo.original.uuid;
-      history.push(`/viewDocumentDeli/${uuid}`);
+      history.push(`/newDocument/${uuid}`);
     }
-  };
-  const handleClickNewDeligenciamiento = ()=> {
-    dispatch( uiOpenModal() );
   };
   return (
     <div>
@@ -83,14 +81,8 @@ export const DocumentMasterIndex = () => {
             };
           }}
         />
-            </div>
-            <button
-            className="btn btn-danger fab"
-            onClick={ handleClickNewDeligenciamiento }
-        >
-            <i className="fas fa-plus"></i>
-        </button>
-    )
+      </div>
+      <ButtonOpen />
       <div className="navigation">
         <div className="navigation_sub">
           <div className="pagination">
@@ -121,7 +113,6 @@ export const DocumentMasterIndex = () => {
           </div>
         </div>
       </div>
-      <DeligenciarModal/>
     </div>
   );
 };

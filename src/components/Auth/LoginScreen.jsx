@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import { useForm } from "../../hooks/useForm";
 import { startLogin } from "../../redux/actions/auth";
 export const LoginScreen = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
   const [formLoginValues, handleLoginInputChange] = useForm({
     email: "",
@@ -15,9 +15,9 @@ export const LoginScreen = () => {
     e.preventDefault();
     dispatch(startLogin(email, password));
   };
-  const handleRegister = () => {
-    history.push("/auth/register");
-  };
+  // const handleRegister = () => {
+  //   history.push("/auth/register");
+  // };
   return (
     <div className="LoginScreen">
       <h1 className="title">Iniciar sesión</h1>

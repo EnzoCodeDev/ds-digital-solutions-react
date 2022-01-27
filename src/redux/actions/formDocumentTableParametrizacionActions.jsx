@@ -5,7 +5,7 @@ export const DocumentMasterPaginateInit = () => {
   let token = localStorage.getItem("token_bearer");
   return async (dispatch) => {
     axios
-      .get(`${baseUrl}/dataMasterHead/index`, {
+      .get(`${baseUrl}/parametrizacion/index`, {
         headers: {
           //En la peticion get se tuvieron que enviar estos encabezados
           "Content-Type": "multipart/form-data",

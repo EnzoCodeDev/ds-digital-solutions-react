@@ -2,12 +2,12 @@ import React from "react";
 import { useHistory } from "react-router";
 //Iconos de material ui icons https://mui.com/components/material-icons/
 import {
-  SettingsOutlined,
-  PersonOutlineOutlined,
-  ForumOutlined,
-  LockOpen,
+  // LockOpen,
   ExitToApp,
-  Translate
+  // Translate,
+  // ForumOutlined,
+  // SettingsOutlined,
+  PersonOutlineOutlined,
 } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { startLogout } from "../../redux/actions/auth";

@@ -3,15 +3,15 @@ import { useParams } from "react-router-dom";
 // import { Print } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { DocumentMasterInfoNew } from "../../redux/actions/documentMasterAction";
-import { Navbar } from "../navbar/Navbar";
-import { ViewDocumentMaster } from "../../redux/actions/formDocumentMasterAction";
+import { DocumentMasterInfoNew } from "../../../redux/actions/documentMasterAction";
+import { Navbar } from "../../navbar/Navbar";
+import { ViewDocumentMaster } from "../../../redux/actions/formDocumentParametrizacionAction";
 import {
   infoCelda,
   listArray,
   titleColumns,
   indexTypeCelda,
-} from "../../helpers/typeCelda";
+} from "../../../helpers/typeCelda";
 export const DocumentMasterView = () => {
   //Inicial state nuevo documento
   const inicialStateOption = [
@@ -92,8 +92,12 @@ export const DocumentMasterView = () => {
   useEffect(() => {
     dispatch(ViewDocumentMaster(uuid));
   }, [dispatch, uuid]);
+  //Traer los estados globales de los state
   let documentMaster = useSelector(
     (state) => state.documentMaster.documentMaster
+  );
+  let { name, identity } = useSelector(
+    (state) => state.infoUserDeligenciar.infoUser
   );
   const { img_header } = useSelector((state) => state.auth);
   const documentMasterHead = documentMaster.DocumentMasterHead;
@@ -161,7 +165,7 @@ export const DocumentMasterView = () => {
             img:
               DocumentMasterBody.image === null ? "" : DocumentMasterBody.image,
             heigth: { state: true },
-            titleCard: '',
+            titleCard: "",
             optionValue: DocumentMasterBody.select_value,
             text:
               DocumentMasterBody.text_description === null
@@ -253,20 +257,21 @@ export const DocumentMasterView = () => {
       if (extensiones_permitidas.indexOf(extension) === -1) {
         alert("Extensión de imagen no valida");
         return;
-      };
+      }
       //Validar tamaño de la imagen en MB
       var tamano = 5;
       if (archive.size / 1048576 > tamano) {
         alert("El archivo no puede superar los " + tamano + "MB");
         return;
-      };
+      }
       //Convertir imagen a base 64
       let reader = new FileReader();
       reader.readAsDataURL(archive);
       reader.onload = function () {
         let base64 = reader.result;
         optionInfo[id][0].img = base64;
-        optionInfo[id][0].img_extesion = extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
+        optionInfo[id][0].img_extesion =
+          extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
         setOption(optionInfo);
       };
     });
@@ -282,13 +287,13 @@ export const DocumentMasterView = () => {
       if (extensiones_permitidas.indexOf(extension) === -1) {
         alert("Extensión de archivo no valida");
         return;
-      };
+      }
       //Validar tamaño del archivo en MB
       var tamano = 10;
       if (archive.size / 1048576 > tamano) {
         alert("El archivo no puede superar los " + tamano + "MB");
         return;
-      };
+      }
       //Convertir imagen a base 64
       let reader = new FileReader();
       reader.readAsDataURL(archive);
@@ -297,7 +302,8 @@ export const DocumentMasterView = () => {
         //Archivo
         optionInfo[id][0].archivo = base64;
         //Extension
-        optionInfo[id][0].archivo_extesion = extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
+        optionInfo[id][0].archivo_extesion =
+          extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
         setOption(optionInfo);
       };
     });
@@ -352,7 +358,7 @@ export const DocumentMasterView = () => {
   };
   //Guarda informacion
   const handleSaveInfo = () => {
-    dispatch(DocumentMasterInfoNew(documentMasterHead, option));
+    dispatch(DocumentMasterInfoNew(documentMasterHead, name, identity, option));
   };
   return (
     <div>
@@ -427,11 +433,7 @@ export const DocumentMasterView = () => {
             </div>
             <div className="part_3">
               <div className="imagen_container">
-                <img
-                  className="imagen"
-                  src={img_header}
-                  alt="logo"
-                />
+                <img className="imagen" src={img_header} alt="logo" />
               </div>
             </div>
           </div>

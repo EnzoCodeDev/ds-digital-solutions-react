@@ -1,0 +1,51 @@
+.container_sub_procesos {
+    padding-top: 70px;
+    .sub_container_procesos {
+        padding-top: 20px;
+        .container_input_procesos {
+            border-radius: 8px;
+            background-color: white;
+            border: 1px solid rgb(0, 0, 0);
+            margin: auto;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            width: 40%;
+            &:focus-within {
+                border: 2px solid black;
+                margin-top: -2px;
+            }
+            .input_procesos {
+                border: 0px;
+                height: 35px;
+                padding: 8px;
+                width: 100%;
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+        .container_button_save {
+            margin: auto;
+            margin-top: 10px;
+            width: 20%;
+            .button_save {
+                background-color: #0052ff;
+                border-radius: 10px;
+                border: 0px;
+                padding-top: 8px;
+                padding-bottom: 8px;
+                width: 100%;
+                height: 100%;
+                transition: all 0.6 ease;
+                &:hover {
+                    background-color: #0004ff;
+                    height: 110%;
+                    transition: all 0.6 ease;
+                }
+                .botom_init_seccion {
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+}

@@ -8,6 +8,7 @@ import {
   Email,
   AllOut,
   Search,
+  Subject,
   Details,
   AlarmOn,
   Timeline,
@@ -35,6 +36,14 @@ export function Menu({ menuOpen, setMenuOpen }) {
     setMenuOpen(false);
     history.push("/documentation-master-list");
   };
+  const handleProcesos = () => {
+    setSubMenuOpen2(!SubMenuOpen2);
+    history.push("/procesos");
+  };
+  const handleSubProceso = () => {
+    setMenuOpen(false);
+    history.push("/subProcesos");
+  };
   const handleMasterDocument = () => {
     setMenuOpen(false);
     history.push("/documentMaster");
@@ -54,13 +63,13 @@ export function Menu({ menuOpen, setMenuOpen }) {
           <span className="maestros_title">PARAMETRIZACIÓN</span>
         </div>
         <ul>
-        <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
+          <li onClick={handleProcesos}>
             <DonutLarge />
             <b> Procesos</b>
             <ArrowRight className={"icon " + (SubMenuOpen && "active")} />
           </li>
-          <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
-            <DonutLarge />
+          <li onClick={handleSubProceso}>
+            <Subject />
             <b> SubProcesos</b>
             <ArrowRight className={"icon " + (SubMenuOpen && "active")} />
           </li>

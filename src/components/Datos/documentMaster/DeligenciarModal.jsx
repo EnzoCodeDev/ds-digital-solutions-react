@@ -1,12 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-modal";
 import { useHistory } from "react-router";
-import { uiCloseModal } from "../../redux/actions/ui";
-import { DocumentSearch } from "../../redux/actions/documentMasterAction";
-import { InputText } from "../mainInput/InputText";
+import { uiCloseModal } from "../../../redux/actions/ui";
+import { InputText } from "../../mainInput/InputText";
+import { NewInfoUser } from "../../../redux/actions/infoUserDeligenciarAction";
 const customStyles = {
   content: {
     top: "53%",
@@ -22,53 +21,48 @@ export const DeligenciarModal = () => {
   const baseUrl = process.env.REACT_APP_API_URL;
   const dispatch = useDispatch();
   const history = useHistory();
-  const [cc, setCc] = useState('');
-  const [name, setName] = useState('');
+  const [identity, setIdentity] = useState("");
+  const [name, setName] = useState("");
+  const [result, setResult] = useState({ documentMaster: [] });
   const { modalOpen } = useSelector((state) => state.ui);
-  let dataDocument = useSelector(
-    (state) => state.documentMasterr.documentMaster.documentMaster
-  );
-  const { uuid } = useSelector((state) => state.auth);
   const closeModal = () => {
     // TODO: cerrar el modal
     dispatch(uiCloseModal());
   };
+  //Peticion para traer lo que se esta buscando en el input
   const searchDocumentMaster = (e) => {
-    dispatch(DocumentSearch(e.target.value));
+    if (e.target.value === undefined) {
+      return;
+    }
+    if (e.target.value.length <= 2) {
+      return;
+    }
+    let token = localStorage.getItem("token_bearer");
+    axios
+      .get(`${baseUrl}/documentMaster/search/${e.target.value}`, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+        timeout: 1500,
+      })
+      .then(function (response) {
+        setResult(response.data);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
   };
   const handleCc = (e) => {
-     setCc(e.target.value);
+    setIdentity(e.target.value);
   };
   const handleName = (e) => {
     setName(e.target.value);
   };
   const viewDocument = (uuid_document) => {
+    dispatch(NewInfoUser(name, identity));
     history.push(`/viewDocument/${uuid_document}`);
     dispatch(uiCloseModal());
-    let token = localStorage.getItem("token_bearer");
-    axios
-      .post(
-        `${baseUrl}/configuration/searchInfo/${uuid}`,
-        {
-          cc,
-          name
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json;charset=UTF-8",
-          },
-        }
-      )
-      .then(function (response) {
-        if (response.statusText === "OK") {
-        };
-      })
-      .catch(function (response) {
-        console.log(response);
-        Swal.fire("Error", "Ha sucedido un error", "error");
-      });
   };
   return (
     <Modal
@@ -88,7 +82,7 @@ export const DeligenciarModal = () => {
             className={"searchDocumentMaster"}
           />
         </div>
-        <div className='container_input_info'>
+        <div className="container_input_info">
           <InputText
             name={"inputCc"}
             onChange={handleCc}
@@ -104,13 +98,13 @@ export const DeligenciarModal = () => {
         </div>
         <div className="container_busqueda">
           <div className="title_search">
-            {dataDocument[0] === undefined ? (
+            {result.documentMaster[0] === undefined ? (
               <h5>No se ha encontrado un dato que coincida </h5>
             ) : (
               <h5>Busqueda relacionadas</h5>
             )}
           </div>
-          {dataDocument.map((document) => (
+          {result.documentMaster.map((document) => (
             <div key={document.id} onClick={(e) => viewDocument(document.uuid)}>
               <h6>{document.format}</h6>
             </div>

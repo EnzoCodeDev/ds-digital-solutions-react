@@ -20,12 +20,19 @@
 @import './components/content';
 //Css de el translate screen 
 @import './components/translate/translate';
-//Estilos de los componenetes del parametrizador documentMaster tablas, tarjetas, previous
-@import './components/parametrizacion/parametrizacionDocumentMasterCard';
-@import './components/parametrizacion/parametrizacionDocumentMasterForm';
-@import './components/parametrizacion/parametrizacionDocumentMasterFormPreviow';
-@import './components/parametrizacion/parametrizacionDocumentMasterTable';
-@import './components/parametrizacion/parametrizacionDocumentMasterOptionTable';
+//Estilos de los de la seccion del parametrizador
+//parametrizacion
+@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterCard';
+@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterForm';
+@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterFormPreviow';
+@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterTable';
+@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterOptionTable';
+//Procesos
+@import './components/parametrizacion/procesos/procesosTable';
+@import './components/parametrizacion/procesos/procesosScreen';
+//Subprocesos
+@import './components/parametrizacion/subProceso/subProcesoScreen';
+@import './components/parametrizacion/subProceso/subProcesosTable';
 //Estilos para el css del document master
 @import './components/documentMaster/documentIndex';
 @import './components/documentMaster/documentView';

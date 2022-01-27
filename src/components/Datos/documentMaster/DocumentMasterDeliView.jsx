@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 // import { Print } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { Navbar } from "../navbar/Navbar";
-import { ViewDocumentMaster } from "../../redux/actions/documentMasterAction";
+import { Navbar } from "../../navbar/Navbar";
+import { ViewDocumentMaster } from "../../../redux/actions/documentMasterAction";
 import {
   infoCelda,
   listArray,
   titleColumns,
   indexTypeCelda,
-} from "../../helpers/typeCelda";
+} from "../../../helpers/typeCelda";
 export const DocumentMasterDeliView = () => {
   //Inicial state nuevo documento
   const inicialStateOption = [

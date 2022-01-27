@@ -26,7 +26,7 @@ export const types ={
     documentDeletedDocumentMaster: '[documentMaster] Deleted documentMaster',
     //Eventos de documentos para la tabla como el paginate y mas
     DocumentMasterPaginateInit:'[document] Paginate',
-    //Eventos para deligenciar los formularios
-    DocumentMastersearch: '[documentMaster] Search',
-    DocumentMasterSave: '[documentMaster] Save',
+    //Informacion global que se inserta para crear el usuario, 
+    infoUsersDefault: '[user information] default value',
+    infoUserNew: '[user information] new info user', 
 }

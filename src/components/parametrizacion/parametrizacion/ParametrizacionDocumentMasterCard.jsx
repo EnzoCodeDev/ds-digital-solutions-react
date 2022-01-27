@@ -6,7 +6,7 @@ import {
   ArrowBackIos,
 } from "@material-ui/icons";
 //importaciones de los inputs
-import { InputSelect } from "../mainInput/InputSelect";
+import { InputSelect } from "../../mainInput/InputSelect";
 //importacion de tipos de celda por defecto
 import {
   listArray,
@@ -14,7 +14,7 @@ import {
   infoCelda,
   titleColumns,
   indexTypeCelda,
-} from "../../helpers/typeCelda";
+} from "../../../helpers/typeCelda";
 export const ParametrizacionDocumentMasterCard = ({
   lista,
   ultime,

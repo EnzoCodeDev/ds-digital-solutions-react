@@ -49,35 +49,6 @@ const documentMasterPaginateInit = (document) => ({
   type: types.DocumentMasterPaginateInit,
   payload: document,
 });
-
-export const DocumentSearch = (parametro) => {
-  return async (dispatch) => {
-    if (parametro === undefined) {
-      return;
-    }
-    if (parametro.length <= 2) {
-      return;
-    }
-    let token = localStorage.getItem("token_bearer");
-    axios
-      .get(`${baseUrl}/documentMaster/search/${parametro}`, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-        timeout: 1500,
-      })
-      .then(function (response) {
-        let documentMaster = response.data;
-        dispatch(documentSearch(documentMaster));
-      })
-      .catch(function (response) {});
-  };
-};
-const documentSearch = (documentMaster) => ({
-  type: types.DocumentMastersearch,
-  payload: documentMaster,
-});
 //Este es el dispach para ver el formulario,
 export const ViewDocumentMaster = (uuid) => {
   return async (dispatch) => {
@@ -111,7 +82,7 @@ const viewDocumentMaster = (documentMaster) => ({
   type: types.documentViewDocumentMaster,
   payload: documentMaster,
 });
-export const DocumentMasterInfoNew = (documentHead, option) => {
+export const DocumentMasterInfoNew = (documentHead, name, identity, option) => {
   return async (dispatch) => {
     for (let i = 0; i < option.length; i++) {
       if (option[i][0].optionValue === "Tabla") {
@@ -164,31 +135,18 @@ export const DocumentMasterInfoNew = (documentHead, option) => {
       }
       // if (option[i][0].optionValue === "Lista") {
       // }
-      // if (option[i][0].optionValue === "Archivo") {
-      //   if (option[i][0].archivo === "") {
-      //     Swal.fire(
-      //       "Error",
-      //       `Falta el link del archivo en una caja texto`,
-      //       "error"
-      //     );
-      //     return;
-      //   }
-      //   if (option[i][0].descripcionArchivo === "") {
-      //     Swal.fire(
-      //       "Error",
-      //       `Falta la descripcion del link del archivo en una caja de texto`,
-      //       "error"
-      //     );
-      //     return;
-      //   }
-      // }
     }
+    //Esta es la validacion de los datos del usuario antes de enviar al backend
+    let nombre = name === "" ? null : name;
+    let identificacion = identity === "" ? null : identity;
     let token = localStorage.getItem("token_bearer");
     axios
       .post(
         `${baseUrl}/documentMaster/store `,
         {
           documentHead,
+          nombre,
+          identificacion,
           option,
         },
         {

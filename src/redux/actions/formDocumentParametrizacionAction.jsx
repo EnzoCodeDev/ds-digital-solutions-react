@@ -2,21 +2,21 @@ import axios from "axios";
 //libreria de swal para mostrar alert https://sweetalert2.github.io/
 import Swal from "sweetalert2";
 import { types } from "../types/types";
-import { DocumentMasterPaginateInit } from "./formDocumentTableActions";
+import { DocumentMasterPaginateInit } from "./formDocumentTableParametrizacionActions";
 const baseUrl = process.env.REACT_APP_API_URL;
 //Manejo del formulario sus peticiones y sus respuestas
 export const DefaultValueDocumentMaster = () => ({
   type: types.documentDefaultDocumentMaster,
-});
+}); 
 //Este es el dispach para ver el formulario,
 export const ViewDocumentMaster = (uuid) => {
   return async (dispatch) => {
     if (uuid === undefined) {
       return;
-    }
+    };
     let token = localStorage.getItem("token_bearer");
     axios
-      .get(`${baseUrl}/dataMasterHead/index/${uuid}`, {
+      .get(`${baseUrl}/parametrizacion/index/${uuid}`, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -153,7 +153,7 @@ export const NewDocumetMaster = (
     //Validaciones de frontend para el formulario
     axios
       .post(
-        `${baseUrl}/dataMasterHead/store `,
+        `${baseUrl}/parametrizacion/store `,
         {
           code,
           format,
@@ -335,7 +335,7 @@ export const UpdateDocumentMaster = (
     //Validaciones de frontend para el formulario
     axios
       .post(
-        `${baseUrl}/dataMasterHead/update/${uuid}`,
+        `${baseUrl}/parametrizacion/update/${uuid}`,
         {
           uuid,
           code,

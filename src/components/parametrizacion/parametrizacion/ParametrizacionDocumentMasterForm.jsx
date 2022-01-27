@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Navbar } from "../navbar/Navbar";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { KeyboardBackspace, AddBox, RemoveCircle } from "@material-ui/icons";
-import { useForm } from "../../hooks/useForm";
-import { DocumentMasterPaginateInit } from "../../redux/actions/formDocumentTableActions";
+import { Navbar } from "../../navbar/Navbar";
+import { useForm } from "../../../hooks/useForm";
+import { DocumentMasterPaginateInit } from "../../../redux/actions/formDocumentTableParametrizacionActions";
 import { ParametrizacionDocumentMasterFormPreviow } from "./ParametrizacionDocumentMasterFormPreviow";
 import {
   ViewDocumentMaster,
   NewDocumetMaster,
   UpdateDocumentMaster,
-} from "../../redux/actions/formDocumentMasterAction";
+} from "../../../redux/actions/formDocumentParametrizacionAction";
 import { ParametrizacionDocumentMasterCard } from "./ParametrizacionDocumentMasterCard";
-import { BtnFloat } from "../bellboy float/btn-float";
-import { InputSelect } from "../mainInput/InputSelect";
+import { BtnFloat } from "../../bellboy float/btn-float";
+import { InputSelect } from "../../mainInput/InputSelect";
 import {
   typeCelda,
   infoCelda,
   listArray,
   titleColumns,
   indexTypeCelda,
-} from "../../helpers/typeCelda";
+} from "../../../helpers/typeCelda";
 //Este es el formulario paraparametrizar un documento
 export const ParametrizacionDocumentMasterForm = () => {
   const dispatch = useDispatch();
