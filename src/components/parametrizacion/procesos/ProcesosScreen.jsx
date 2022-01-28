@@ -8,6 +8,10 @@ export const ProcesosScreen = () => {
   const baseUrl = process.env.REACT_APP_API_URL;
   const { uuid } = useParams();
   const [proceso, setProceso] = useState("");
+  //Estado del input del proceso
+  const handleProceso = (e) => {
+    setProceso(e.target.value);
+  };
   //Hacer la peticion si viene el uuid
   useEffect(() => {
     if (uuid === undefined) {
@@ -28,9 +32,7 @@ export const ProcesosScreen = () => {
         console.log(response);
       });
   }, [uuid, baseUrl]);
-  const handleProceso = (e) => {
-    setProceso(e.target.value);
-  };
+  //Guardar proceso
   const handleSaveProceso = () => {
     if (proceso.length < 1) {
       Swal.fire(
@@ -70,7 +72,9 @@ export const ProcesosScreen = () => {
         console.log(response);
       });
   };
-  const handleUpdateProceso = ()=> {
+  //Actualizar sub proceso
+  const handleUpdateProceso = (e)=> {
+    e.preventDefault();
     if (proceso.length < 1) {
       Swal.fire(
         "Upss...",
@@ -81,7 +85,7 @@ export const ProcesosScreen = () => {
     }
     let token = localStorage.getItem("token_bearer");
     axios
-      .post(
+      .put(
         `${baseUrl}/parametrizacion/update/proceso/${uuid}`,
         {
           proceso,
@@ -96,6 +100,7 @@ export const ProcesosScreen = () => {
         }
       )
       .then(function (response) {
+        console.log(response);
         if (response.data.res === "exists_process") {
           Swal.fire("Ya existe", "El proceso ya existe", "error");
           return;
@@ -113,6 +118,7 @@ export const ProcesosScreen = () => {
       <Navbar />
       <div className="container_procesos">
         <div className="sub_container_procesos">
+          <form onSubmit={uuid === undefined ? handleSaveProceso : handleUpdateProceso}>
           <div className="container_input_procesos">
             <input
               onChange={handleProceso}
@@ -122,16 +128,11 @@ export const ProcesosScreen = () => {
             />
           </div>
           <div className="container_button_save">
-            {uuid === undefined ? (
-              <button onClick={handleSaveProceso} className="button_save">
-                Guardar proceso
+              <button type="submit" className="button_save">
+                {uuid === undefined ? 'Guardar proceso' : 'Actualizar proceso'}
               </button>
-            ) : (
-              <button onClick={handleUpdateProceso} className="button_save">
-                Actualizar proceso
-              </button>
-            )}
           </div>
+          </form>
         </div>
       </div>
     </div>

@@ -39,7 +39,7 @@ export const DeligenciarModal = () => {
     }
     let token = localStorage.getItem("token_bearer");
     axios
-      .get(`${baseUrl}/documentMaster/search/${e.target.value}`, {
+      .get(`${baseUrl}/datos/search/${e.target.value}`, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

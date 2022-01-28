@@ -7,13 +7,13 @@ const baseUrl = process.env.REACT_APP_API_URL;
 //Manejo del formulario sus peticiones y sus respuestas
 export const DefaultValueDocumentMaster = () => ({
   type: types.documentDefaultDocumentMaster,
-}); 
+});
 //Este es el dispach para ver el formulario,
 export const ViewDocumentMaster = (uuid) => {
   return async (dispatch) => {
     if (uuid === undefined) {
       return;
-    };
+    }
     let token = localStorage.getItem("token_bearer");
     axios
       .get(`${baseUrl}/parametrizacion/index/${uuid}`, {
@@ -49,10 +49,9 @@ export const NewDocumetMaster = (
   position,
   dataBasic,
   description,
-  process_link,
-  process_type,
+  process_option,
+  sub_process_option,
   dataBasicCount,
-  process_description,
   optionTarget,
   handleViewEdit
 ) => {
@@ -66,7 +65,7 @@ export const NewDocumetMaster = (
     ) {
       Swal.fire("Error", "Falta informacion del formulario", "error");
       return;
-    }
+    };
     //Validacion de los titulos de la tarjetas
     for (let i = 0; i < optionTarget.length; i++) {
       if (optionTarget[i][0].optionValue !== "undefined") {
@@ -77,38 +76,19 @@ export const NewDocumetMaster = (
             "error"
           );
           return;
-        }
-      }
-    }
+        };
+      };
+    };
     //Validacion de los datos del proceso
-    if (process_type === "Texto") {
-      if (process_description.trim().length === 0) {
-        Swal.fire("Error", "Falta la descripcion del proceso", "error");
-        return;
-      }
-    }
-    if (process_type === "Link") {
-      if (process_description.trim().length === 0) {
-        Swal.fire("Error", "Falta el link del proceso", "error");
-        return;
-      }
-      if (process_link === undefined) {
-        Swal.fire(
-          "Error",
-          "Falta la descripcion del link del proceso",
-          "error"
-        );
-        return;
-      }
-      if (process_link.trim().length === 0) {
-        Swal.fire(
-          "Error",
-          "Falta la descripcion del link del proceso",
-          "error"
-        );
-        return;
-      }
-    }
+    if (process_option.trim().length === 0) {
+      Swal.fire("Error", "Por favor selecciona un proceso", "error");
+      return;
+    };
+    //Validacion de los datos del proceso
+    if (sub_process_option.trim().length === 0) {
+      Swal.fire("Error", "Por favor selecciona un Subproceso", "error");
+      return;
+    };
     //Validacion de los datos basicos
     for (let i = 0; i < dataBasicCount.length; i++) {
       if (dataBasic[dataBasicCount[i] - 1][0].title.trim() === "") {
@@ -118,36 +98,26 @@ export const NewDocumetMaster = (
           "error"
         );
         return;
-      }
-      if (dataBasic[dataBasicCount[i] - 1][0].type === "Texto") {
-        if (dataBasic[dataBasicCount[i] - 1][0].description.trim() === "") {
-          Swal.fire(
-            "Error",
-            "Falta la descripcion de uno de los datos basicos o remueve el dato basico",
-            "error"
-          );
-          return;
-        }
-      }
+      };
       if (dataBasic[dataBasicCount[i] - 1][0].type === "Link") {
-        if (dataBasic[dataBasicCount[i] - 1][0].descriptionLink.trim() === "") {
+        if (dataBasic[dataBasicCount[i] - 1][0].info === null) {
           Swal.fire(
             "Error",
             "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
             "error"
           );
           return;
-        }
-        if (dataBasic[dataBasicCount[i] - 1][0].description.trim() === "") {
+        };
+        if (dataBasic[dataBasicCount[i] - 1][0].info.trim() === "") {
           Swal.fire(
             "Error",
-            "Falta el link de uno de los datos basicos o remueve el dato basico",
+            "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
             "error"
           );
           return;
-        }
-      }
-    }
+        };
+      };
+    };
     const data_basic = [...dataBasic];
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario
@@ -161,10 +131,9 @@ export const NewDocumetMaster = (
           position,
           data_basic,
           description,
-          process_link,
-          process_type,
+          process_option,
+          sub_process_option,
           dataBasicCount,
-          process_description,
           optionTarget,
         },
         {
@@ -189,8 +158,8 @@ export const NewDocumetMaster = (
               text: "Se ha guardado exitosamente el documento",
               icon: "success",
               showDenyButton: true,
-              confirmButtonText: 'Ok y editar',
-              denyButtonText: `Ok y volver`,
+              confirmButtonText: "Continuar editando",
+              denyButtonText: `Regresar`,
             }).then((result) => {
               /* Read more about isConfirmed, isDenied below */
               if (result.isConfirmed) {
@@ -229,10 +198,9 @@ export const UpdateDocumentMaster = (
   position,
   dataBasic,
   description,
-  process_link,
-  process_type,
   dataBasicCount,
-  process_description,
+  process_option,
+  sub_process_option,
   optionTarget,
   handleViewEdit
 ) => {
@@ -246,35 +214,30 @@ export const UpdateDocumentMaster = (
     ) {
       Swal.fire("Error", "Falta informacion del formulario", "error");
       return;
-    }
-    if (process_type === "Texto") {
-      if (process_description.trim().length === 0) {
-        Swal.fire("Error", "Falta la descripcion del proceso", "error");
-        return;
-      }
-    }
-    if (process_type === "Link") {
-      if (process_description.trim().length === 0) {
-        Swal.fire("Error", "Falta el link del proceso", "error");
-        return;
-      }
-      if (process_link === undefined) {
-        Swal.fire(
-          "Error",
-          "Falta la descripcion del link del proceso",
-          "error"
-        );
-        return;
-      }
-      if (process_link.trim().length === 0) {
-        Swal.fire(
-          "Error",
-          "Falta la descripcion del link del proceso",
-          "error"
-        );
-        return;
-      }
-    }
+    };
+    //Validacion de los titulos de la tarjetas
+    for (let i = 0; i < optionTarget.length; i++) {
+      if (optionTarget[i][0].optionValue !== "undefined") {
+        if (optionTarget[i][0].titleCard.length === 0) {
+          Swal.fire(
+            "Error",
+            `Falta el titulo en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+            "error"
+          );
+          return;
+        };
+      };
+    };
+    //Validacion de los datos del proceso
+    if (process_option.trim().length === 0) {
+      Swal.fire("Error", "Por favor selecciona un proceso", "error");
+      return;
+    };
+    //Validacion de los datos del proceso
+    if (sub_process_option.trim().length === 0) {
+      Swal.fire("Error", "Por favor selecciona un Subproceso", "error");
+      return;
+    };
     //Validacion de los datos basicos
     for (let i = 0; i < dataBasicCount.length; i++) {
       if (dataBasic[dataBasicCount[i] - 1][0].title.trim() === "") {
@@ -284,52 +247,26 @@ export const UpdateDocumentMaster = (
           "error"
         );
         return;
-      }
-      if (dataBasic[dataBasicCount[i] - 1][0].type === "Texto") {
-        if (dataBasic[dataBasicCount[i] - 1][0].description.trim() === "") {
-          Swal.fire(
-            "Error",
-            "Falta la descripcion de uno de los datos basicos o remueve el dato basico",
-            "error"
-          );
-          return;
-        }
-      }
+      };
       if (dataBasic[dataBasicCount[i] - 1][0].type === "Link") {
-        if (dataBasic[dataBasicCount[i] - 1][0].descriptionLink === null) {
+        if (dataBasic[dataBasicCount[i] - 1][0].info === null) {
           Swal.fire(
             "Error",
             "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
             "error"
           );
           return;
-        }
-        if (dataBasic[dataBasicCount[i] - 1][0].descriptionLink.trim() === "") {
+        };
+        if (dataBasic[dataBasicCount[i] - 1][0].info.trim() === "") {
           Swal.fire(
             "Error",
             "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
             "error"
           );
           return;
-        }
-        if (dataBasic[dataBasicCount[i] - 1][0].description === null) {
-          Swal.fire(
-            "Error",
-            "Falta el link de uno de los datos basicos o remueve el dato basico",
-            "error"
-          );
-          return;
-        }
-        if (dataBasic[dataBasicCount[i] - 1][0].description.trim() === "") {
-          Swal.fire(
-            "Error",
-            "Falta el link de uno de los datos basicos o remueve el dato basico",
-            "error"
-          );
-          return;
-        }
-      }
-    }
+        };
+      };
+    };
     const data_basic = [...dataBasic];
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario
@@ -344,10 +281,9 @@ export const UpdateDocumentMaster = (
           position,
           data_basic,
           description,
-          process_link,
-          process_type,
+          process_option,
+          sub_process_option,
           dataBasicCount,
-          process_description,
           optionTarget,
         },
         {
@@ -372,8 +308,8 @@ export const UpdateDocumentMaster = (
               text: "Se ha actualizado exitosamente el documento",
               icon: "success",
               showDenyButton: true,
-              confirmButtonText: 'Ok y editar',
-              denyButtonText: `Ok y volver`,
+              confirmButtonText: "Continuar editando",
+              denyButtonText: `Regresar`,
             }).then((result) => {
               /* Read more about isConfirmed, isDenied below */
               if (result.isConfirmed) {

@@ -41,12 +41,20 @@ export const AppRouter = () => {
             component={CalendarScreen}
             isAuthenticaded={checking}
           /> */}
+          {/* popol */}
+          {/*
+          *
+          RUTAS DEL POPOL
+          *
+        */}
+        {/* vista a cambio de idioma */}
           <PrivateRoute
             exact
             path="/translate"
             component={TranslateScreen}
             isAuthenticaded={checking}
           />
+          {/* vista a configuracion del perfil del usuario */}
           <PrivateRoute
             exact
             path="/profile/:uuid"
@@ -140,18 +148,26 @@ export const AppRouter = () => {
             isAuthenticaded={checking}
           />
           {/* Datos */}
+           {/*
+          *
+          Rutas de maestro de infroamcion
+          *
+        */}
+        {/* Tabla documentos deligenciados */}
           <PrivateRoute
             exact
             path="/documentMaster"
             component={DocumentMasterIndex}
             isAuthenticaded={checking}
           />
+          {/* vista deligenciar documento */}
           <PrivateRoute
             exact
             path="/viewDocument/:uuid"
             component={DocumentMasterView}
             isAuthenticaded={checking}
           />
+          {/* vista ver documento deligenciado */}
           <PrivateRoute
             exact
             path="/viewDocumentDeli/:uuid"

@@ -3,7 +3,7 @@ export const COLUMNS = [
   {
     Header: "Proceso",
     Footer: "Proceso",
-    accessor: "process_description",
+    accessor: "process_select",
     sticky: 'left',
   },
   {

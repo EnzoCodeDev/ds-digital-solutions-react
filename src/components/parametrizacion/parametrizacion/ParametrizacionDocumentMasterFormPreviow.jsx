@@ -92,11 +92,7 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
             </div>
             <div className="part_3">
               <div className="imagen_container">
-                <img
-                  className="imagen"
-                  src={img_header}
-                  alt="logo"
-                />
+                <img className="imagen" src={img_header} alt="logo" />
               </div>
             </div>
           </div>
@@ -116,23 +112,20 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                   </h6>
                 </div>
                 <div className="text_body">
-                  {dataBasic[0][0].type === "Texto" ? (
-                    <>
-                      <div className="linea1"></div>
-                      <p>{dataBasic[0][0].description} </p>
-                    </>
-                  ) : (
-                    <>
-                      <div className="linea2"></div>
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={`${dataBasic[0][0].descriptionLink}`}
-                      >
-                        {dataBasic[0][0].description}{" "}
-                      </a>
-                    </>
-                  )}
+                  <div className="linea1"></div>
+                  <p>{dataBasic[0][0].option} </p>
+                </div>
+              </div>
+              <div className="celda_title_text">
+                <div className="header_titlee">
+                  <h6 className="celda_title_inputt">
+                    {" "}
+                    {dataBasic[1][0].title}:
+                  </h6>
+                </div>
+                <div className="text_body">
+                  <div className="linea3"></div>
+                  <p>{dataBasic[1][0].option} </p>
                 </div>
               </div>
               {dataBasicCount.map((proceso_id) => (
@@ -144,32 +137,36 @@ export const ParametrizacionDocumentMasterFormPreviow = ({
                         ? "Titulo no introducido"
                         : `${dataBasic[proceso_id - 1][0].title}:`}
                     </h6>
-                  </div>{" "}
-                  {dataBasic[proceso_id - 1][0].description.length === 0 ? (
-                    ""
-                  ) : (
-                    <div className="text_body">
-                      {dataBasic[proceso_id - 1][0].type === "Texto" ? (
-                        <>
-                          <div className="linea1"></div>
-                          <p>{dataBasic[proceso_id - 1][0].description}</p>
-                        </>
-                      ) : (
+                  </div>
+                  <div className="text_body">
+                    {dataBasic[proceso_id - 1][0].type === "Texto" && (
+                      <>
+                        <div className="linea1"></div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                      </>
+                    )}
+                    {dataBasic[proceso_id - 1][0].type === "Link" && (
+                      <>
+                        <div className="linea2"></div>
                         <>
                           <div className="linea2"></div>
                           <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href={`${
-                              dataBasic[proceso_id - 1][0].descriptionLink
-                            }`}
+                            href={`https://www.federico-toledo.com/sitios-de-prueba-para-practicar/`}
                           >
-                            {dataBasic[proceso_id - 1][0].description}
+                            {dataBasic[proceso_id - 1][0].info}
                           </a>
                         </>
-                      )}
-                    </div>
-                  )}
+                      </>
+                    )}
+                     {dataBasic[proceso_id - 1][0].type === "Fecha" && (
+                      <>
+                        <div className="linea4"></div>
+                        <p>{moment().format("LLLL")}</p>
+                      </>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

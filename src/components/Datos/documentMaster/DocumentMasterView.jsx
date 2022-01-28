@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 // import { Print } from "@material-ui/icons";
+import { Help } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { DocumentMasterInfoNew } from "../../../redux/actions/documentMasterAction";
@@ -13,6 +15,9 @@ import {
   indexTypeCelda,
 } from "../../../helpers/typeCelda";
 export const DocumentMasterView = () => {
+  //Esta es la url de la aplucacion para las peticiones al backend
+  const baseUrl = process.env.REACT_APP_API_URL;
+  let token = localStorage.getItem("token_bearer");
   //Inicial state nuevo documento
   const inicialStateOption = [
     [
@@ -77,6 +82,7 @@ export const DocumentMasterView = () => {
       },
     ],
   ];
+  //Manejo de fechas
   //Use state de la cabeza del formulario
   //Manejo de que tipo de informacion quiere insertar el usuario en las tarjetas
   const [option, setOption] = useState(inicialStateOption);
@@ -86,6 +92,10 @@ export const DocumentMasterView = () => {
   const [dataBasic, setDataBasic] = useState(initialStateDataBasic);
   //Manejo del id de cada tarjeta del proceso
   const [dataBasicCount, setDataBasicCount] = useState([]);
+  //Manejo de los procesos
+  const [procesos, setProcesos] = useState([]);
+  //Manejo de los subProcesos
+  const [subProceso, setSubProceso] = useState([]);
   //Manejo de la ultima tarjeta que se hizo
   const { uuid } = useParams();
   const dispatch = useDispatch();
@@ -165,7 +175,7 @@ export const DocumentMasterView = () => {
             img:
               DocumentMasterBody.image === null ? "" : DocumentMasterBody.image,
             heigth: { state: true },
-            titleCard: "",
+            titleCard: DocumentMasterBody.title_card,
             optionValue: DocumentMasterBody.select_value,
             text:
               DocumentMasterBody.text_description === null
@@ -222,7 +232,71 @@ export const DocumentMasterView = () => {
     documentMaster.DocumentMasterBody,
     documentMaster.res,
   ]);
-  //Vigilar el estado de los inputs de text
+  useEffect(() => {
+    axios
+      .get(`${baseUrl}/datos/index/process/all`, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        setProcesos(response.data.procesos);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+  }, [baseUrl, token]);
+  //Manejar el select de procesos para traer los sub procesos mediante peticion axios
+  const handleValueProceso = (e, id) => {
+    let opcionData = [...dataBasic];
+    opcionData[id - 1][0].option = e.target.value;
+    setDataBasic(opcionData);
+    axios
+      .get(`${baseUrl}/datos/index/Subprocess/${e.target.value}`, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        //validar los datos con los que vienen
+        let opcionData = [...dataBasic];
+        if (response.data.sub_procesos.length === 0) {
+          opcionData[1][0].option = "";
+        }
+        setSubProceso(response.data.sub_procesos);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+    setDataBasic(opcionData);
+  };
+  //Vigilar el estado del sub proceso
+  const handleValueSubProceso = (e, id) => {
+    let opcionData = [...dataBasic];
+    opcionData[id - 1][0].option = e.target.value;
+    setDataBasic(opcionData);
+  };
+  //Vigilar el estado de la caja del texto los datos basicos
+  const handleValueText = (e, id) => {
+    let opcionData = [...dataBasic];
+    opcionData[id - 1][0].info = e.target.value;
+    setDataBasic(opcionData);
+  };
+  //Vigilar el estado de dato basico tipo fecha
+  const handleValueDate = (e, id) => {
+    let opcionData = [...dataBasic];
+    opcionData[id - 1][0].info = e.target.value;
+    setDataBasic(opcionData);
+  };
+  //vigilar el estado del dato basico tipo link
+  const handleValueLink = (e, id) => {
+    let opcionData = [...dataBasic];
+    opcionData[id - 1][0].link = e.target.value;
+    setDataBasic(opcionData);
+  };
+  //Vigilar el estado de los titulo de la columna
   const handleOnChangeTitleCard = (e, id) => {
     let optionInfo = [...option];
     optionInfo[id][0].titleCard = e.target.value;
@@ -450,23 +524,44 @@ export const DocumentMasterView = () => {
                   <h6 className="celda_title_inputt">{"Proceso"}</h6>
                 </div>
                 <div className="text_body">
-                  {documentMasterHead.process_type === "Texto" ? (
-                    <>
-                      <div className="linea1"></div>
-                      <p>{documentMasterHead.process_description} </p>
-                    </>
-                  ) : (
-                    <>
-                      <div className="linea2"></div>
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={`${documentMasterHead.process_description}`}
+                  <div className="linea3"></div>
+                  <div className="select_procesos">
+                    <select
+                      onClick={(e) => handleValueProceso(e, 1)}
+                      className="selected"
+                    >
+                      {procesos.map((process) => (
+                        <option key={process.id} value={process.id}>
+                          {process.process}
+                        </option>
+                      ))}
+                    </select>
+                    <i></i>
+                  </div>
+                </div>
+              </div>
+              <div className="celda_title_text">
+                <div className="header_titlee">
+                  <h6 className="celda_title_inputt">{"Sub proceso"}</h6>
+                </div>
+                <div className="text_body">
+                  <div className="linea3"></div>
+                  <div className="select_sub_procesos">
+                    {subProceso.length === 0 ? (
+                      <h6>Este proceso no tiene subProcesos</h6>
+                    ) : (
+                      <select
+                        onClick={(e) => handleValueSubProceso(e, 2)}
+                        className="selected"
                       >
-                        {documentMasterHead.process_description}{" "}
-                      </a>
-                    </>
-                  )}
+                        {subProceso.map((subProcess) => (
+                          <option key={subProcess.id} value={subProcess.id}>
+                            {subProcess.subProceso}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
                 </div>
               </div>
               {dataBasicCount.map((proceso_id) => (
@@ -479,27 +574,51 @@ export const DocumentMasterView = () => {
                         : `${dataBasic[proceso_id - 1][0].title}:`}
                     </h6>
                   </div>{" "}
-                  {dataBasic[proceso_id - 1][0].description.length === 0 ? (
-                    ""
-                  ) : (
+                  {dataBasic[proceso_id - 1][0].type === "Texto" && (
                     <div className="text_body">
-                      {dataBasic[proceso_id - 1][0].type === "Texto" ? (
-                        <>
-                          <div className="linea1"></div>
-                          <p>{dataBasic[proceso_id - 1][0].description}</p>
-                        </>
-                      ) : (
-                        <>
-                          <div className="linea2"></div>
-                          <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={`${dataBasic[proceso_id - 1][0].description}`}
-                          >
-                            {dataBasic[proceso_id - 1][0].description}
-                          </a>
-                        </>
-                      )}
+                      <div className="linea1"></div>
+                      <textarea
+                        className="text"
+                        onChange={(e) => handleValueText(e, proceso_id)}
+                      ></textarea>
+                    </div>
+                  )}
+                  {dataBasic[proceso_id - 1][0].type === "Link" && (
+                    <>
+                      <div className="text_body">
+                        <div className="linea2"></div>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={`${
+                            dataBasic[proceso_id - 1][0].link === undefined
+                              ? ""
+                              : dataBasic[proceso_id - 1][0].link
+                          }`}
+                        >
+                          {dataBasic[proceso_id - 1][0].info}
+                        </a>
+                      </div>
+                      <div className="input-url">
+                        <input
+                          type="url"
+                          onChange={(e) => handleValueLink(e, proceso_id)}
+                          placeholder="Agrega la url aqui"
+                          className="input"
+                        ></input>
+                      </div>
+                    </>
+                  )}
+                  {dataBasic[proceso_id - 1][0].type === "Fecha" && (
+                    <div className="text_body">
+                      <div className="linea4"></div>
+                      <div className="container_input_date">
+                        <input
+                          type="date"
+                          className="form-control"
+                          onChange={(e) => handleValueDate(e, proceso_id)}
+                        ></input>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -509,20 +628,140 @@ export const DocumentMasterView = () => {
         </div>
         {arrayCard.map((card_id) => (
           <div key={card_id}>
-            {option[card_id][0].optionValue === "Tabla" && (
-              <>
-                <input
-                  type="text"
-                  state={option}
-                  className={"titleColumn"}
-                  name={`text${card_id}`}
-                  onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                  placeholder={"Ingresa el titulo de la columna aqui"}
-                  defaultValue={option[card_id][0].titleCard}
-                ></input>
-              </>
-            )}
             <div className="tabla-container ">
+              {option[card_id][0].optionValue === "Texto" && (
+                <div className="container_text">
+                  <div className="container_input">
+                    <h6 title={option[card_id][0].text} className={"textt"}>
+                      {option[card_id][0].titleCard}
+                    </h6>
+                    <div title={option[card_id][0].text}>
+                      <Help />
+                    </div>
+                  </div>
+                  <div className="container_sub_text">
+                    <div className="subContainer">
+                      <textarea
+                        rows={"3"}
+                        cols={"30"}
+                        className={"text"}
+                        name={`textarea${card_id}`}
+                        placeholder={"Escribe el texto"}
+                        onChange={(e) => handleOnChangeText(e, card_id)}
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {option[card_id][0].optionValue === "Link" && (
+                <div className="container_link">
+                  <div className="container_input">
+                    <h6 title={option[card_id][0].text} className={"textt"}>
+                      {option[card_id][0].titleCard}
+                    </h6>
+                    <div title={option[card_id][0].text}>
+                      <Help />
+                    </div>
+                  </div>
+                  <div className="container_sub_link">
+                    <input
+                      type="url"
+                      className={"InputLink"}
+                      name={`link${card_id}`}
+                      onChange={(e) => handleOnchangeLink(e, card_id)}
+                      placeholder={"Agrega tu enlace aqui"}
+                    ></input>
+                    <input
+                      name={`text${card_id}`}
+                      className={"input-title-img"}
+                      placeholder={"Descripción del enlace"}
+                      onChange={(e) => handleDescripcionLinkChange(e, card_id)}
+                    ></input>
+                    <div className="subContainer">
+                      <a
+                        target="_blank"
+                        className="title"
+                        rel="noopener noreferrer"
+                        href={option[card_id][0].link}
+                      >
+                        {option[card_id][0].linkDescription}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {option[card_id][0].optionValue === "Imagen" && (
+                <div className="container_imagen_previous">
+                  <div className="container_input">
+                    <h6 title={option[card_id][0].text} className={"textt"}>
+                      {option[card_id][0].titleCard}
+                    </h6>
+                    <div title={option[card_id][0].text}>
+                      <Help />
+                    </div>
+                  </div>
+                  <div className="container_imagen_sub_previous">
+                    <div className="input_container_img">
+                      <input
+                        className="input_img"
+                        accept=".png, .jpg, .jpeg"
+                        type="file"
+                        onChange={(e) => converterFileBase64(e, card_id)}
+                      ></input>
+                      Cargar Imagen
+                    </div>
+                    {option[card_id][0].img !== undefined && (
+                      <img
+                        className="imagen"
+                        src={option[card_id][0].img}
+                        alt="texto descriptivo"
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+              {option[card_id][0].optionValue === "Archivo" && (
+                <div className="container_archivo">
+                  <div className="container_input">
+                    <h6 title={option[card_id][0].text} className={"textt"}>
+                      {option[card_id][0].titleCard}
+                    </h6>
+                    <div title={option[card_id][0].text}>
+                      <Help />
+                    </div>
+                  </div>
+                  <div className="container_sub_archivo">
+                    <div className="input_container_file">
+                      <input
+                        accept=".xlsx, .pdf, .docx, .pptx"
+                        className="input_file"
+                        type="file"
+                        onChange={(e) => converterFileBase64Archive(e, card_id)}
+                      ></input>
+                      Cargar Archivo
+                    </div>
+                  </div>
+                </div>
+              )}
+              {option[card_id][0].optionValue === "Lista" && (
+                <div>
+                  <h1>{`lista${card_id}`}</h1>
+                </div>
+              )}
+              {option[card_id][0].optionValue === "Tabla" && (
+                <>
+                  <input
+                    type="text"
+                    state={option}
+                    className={"titleColumn"}
+                    name={`text${card_id}`}
+                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
+                    placeholder={"Ingresa el titulo de la columna aqui"}
+                    defaultValue={option[card_id][0].titleCard}
+                    readOnly
+                  ></input>
+                </>
+              )}
               {option[card_id][0].optionValue === "Tabla" && (
                 <div className="tabla-subContainer animate__animated animate__fadeIn">
                   {option[card_id][0].tabla.row.map((id_column) => (
@@ -796,125 +1035,6 @@ export const DocumentMasterView = () => {
                       ))}
                     </div>
                   ))}
-                </div>
-              )}
-              {option[card_id][0].optionValue === "Texto" && (
-                <div className="container_text">
-                  <input
-                    type="text"
-                    state={option}
-                    className={"textt"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"*Ingresa el titulo del texto aqui"}
-                  ></input>
-                  <div className="container_sub_text">
-                    <div className="subContainer">
-                      <textarea
-                        rows={"3"}
-                        cols={"30"}
-                        className={"text"}
-                        name={`textarea${card_id}`}
-                        placeholder={"Escribe el texto"}
-                        onChange={(e) => handleOnChangeText(e, card_id)}
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {option[card_id][0].optionValue === "Link" && (
-                <div className="container_link">
-                  <input
-                    type="text"
-                    state={option}
-                    className={"textt"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"*Ingrese el titulo del link aqui"}
-                  ></input>
-                  <div className="container_sub_link">
-                    <input
-                      type="url"
-                      className={"InputLink"}
-                      name={`link${card_id}`}
-                      onChange={(e) => handleOnchangeLink(e, card_id)}
-                      placeholder={"Agrega tu enlace aqui"}
-                    ></input>
-                    <input
-                      name={`text${card_id}`}
-                      className={"input-title-img"}
-                      placeholder={"Descripción del enlace"}
-                      onChange={(e) => handleDescripcionLinkChange(e, card_id)}
-                    ></input>
-                    <div className="subContainer">
-                      <a
-                        target="_blank"
-                        className="title"
-                        rel="noopener noreferrer"
-                        href={option[card_id][0].link}
-                      >
-                        {option[card_id][0].linkDescription}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {option[card_id][0].optionValue === "Imagen" && (
-                <div className="container_imagen_previous">
-                  <input
-                    type="text"
-                    state={option}
-                    className={"textt"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"*Ingresa el titulo de la imagen aqui"}
-                  ></input>
-                  <div className="container_imagen_sub_previous">
-                    <div className="input_container_img">
-                      <input
-                        className="input_img"
-                        accept=".png, .jpg, .jpeg"
-                        type="file"
-                        onChange={(e) => converterFileBase64(e, card_id)}
-                      ></input>
-                      Cargar Imagen
-                    </div>
-                    {option[card_id][0].img !== "" && (
-                      <img
-                        className="imagen"
-                        src={option[card_id][0].img}
-                        alt="texto descriptivo"
-                      />
-                    )}
-                  </div>
-                </div>
-              )}
-              {option[card_id][0].optionValue === "Archivo" && (
-                <div className="container_archivo">
-                  <input
-                    type="text"
-                    state={option}
-                    className={"textt"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"*Ingrese el titulo del archivo aqui"}
-                  ></input>
-                  <div className="container_sub_archivo">
-                    <div className="input_container_file">
-                      <input
-                        accept=".xlsx, .pdf, .docx, .pptx"
-                        className="input_file"
-                        type="file"
-                        onChange={(e) => converterFileBase64Archive(e, card_id)}
-                      ></input>
-                      Cargar Archivo
-                    </div>
-                  </div>
-                </div>
-              )}
-              {option[card_id][0].optionValue === "Lista" && (
-                <div>
-                  <h1>{`lista${card_id}`}</h1>
                 </div>
               )}
             </div>

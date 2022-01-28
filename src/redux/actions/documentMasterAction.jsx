@@ -7,7 +7,7 @@ export const DocumentMasterPaginateInit = () => {
   let token = localStorage.getItem("token_bearer");
   return async (dispatch) => {
     axios
-      .get(`${baseUrl}/documentMaster/index`, {
+      .get(`${baseUrl}/datos/index`, {
         headers: {
           //En la peticion get se tuvieron que enviar estos encabezados
           "Content-Type": "multipart/form-data",
@@ -57,7 +57,7 @@ export const ViewDocumentMaster = (uuid) => {
     }
     let token = localStorage.getItem("token_bearer");
     axios
-      .get(`${baseUrl}/documentMaster/index/${uuid}`, {
+      .get(`${baseUrl}/datos/index/${uuid}`, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -142,7 +142,7 @@ export const DocumentMasterInfoNew = (documentHead, name, identity, option) => {
     let token = localStorage.getItem("token_bearer");
     axios
       .post(
-        `${baseUrl}/documentMaster/store `,
+        `${baseUrl}/datos/store `,
         {
           documentHead,
           nombre,

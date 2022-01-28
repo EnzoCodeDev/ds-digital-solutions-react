@@ -122,12 +122,6 @@ export const ParametrizacionDocumentMasterCard = ({
       setArrayCard([...arrayCard]);
     }
   };
-  //Logica para agregar un nuevo campo a la lista
-  const handleAddListar = () => {
-    const newArrayLista = [...lista, listaUltime + 1];
-    setListaUltime(listaUltime + 1);
-    setLista(newArrayLista);
-  };
   //Esta logica es para agregar el estado la opcion del formulario
   //Y que tipo de datos y datos se han insertado
   const handleTarget = (e, id) => {
@@ -159,7 +153,7 @@ export const ParametrizacionDocumentMasterCard = ({
       optionInfo[id][0].heigth.state = false;
       setOption(optionInfo);
     }
-    if (optionValue === "Lista") {
+    if (optionValue === "Fecha") {
       optionInfo[id][0].optionValue = optionValue;
       optionInfo[id][0].heigth.state = false;
       setOption(optionInfo);
@@ -172,7 +166,7 @@ export const ParametrizacionDocumentMasterCard = ({
     const arraycolumns = [];
     for (let i = 1; i <= optionValue; i++) {
       arraycolumns.push(i);
-    }
+    };
     optionInfo[id][0].tabla.column = arraycolumns;
     let number = optionInfo[id][0].tabla.row.length * 10;
     let arrayTypeColumns = [];
@@ -295,7 +289,7 @@ export const ParametrizacionDocumentMasterCard = ({
     let array = [];
     for (let i = 0; i < e.target.value; i++) {
       array.push(i);
-    }
+    };
     optionInfo[id][0].tablaTypeCelda.lista[
       option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ] = array;
@@ -347,7 +341,7 @@ export const ParametrizacionDocumentMasterCard = ({
                   "Imagen",
                   "Link",
                   "Archivo",
-                  // "Lista",
+                  "Fecha",
                 ]}
               />
             </div>
@@ -368,6 +362,74 @@ export const ParametrizacionDocumentMasterCard = ({
                 </div>
               </div>
             )}
+              {/* Renderizar campo de las imagenes*/}
+              {option[card_id][0].optionValue === "Imagen" && (
+              <div className="inputImg animate__animated animate__fadeIn">
+                 <div>
+                  <span className="span2">Descripcion del item</span>
+                  <textarea
+                    rows={"3"}
+                    cols={"30"}
+                    className={"textarea"}
+                    name={`textarea${card_id}`}
+                    placeholder={"Escribe el texto"}
+                    onChange={(e) => handleOnChangeText(e, card_id)}
+                    defaultValue={option[card_id][0].text}
+                  ></textarea>
+                </div>
+              </div>
+            )}
+            {/* Renderizar campo del link*/}
+            {option[card_id][0].optionValue === "Link" && (
+              <div className="inputLink animate__animated animate__fadeIn">
+                 <div>
+                  <span className="span2">Descripcion del item</span>
+                  <textarea
+                    rows={"3"}
+                    cols={"30"}
+                    className={"textarea"}
+                    name={`textarea${card_id}`}
+                    placeholder={"Escribe el texto"}
+                    onChange={(e) => handleOnChangeText(e, card_id)}
+                    defaultValue={option[card_id][0].text}
+                  ></textarea>
+                </div>
+              </div>
+            )}
+            {/* Renderizar campo del archivo*/}
+            {option[card_id][0].optionValue === "Archivo" && (
+              <div className="inputFile animate__animated animate__fadeIn">
+                 <div>
+                  <span className="span2">Descripcion del item</span>
+                  <textarea
+                    rows={"3"}
+                    cols={"30"}
+                    className={"textarea"}
+                    name={`textarea${card_id}`}
+                    placeholder={"Escribe el texto"}
+                    onChange={(e) => handleOnChangeText(e, card_id)}
+                    defaultValue={option[card_id][0].text}
+                  ></textarea>
+                </div>
+              </div>
+              )}
+                {/* Renderizar campo del Fecha*/}
+              {option[card_id][0].optionValue === "Fecha" && (
+                <div className="inputFecha animate__animated animate__fadeIn">
+                   <div>
+                  <span className="span2">Descripcion del item</span>
+                  <textarea
+                    rows={"3"}
+                    cols={"30"}
+                    className={"textarea"}
+                    name={`textarea${card_id}`}
+                    placeholder={"Escribe el texto"}
+                    onChange={(e) => handleOnChangeText(e, card_id)}
+                    defaultValue={option[card_id][0].text}
+                  ></textarea>
+                </div>
+                </div>
+              )}
             {/* Renderizar campo del cuantas tablas y columnas*/}
             {option[card_id][0].optionValue === "Tabla" && (
               <div>
@@ -487,29 +549,6 @@ export const ParametrizacionDocumentMasterCard = ({
                   </div>
                 )}
               </div>
-            )}
-            {/* Renderizar campo de las imagenes*/}
-            {option[card_id][0].optionValue === "Imagen" && (
-              <div className="inputImg animate__animated animate__fadeIn"></div>
-            )}
-            {/* Renderizar campo del link*/}
-            {option[card_id][0].optionValue === "Link" && (
-              <div className="inputImg animate__animated animate__fadeIn"></div>
-            )}
-            {/* Renderizar campo del lista*/}
-            {option[card_id][0].optionValue === "Lista" && (
-              <div className="lista animate__animated animate__fadeIn">
-                <span>Lista</span>
-                <div onClick={handleAddListar}>Agregar</div>
-                <ol compact="true">
-                  {lista.map((id_lista) => (
-                    <li key={id_lista} value={id_lista}></li>
-                  ))}
-                </ol>
-              </div>
-            )}
-            {option[card_id][0].optionValue === "Archivo" && (
-              <div className="inputImg animate__animated animate__fadeIn"></div>
             )}
           </div>
           <div className="add-remove">

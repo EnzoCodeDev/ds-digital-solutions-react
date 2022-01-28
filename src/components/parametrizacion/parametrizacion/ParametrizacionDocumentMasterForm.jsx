@@ -40,11 +40,11 @@ export const ParametrizacionDocumentMasterForm = () => {
     history.push("/documentation-master-list");
   }
   const handleViewEdit = (uuid) => {
-    if(uuid){
+    if (uuid) {
       history.push(`/newDocument/${uuid}`);
-    }else{
+    } else {
       history.push("/documentation-master-list");
-    };
+    }
   };
   //Manejo de que tipo es cada celda
   const [tableColumnsTypeValue, handletableColumnsTypeValueChange] =
@@ -105,10 +105,17 @@ export const ParametrizacionDocumentMasterForm = () => {
     [
       {
         id: 1,
-        type: "Texto",
+        type: "Select",
         title: "Proceso",
-        description: "",
-        descriptionLink: "",
+        option: "Lorem ipsum dolor",
+      },
+    ],
+    [
+      {
+        id: 2,
+        type: "Select",
+        title: "Subproceso",
+        option: "Lorem ipsum dolor",
       },
     ],
   ];
@@ -134,7 +141,7 @@ export const ParametrizacionDocumentMasterForm = () => {
   //Manejo del id de cada tarjeta del proceso
   const [dataBasicCount, setDataBasicCount] = useState([]);
   //Manejo de la ultima tarjeta que se hizo
-  const [dataBasicUlti, setDataBasicUlti] = useState(1);
+  const [dataBasicUlti, setDataBasicUlti] = useState(2);
   //Validaciones para traer la informacion e insertarla en los inputs del formulario
   //Mantener el estado del codigo
   const handleInputCode = (e) => {
@@ -163,7 +170,7 @@ export const ParametrizacionDocumentMasterForm = () => {
   };
   //Agregar dato basico
   const handleAddDataBasic = () => {
-    if (dataBasicCount.length <= 2) {
+    if (dataBasicCount.length <= 1) {
       let procesos = [...dataBasic];
       setDataBasic([
         ...procesos,
@@ -172,8 +179,7 @@ export const ParametrizacionDocumentMasterForm = () => {
             id: dataBasicUlti + 1,
             type: "Texto",
             title: "",
-            description: "",
-            descriptionLink: "",
+            info: "",
           },
         ],
       ]);
@@ -209,6 +215,11 @@ export const ParametrizacionDocumentMasterForm = () => {
     opcionData[id - 1][0].type = e.target.value;
     setDataBasic(opcionData);
   };
+  const handleSelectProceso = (e, id) => {
+    let opcionData = [...dataBasic];
+    opcionData[id - 1][0].option = e.target.value;
+    setDataBasic(opcionData);
+  };
   //Ttulo de datos basicos
   const handleTitle = (e, id) => {
     let opcionData = [...dataBasic];
@@ -218,12 +229,7 @@ export const ParametrizacionDocumentMasterForm = () => {
   //Descripcion de datos basicos
   const handleDescripcion = (e, id) => {
     let opcionData = [...dataBasic];
-    opcionData[id - 1][0].description = e.target.value;
-    setDataBasic(opcionData);
-  };
-  const handleDescripcionLink = (e, id) => {
-    let opcionData = [...dataBasic];
-    opcionData[id - 1][0].descriptionLink = e.target.value;
+    opcionData[id - 1][0].info = e.target.value;
     setDataBasic(opcionData);
   };
   //Funcion que llama al dispach para crear un nuevo formulario
@@ -232,10 +238,8 @@ export const ParametrizacionDocumentMasterForm = () => {
     const code = codigo;
     const format = formato;
     const position = arrayCard;
-    const process_type = dataBasic[0][0].type;
-    const process_description = dataBasic[0][0].description;
-    const process_link =
-      dataBasic[0][0].type === "Texto" ? null : dataBasic[0][0].descriptionLink;
+    const process_option = dataBasic[0][0].option;
+    const sub_process_option = dataBasic[1][0].option;
     const optionTarget = [...option];
     dispatch(
       NewDocumetMaster(
@@ -245,12 +249,11 @@ export const ParametrizacionDocumentMasterForm = () => {
         position,
         dataBasic,
         description,
-        process_link,
-        process_type,
+        process_option,
+        sub_process_option,
         dataBasicCount,
-        process_description,
         optionTarget,
-        handleViewEdit,
+        handleViewEdit
       )
     );
   };
@@ -260,10 +263,8 @@ export const ParametrizacionDocumentMasterForm = () => {
     const code = codigo;
     const format = formato;
     const position = arrayCard;
-    const process_type = dataBasic[0][0].type;
-    const process_description = dataBasic[0][0].description;
-    const process_link =
-      dataBasic[0][0].type === "Texto" ? null : dataBasic[0][0].descriptionLink;
+    const process_option = dataBasic[0][0].option;
+    const sub_process_option = dataBasic[1][0].option;
     const optionTarget = [...option];
     dispatch(
       UpdateDocumentMaster(
@@ -274,12 +275,11 @@ export const ParametrizacionDocumentMasterForm = () => {
         position,
         dataBasic,
         description,
-        process_link,
-        process_type,
         dataBasicCount,
-        process_description,
+        process_option,
+        sub_process_option,
         optionTarget,
-        handleViewEdit,
+        handleViewEdit
       )
     );
   };
@@ -296,7 +296,7 @@ export const ParametrizacionDocumentMasterForm = () => {
         setDataBasic([...array]);
         setDataBasicUlti(
           JSON.parse(documentMaster.DocumentMasterHead.position_data_basic)
-            .length + 1
+            .length + 2
         );
       }
     }
@@ -510,58 +510,44 @@ export const ParametrizacionDocumentMasterForm = () => {
             <div className="input-group-container-2">
               <div className="container_data_basic">
                 <div className="container_sub_data_basic">
-                  <div className="header">
-                    <div className="container_select">
-                      <InputSelect
-                        id={1}
-                        className={"select_columns"}
-                        onclick={handleTypeSelect}
-                        selected={
-                          documentMaster.DocumentMasterHead.process_type
-                        }
-                        name={`dataBasic${1}`}
-                        option={["Texto", "Link"]}
-                      />
-                    </div>
-                  </div>
+                  <div className="header"></div>
                   <div className="container_body">
                     {/* El proceso es obligatorio en los datos basicos */}
                     <div className="container_inptut1">
                       <input defaultValue="Proceso" readOnly></input>
                     </div>
-                    <div className="container_inptut2">
-                      {dataBasic[0][0].type === "Link" ? (
-                        <>
-                          <input
-                            type="text"
-                            name={"Proceso"}
-                            onChange={(e) => handleDescripcion(e, 1)}
-                            defaultValue={
-                              documentMaster.DocumentMasterHead
-                                .process_description
-                            }
-                            placeholder="Procesos(Obligatorio)"
-                          ></input>
-                          <input
-                            type="url"
-                            placeholder="Url del sitio"
-                            onChange={(e) => handleDescripcionLink(e, 1)}
-                            name={`descripcionLink`}
-                            defaultValue={dataBasic[0][0].descriptionLink}
-                          />
-                        </>
-                      ) : (
-                        <input
-                          type="text"
-                          name={"Proceso"}
-                          onChange={(e) => handleDescripcion(e, 1)}
-                          defaultValue={
-                            documentMaster.DocumentMasterHead
-                              .process_description
-                          }
-                          placeholder="Procesos(Obligatorio)"
-                        ></input>
-                      )}
+                    <div className="container_select">
+                      <select
+                        className={"select_columns"}
+                        onClick={(e) => handleSelectProceso(e, 1)}
+                        name={`dataBasic${1}`}
+                      >
+                        <option>Lorem ipsum dolor</option>
+                        <option>Lorem ipsum dolor</option>
+                        <option>Lorem ipsum dolor</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="container_data_basic">
+                <div className="container_sub_data_basic">
+                  <div className="header"></div>
+                  <div className="container_body">
+                    {/* El sub proceso es obligatorio en los datos basicos */}
+                    <div className="container_inptut1">
+                      <input defaultValue="SubProceso" readOnly></input>
+                    </div>
+                    <div className="container_select">
+                      <select
+                        className={"select_columns"}
+                        onClick={(e) => handleSelectProceso(e, 2)}
+                        name={`dataBasic${1}`}
+                      >
+                        <option>Lorem ipsum dolor</option>
+                        <option>Lorem ipsum dolor</option>
+                        <option>Lorem ipsum dolor</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -578,7 +564,7 @@ export const ParametrizacionDocumentMasterForm = () => {
                           id={proceso_id}
                           onclick={handleTypeSelect}
                           selected={dataBasic[proceso_id - 1][0].type}
-                          option={["Texto", "Link"]}
+                          option={["Texto", "Link", "Fecha"]}
                           className={"select_columns"}
                           name={`dataBasic${proceso_id}`}
                         />
@@ -587,47 +573,30 @@ export const ParametrizacionDocumentMasterForm = () => {
                     <div className="container_body">
                       <div className="container_inptut1">
                         <input
-                          id={proceso_id}
-                          placeholder="Titulo"
+                          placeholder="Titulo del dato basico"
                           name={`Titulo${proceso_id}`}
                           onChange={(e) => handleTitle(e, proceso_id)}
                           defaultValue={dataBasic[proceso_id - 1][0].title}
                         ></input>
                       </div>
-                      {dataBasic[proceso_id - 1][0].type === "Link" ? (
+                      {dataBasic[proceso_id - 1][0].type === "Link" && (
                         <div className="container_inptut2">
                           <input
                             id={proceso_id}
-                            placeholder="Descripcion"
+                            placeholder="Descripcion de la url"
                             name={`descripcion${proceso_id}`}
                             onChange={(e) => handleDescripcion(e, proceso_id)}
                             defaultValue={
-                              dataBasic[proceso_id - 1][0].description
+                              dataBasic[proceso_id - 1][0].info
                             }
                           ></input>
-                          <input
-                            type="url"
-                            placeholder="Url del sitio"
-                            onChange={(e) =>
-                              handleDescripcionLink(e, proceso_id)
-                            }
-                            name={`descripcionLink`}
-                            defaultValue={
-                              dataBasic[proceso_id - 1][0].descriptionLink
-                            }
-                          />
                         </div>
-                      ) : (
+                      )}
+                      {dataBasic[proceso_id - 1][0].type === "Texto" && (
+                        <div className="container_inptut2"></div>
+                      )}
+                      {dataBasic[proceso_id - 1][0].type === "Fecha" && (
                         <div className="container_inptut2">
-                          <input
-                            id={proceso_id}
-                            placeholder="Descripcion"
-                            name={`descripcion${proceso_id}`}
-                            onChange={(e) => handleDescripcion(e, proceso_id)}
-                            defaultValue={
-                              dataBasic[proceso_id - 1][0].description
-                            }
-                          ></input>
                         </div>
                       )}
                     </div>
