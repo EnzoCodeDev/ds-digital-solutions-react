@@ -260,6 +260,11 @@
                                 width: 100%;
                                 margin: auto;
                             }
+                            p {
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 13px;
+                                font-weight: 700;
+                            }
                         }
                         .text {
                             border: none;
@@ -319,6 +324,57 @@
                                 outline: none;
                                 border-bottom: 1px solid rgb(0, 0, 0);
                             }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .container_apli {
+        width: 100%;
+        .sub_container_apli {
+            width: 90%;
+            margin: auto;
+            .content_container_apli {
+                display: flex;
+                margin-top: 20px;
+                justify-content: space-around;
+                .inputName {
+                    border-left: 3px solid rgb(245, 18, 18);
+                    width: 30%;
+                    input {
+                        border: 0px;
+                        border-bottom: 1px solid rgb(0, 0, 0);
+                        box-sizing: border-box;
+                        margin-bottom: 0px;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-weight: 700;
+                        width: 100%;
+                        font-size: 13px;
+                        transition: all 0.4s ease;
+                        &:focus {
+                            outline: none;
+                            border-bottom: 1px solid rgb(0, 0, 0);
+                        }
+                    }
+                }
+                .input_identify {
+                    border-left: 3px solid rgba(18, 41, 245, 0.719);
+                    width: 30%;
+                    input {
+                        border: 0px;
+                        border-bottom: 1px solid rgb(0, 0, 0);
+                        box-sizing: border-box;
+                        margin-bottom: 0px;
+                        margin-right: 14px;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-weight: 700;
+                        width: 100%;
+                        font-size: 13px;
+                        transition: all 0.4s ease;
+                        &:focus {
+                            outline: none;
+                            border-bottom: 1px solid rgb(0, 0, 0);
                         }
                     }
                 }
@@ -402,7 +458,7 @@
                 margin-right: 14px;
                 font-family: Arial, Helvetica, sans-serif;
                 font-weight: 700;
-                width: 48.6%;
+                width: 48%;
                 font-size: 13px;
                 transition: all 0.4s ease;
                 &:focus {
@@ -535,22 +591,47 @@
             }
         }
     }
-    .titleColumn {
-        border: 0px;
-        border-bottom: 1px solid rgb(0, 0, 0);
-        box-sizing: border-box;
-        margin-bottom: 0px;
-        margin-top: 10px;
-        margin-left: 75px;
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: 700;
+    .container_fecha {
         width: 100%;
-        font-size: 13px;
-        transition: all 0.4s ease;
-        &:focus {
-            outline: none;
-            border-bottom: 1px solid rgb(0, 0, 0);
-            width: 90%;
+        height: 100%;
+        margin-top: 4px;
+        .container_input {
+            display: flex;
+            max-width: 100%;
+            .textt {
+                border: 0px;
+                box-sizing: border-box;
+                margin-bottom: 0px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: 700;
+                font-size: 13px;
+                padding-top: 5px;
+                transition: all 0.4s ease;
+                &:focus {
+                    outline: none;
+                    border-bottom: 1px solid rgb(0, 0, 0);
+                }
+            }
+        }
+        .container_sub_text {
+            width: 100%;
+            border-left: 3px solid rgb(9, 247, 255);
+            .subContainer {
+                .text {
+                    border: none;
+                    width: 100%;
+                    margin-left: 5px;
+                    font-size: 13px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: 400;
+                    &:focus {
+                        outline: none;
+                        border-bottom: 1px solid rgb(0, 0, 0);
+                        border-right: 1px solid rgb(0, 0, 0);
+                        width: 100%;
+                    }
+                }
+            }
         }
     }
     .tabla-container {
@@ -564,6 +645,40 @@
         .tabla-subContainer {
             justify-content: space-around;
             width: 100%;
+            .container_header {
+                display: flex;
+                max-width: 100%;
+                margin-bottom: 10px;
+                .textt {
+                    border: 0px;
+                    box-sizing: border-box;
+                    margin-bottom: 0px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: 700;
+                    font-size: 13px;
+                    padding-top: 5px;
+                    transition: all 0.4s ease;
+                    &:focus {
+                        outline: none;
+                        border-bottom: 1px solid rgb(0, 0, 0);
+                    }
+                }
+                .titleTabla {
+                    border: 0px;
+                    box-sizing: border-box;
+                    margin-bottom: 10px;
+                    margin-top: 10px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: 700;
+                    width: 100%;
+                    font-size: 13px;
+                    transition: all 0.4s ease;
+                    &:focus {
+                        outline: none;
+                        width: 100%;
+                    }
+                }
+            }
             .row {
                 flex-wrap: nowrap;
                 margin: 0;
@@ -667,11 +782,36 @@
                         height: 87%;
                         width: 100%;
                         text-align: center;
+                        .input_container_img {
+                            background-color: #01396A;
+                            color: #fff;
+                            cursor: pointer;
+                            font-size: 9px;
+                            font-weight: bold;
+                            margin: 0 auto 0;
+                            margin-top: 5px;
+                            overflow: hidden;
+                            padding: 5px;
+                            position: relative;
+                            width: 100px;
+                            .input_img {
+                                border: 10000px solid transparent;
+                                cursor: pointer;
+                                font-size: 10000px;
+                                margin: 0;
+                                opacity: 0;
+                                outline: 0 none;
+                                padding: 0;
+                                position: absolute;
+                                right: -1000px;
+                                top: -1000px;
+                            }
+                        }
                         .imagen {
-                            height: 100%;
-                            width: 100%;
+                            max-width: 250px;
                             object-fit: contain;
-                            max-height: 100%;
+                            max-height: 200px;
+                            margin: 5px;
                             height: auto;
                         }
                     }
@@ -696,11 +836,36 @@
                             height: 80%;
                             width: 100%;
                             text-align: center;
-                            .imagen {
-                                height: 100%;
-                                width: 100%;
+                            .input_container_img_title {
+                                background-color: #01396A;
+                                color: #fff;
+                                cursor: pointer;
+                                font-size: 9px;
+                                font-weight: bold;
+                                margin: 0 auto 0;
+                                margin-top: 16px;
+                                overflow: hidden;
+                                padding: 5px;
+                                position: relative;
+                                width: 100px;
+                                .input_img {
+                                    border: 10000px solid transparent;
+                                    cursor: pointer;
+                                    font-size: 10000px;
+                                    margin: 0;
+                                    opacity: 0;
+                                    outline: 0 none;
+                                    padding: 0;
+                                    position: absolute;
+                                    right: -1000px;
+                                    top: -1000px;
+                                }
+                            }
+                            .imagenes {
+                                max-width: 250px;
                                 object-fit: contain;
-                                max-height: 100%;
+                                max-height: 200px;
+                                margin: 5px;
                                 height: auto;
                             }
                         }
@@ -738,7 +903,18 @@
                     .link {
                         .celda_container_link {
                             height: 15px;
-                            .celda_title_inputt {
+                            .celda_title_inputt1 {
+                                margin-top: 0px;
+                                color: blue;
+                                text-align: start;
+                                font-size: 13px;
+                                border: 0;
+                                width: 100%;
+                                outline: none;
+                                font-weight: 700;
+                                border-bottom: 1px solid black;
+                            }
+                            .celda_title_inputt2 {
                                 margin-top: 0px;
                                 text-align: start;
                                 font-size: 13px;

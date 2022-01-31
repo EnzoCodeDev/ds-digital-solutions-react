@@ -59,6 +59,7 @@ const initialState = {
       type_card: "",
       updated_at: "",
     },
+
   },
 };
 export const formDocumentViewReducer = (state = initialState, action) => {

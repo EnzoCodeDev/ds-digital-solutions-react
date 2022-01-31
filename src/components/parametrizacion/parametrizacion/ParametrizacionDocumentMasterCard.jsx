@@ -55,7 +55,7 @@ export const ParametrizacionDocumentMasterCard = ({
             celdaType: JSON.stringify(typeCelda),
             type: indexTypeCelda,
             lista: listArray,
-            typeCeldaInfo: [infoCelda],
+            typeCeldaInfo: infoCelda,
           },
         },
       ],
@@ -166,7 +166,7 @@ export const ParametrizacionDocumentMasterCard = ({
     const arraycolumns = [];
     for (let i = 1; i <= optionValue; i++) {
       arraycolumns.push(i);
-    };
+    }
     optionInfo[id][0].tabla.column = arraycolumns;
     let number = optionInfo[id][0].tabla.row.length * 10;
     let arrayTypeColumns = [];
@@ -174,7 +174,7 @@ export const ParametrizacionDocumentMasterCard = ({
     for (let i = 1; i <= number; i++) {
       arrayTypeColumns.push(
         optionInfo[id][0].tablaTypeCelda.celda[i] === undefined
-          ? "Título"
+          ? "Título texto"
           : optionInfo[id][0].tablaTypeCelda.celda[i]
       );
     }
@@ -202,7 +202,7 @@ export const ParametrizacionDocumentMasterCard = ({
         lista: ["", "", "", "", "", "", "", "", "", ""],
       });
     }
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo = arrayTypeCeldaInfo;
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo = [arrayTypeCeldaInfo];
     setOption(optionInfo);
   };
   //Guardar en el state filas columnas quiere el usuario
@@ -225,7 +225,7 @@ export const ParametrizacionDocumentMasterCard = ({
     for (let i = 1; i <= number; i++) {
       arrayTypeColumns.push(
         optionInfo[id][0].tablaTypeCelda.celda[i] === undefined
-          ? "Título"
+          ? "Título texto"
           : optionInfo[id][0].tablaTypeCelda.celda[i]
       );
     }
@@ -253,12 +253,11 @@ export const ParametrizacionDocumentMasterCard = ({
         lista: ["", "", "", "", "", "", "", "", "", ""],
       });
     }
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo = arrayTypeCeldaInfo;
+    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo = [arrayTypeCeldaInfo];
     setOption(optionInfo);
   };
   //Agregar que tipo de celda quiere cada usuario
   const handleFileValuesCelda = (e, id, parametro_opcional) => {
-    console.log(parametro_opcional);
     let optionInfo = [...option];
     e.stopPropagation();
     optionInfo[id][0].tablaTypeCelda.celda[
@@ -282,6 +281,14 @@ export const ParametrizacionDocumentMasterCard = ({
     optionInfo[id][0].text = e.target.value;
     setOption(optionInfo);
   };
+  //Vigila que titulo de cada columna
+  const handletitleColumns = (e, id, parametro_opcional) => {
+    let optionInfo = [...option];
+    optionInfo[id][0].tablaTypeCelda.title_columna[
+      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    ] = e.target.value;
+    setOption(optionInfo);
+  };
   //Guardar que tipo de lista por celda
   const handleSelectList = (e, id, parametro_opcional) => {
     e.stopPropagation();
@@ -289,7 +296,7 @@ export const ParametrizacionDocumentMasterCard = ({
     let array = [];
     for (let i = 0; i < e.target.value; i++) {
       array.push(i);
-    };
+    }
     optionInfo[id][0].tablaTypeCelda.lista[
       option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ] = array;
@@ -347,7 +354,7 @@ export const ParametrizacionDocumentMasterCard = ({
             </div>
             {/* Renderizar campo del texto */}
             {option[card_id][0].optionValue === "Texto" && (
-              <div className="inputText animate__animated animate__fadeIn">
+              <div className="inputText">
                 <div>
                   <span className="span2">Descripcion del item</span>
                   <textarea
@@ -362,10 +369,10 @@ export const ParametrizacionDocumentMasterCard = ({
                 </div>
               </div>
             )}
-              {/* Renderizar campo de las imagenes*/}
-              {option[card_id][0].optionValue === "Imagen" && (
-              <div className="inputImg animate__animated animate__fadeIn">
-                 <div>
+            {/* Renderizar campo de las imagenes*/}
+            {option[card_id][0].optionValue === "Imagen" && (
+              <div className="inputImg">
+                <div>
                   <span className="span2">Descripcion del item</span>
                   <textarea
                     rows={"3"}
@@ -381,8 +388,8 @@ export const ParametrizacionDocumentMasterCard = ({
             )}
             {/* Renderizar campo del link*/}
             {option[card_id][0].optionValue === "Link" && (
-              <div className="inputLink animate__animated animate__fadeIn">
-                 <div>
+              <div className="inputLink">
+                <div>
                   <span className="span2">Descripcion del item</span>
                   <textarea
                     rows={"3"}
@@ -398,8 +405,8 @@ export const ParametrizacionDocumentMasterCard = ({
             )}
             {/* Renderizar campo del archivo*/}
             {option[card_id][0].optionValue === "Archivo" && (
-              <div className="inputFile animate__animated animate__fadeIn">
-                 <div>
+              <div className="inputFile">
+                <div>
                   <span className="span2">Descripcion del item</span>
                   <textarea
                     rows={"3"}
@@ -412,11 +419,11 @@ export const ParametrizacionDocumentMasterCard = ({
                   ></textarea>
                 </div>
               </div>
-              )}
-                {/* Renderizar campo del Fecha*/}
-              {option[card_id][0].optionValue === "Fecha" && (
-                <div className="inputFecha animate__animated animate__fadeIn">
-                   <div>
+            )}
+            {/* Renderizar campo del Fecha*/}
+            {option[card_id][0].optionValue === "Fecha" && (
+              <div className="inputFecha">
+                <div>
                   <span className="span2">Descripcion del item</span>
                   <textarea
                     rows={"3"}
@@ -428,8 +435,8 @@ export const ParametrizacionDocumentMasterCard = ({
                     defaultValue={option[card_id][0].text}
                   ></textarea>
                 </div>
-                </div>
-              )}
+              </div>
+            )}
             {/* Renderizar campo del cuantas tablas y columnas*/}
             {option[card_id][0].optionValue === "Tabla" && (
               <div>
@@ -479,6 +486,36 @@ export const ParametrizacionDocumentMasterCard = ({
                           <div className="column" key={id_row}>
                             <div className="columns"></div>
                             <div className="celda_type">
+                              {id_row === 1 && (
+                                <>
+                                  <div className="header_title">
+                                    <input
+                                      type="text"
+                                      className={"celda_title_input"}
+                                      defaultValue={
+                                        option[card_id][0].tablaTypeCelda
+                                          .title_columna[
+                                          option[
+                                            card_id
+                                          ][0].tablaTypeCelda.type.indexOf(
+                                            parseInt(`${id_row}${id_column}`)
+                                          )
+                                        ]
+                                      }
+                                      name={parseInt(`${id_row}${id_column}`)}
+                                      onChange={(e) =>
+                                        handletitleColumns(
+                                          e,
+                                          card_id,
+                                          `${id_row}${id_column}`
+                                        )
+                                      }
+                                      placeholder={"*Titulo de columna"}
+                                    ></input>
+                                  </div>
+                                  <div className="linea"></div>
+                                </>
+                              )}
                               <div className="celda_list animate__animated animate__fadeIn">
                                 {/* Renderizar campo del select para cada tipo de celda */}
                                 <InputSelect
@@ -498,12 +535,12 @@ export const ParametrizacionDocumentMasterCard = ({
                                   onChange={handletableColumnsTypeValueChange}
                                   parametro_opcional={`${id_row}${id_column}`}
                                   option={[
-                                    "Título",
                                     "Título texto",
                                     "Imagen",
                                     "Imagen título",
                                     "Lista",
                                     "Link",
+                                    "Fecha",
                                   ]}
                                 />
                                 {option[card_id][0].tablaTypeCelda.celda[

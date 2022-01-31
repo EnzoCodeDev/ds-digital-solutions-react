@@ -76,12 +76,35 @@ export const DocumentMasterView = () => {
     [
       {
         id: 1,
-        type: "Texto",
+        type: "Select",
         title: "Proceso",
-        description: "",
+        option: "Lorem ipsum dolor",
+      },
+    ],
+    [
+      {
+        id: 2,
+        type: "Select",
+        title: "Subproceso",
+        option: "Lorem ipsum dolor",
       },
     ],
   ];
+  //Verificar si es para editar o crear
+  const { uuid } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(ViewDocumentMaster(uuid));
+  }, [dispatch, uuid]);
+  //Traer los estados globales de los state
+  let documentMaster = useSelector(
+    (state) => state.documentMaster.documentMaster
+  );
+  let { aplicar, name, identity } = useSelector(
+    (state) => state.infoUserDeligenciar.infoUser
+  );
+  const { img_header } = useSelector((state) => state.auth);
+  const documentMasterHead = documentMaster.DocumentMasterHead;
   //Manejo de fechas
   //Use state de la cabeza del formulario
   //Manejo de que tipo de informacion quiere insertar el usuario en las tarjetas
@@ -96,21 +119,12 @@ export const DocumentMasterView = () => {
   const [procesos, setProcesos] = useState([]);
   //Manejo de los subProcesos
   const [subProceso, setSubProceso] = useState([]);
-  //Manejo de la ultima tarjeta que se hizo
-  const { uuid } = useParams();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(ViewDocumentMaster(uuid));
-  }, [dispatch, uuid]);
-  //Traer los estados globales de los state
-  let documentMaster = useSelector(
-    (state) => state.documentMaster.documentMaster
-  );
-  let { name, identity } = useSelector(
-    (state) => state.infoUserDeligenciar.infoUser
-  );
-  const { img_header } = useSelector((state) => state.auth);
-  const documentMasterHead = documentMaster.DocumentMasterHead;
+  //Manejo del estado de la aplicacion de documento en general o a usuario
+  const [aplicarState, setAplicar] = useState(aplicar);
+  //Manejo de identificacion
+  const [identificacion, setIdentificacion] = useState(identity);
+  //manejo de nombre
+  const [nombre, setNombre] = useState(name);
   //Renderizado de los datos basicos de la aplicacion
   useEffect(() => {
     let array = [];
@@ -212,7 +226,7 @@ export const DocumentMasterView = () => {
                 DocumentMasterBody.type_celda !== null
                   ? DocumentMasterBody.type_celda
                   : JSON.stringify(["0", "Título"]),
-              typeCeldaInfo: [JSON.parse(DocumentMasterBody.card_info_table)],
+              typeCeldaInfo: JSON.parse(DocumentMasterBody.card_info_table),
             },
           },
         ]);
@@ -296,16 +310,22 @@ export const DocumentMasterView = () => {
     opcionData[id - 1][0].link = e.target.value;
     setDataBasic(opcionData);
   };
-  //Vigilar el estado de los titulo de la columna
-  const handleOnChangeTitleCard = (e, id) => {
-    let optionInfo = [...option];
-    optionInfo[id][0].titleCard = e.target.value;
-    setOption(optionInfo);
+  //Manejo para aplicar documento en general o a usuario
+  const handleValueAplicar = (e) => {
+    setAplicar(e.target.value);
+  };
+  //Manejo de la identificacion del usuario
+  const handleIdentificacion = (e) => {
+    setIdentificacion(e.target.value);
+  };
+  //Manejo del nombre del usuario
+  const handleNombre = (e) => {
+    setNombre(e.target.value);
   };
   //Vigilar los estados de los input de descripcion del texto
   const handleOnChangeText = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].text = e.target.value;
+    optionInfo[id][0].textDescription = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado del input del link descripcion
@@ -382,12 +402,10 @@ export const DocumentMasterView = () => {
       };
     });
   };
-  //Vigila que titulo de cada columna
-  const handletitleColumns = (e, id, parametro_opcional) => {
+  //Vigilar el estado de la tarjeta tipo fecha
+  const handleDate = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ].titleColumna = e.target.value;
+    optionInfo[id][0].date = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado de cada titulo de cada celda
@@ -430,9 +448,56 @@ export const DocumentMasterView = () => {
     ].linkDescription = e.target.value;
     setOption(optionInfo);
   };
+  //Logica para guardar para convertir la imagen de la tabla a archivo 64
+  const converterFileBase64Table = (e, id, parametro_opcional) => {
+    let optionInfo = [...option];
+    var extensiones_permitidas = [".png", ".jpg", ".jpeg"];
+    Array.from(e.target.files).forEach((archive) => {
+      var ultimo_punto = archive.name.lastIndexOf(".");
+      var extension = archive.name.slice(ultimo_punto, archive.name.length);
+      if (extensiones_permitidas.indexOf(extension) === -1) {
+        alert("Extensión de imagen no valida");
+        return;
+      }
+      //Validar tamaño de la imagen en MB
+      var tamano = 5;
+      if (archive.size / 1048576 > tamano) {
+        alert("El archivo no puede superar los " + tamano + "MB");
+        return;
+      }
+      //Convertir imagen a base 64
+      let reader = new FileReader();
+      reader.readAsDataURL(archive);
+      reader.onload = function () {
+        let base64 = reader.result;
+        optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
+          option[id][0].tablaTypeCelda.type.indexOf(
+            parseInt(parametro_opcional)
+          )
+        ].img = base64;
+        optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
+          option[id][0].tablaTypeCelda.type.indexOf(
+            parseInt(parametro_opcional)
+          )
+        ].img_extension =
+          extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
+        setOption(optionInfo);
+      };
+    });
+  };
   //Guarda informacion
   const handleSaveInfo = () => {
-    dispatch(DocumentMasterInfoNew(documentMasterHead, name, identity, option));
+    dispatch(
+      DocumentMasterInfoNew(
+        documentMasterHead,
+        dataBasic,
+        dataBasicCount,
+        aplicarState,
+        nombre,
+        identificacion,
+        option
+      )
+    );
   };
   return (
     <div>
@@ -527,9 +592,15 @@ export const DocumentMasterView = () => {
                   <div className="linea3"></div>
                   <div className="select_procesos">
                     <select
-                      onClick={(e) => handleValueProceso(e, 1)}
+                      // value={
+                      //   dataBasic[0][0].option === "Lorem ipsum dolor"
+                      //     ? ""
+                      //     : dataBasic[0][0].option
+                      // }
+                      onChange={(e) => handleValueProceso(e, 1)}
                       className="selected"
                     >
+                      <option value="0">--Seleccionar proceso--</option>
                       {procesos.map((process) => (
                         <option key={process.id} value={process.id}>
                           {process.process}
@@ -548,12 +619,13 @@ export const DocumentMasterView = () => {
                   <div className="linea3"></div>
                   <div className="select_sub_procesos">
                     {subProceso.length === 0 ? (
-                      <h6>Este proceso no tiene subProcesos</h6>
+                      <p>Este proceso no tiene subProcesos</p>
                     ) : (
                       <select
                         onClick={(e) => handleValueSubProceso(e, 2)}
                         className="selected"
                       >
+                        <option value="0">--Seleccionar subproceso--</option>
                         {subProceso.map((subProcess) => (
                           <option key={subProcess.id} value={subProcess.id}>
                             {subProcess.subProceso}
@@ -623,6 +695,42 @@ export const DocumentMasterView = () => {
                   )}
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+        <div className="container_apli">
+          <div className="sub_container_apli">
+            <div className="content_container_apli">
+              <div className="select">
+                <select value={aplicarState} onChange={handleValueAplicar}>
+                  <option value="1">Aplicar documento en general</option>
+                  <option value="2">Aplicar documento a un usuario</option>
+                </select>
+              </div>
+              {aplicarState === "2" && (
+                <>
+                  <div className="inputName  animate__animated animate__fadeIn">
+                    <input
+                      type="text"
+                      name={"inputCc"}
+                      onChange={handleIdentificacion}
+                      placeholder={"Identificación"}
+                      className={"inputCc"}
+                      defaultValue={identity}
+                    />
+                  </div>
+                  <div className="input_identify animate__animated animate__fadeIn">
+                    <input
+                      type="text"
+                      name={"inputName"}
+                      onChange={handleNombre}
+                      placeholder={"Nombre"}
+                      className={"inputName"}
+                      defaultValue={name}
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -708,7 +816,9 @@ export const DocumentMasterView = () => {
                         type="file"
                         onChange={(e) => converterFileBase64(e, card_id)}
                       ></input>
-                      Cargar Imagen
+                      {option[card_id][0].img === undefined
+                        ? "Cargar Imagen"
+                        : "Cambiar imagen"}
                     </div>
                     {option[card_id][0].img !== undefined && (
                       <img
@@ -743,27 +853,36 @@ export const DocumentMasterView = () => {
                   </div>
                 </div>
               )}
-              {option[card_id][0].optionValue === "Lista" && (
-                <div>
-                  <h1>{`lista${card_id}`}</h1>
+              {option[card_id][0].optionValue === "Fecha" && (
+                <div className="container_fecha">
+                  <div className="container_input">
+                    <h6 title={option[card_id][0].text} className={"textt"}>
+                      {option[card_id][0].titleCard}
+                    </h6>
+                    <div title={option[card_id][0].text}>
+                      <Help />
+                    </div>
+                  </div>
+                  <div className="container_sub_text">
+                    <div className="subContainer">
+                      <input
+                        onChange={(e) => handleDate(e, card_id)}
+                        type="datetime-local"
+                      ></input>
+                    </div>
+                  </div>
                 </div>
               )}
               {option[card_id][0].optionValue === "Tabla" && (
-                <>
-                  <input
-                    type="text"
-                    state={option}
-                    className={"titleColumn"}
-                    name={`text${card_id}`}
-                    onChange={(e) => handleOnChangeTitleCard(e, card_id)}
-                    placeholder={"Ingresa el titulo de la columna aqui"}
-                    defaultValue={option[card_id][0].titleCard}
-                    readOnly
-                  ></input>
-                </>
-              )}
-              {option[card_id][0].optionValue === "Tabla" && (
                 <div className="tabla-subContainer animate__animated animate__fadeIn">
+                  <div className="container_header">
+                    <h6 title={option[card_id][0].text} className={"textt"}>
+                      {option[card_id][0].titleCard}
+                    </h6>
+                    <div title={option[card_id][0].text}>
+                      <Help />
+                    </div>
+                  </div>
                   {option[card_id][0].tabla.row.map((id_column) => (
                     <div
                       className={
@@ -787,43 +906,23 @@ export const DocumentMasterView = () => {
                                 <input
                                   type="text"
                                   className={"celda_title_input"}
+                                  readOnly
                                   name={parseInt(`${id_row}${id_column}`)}
-                                  onChange={(e) =>
-                                    handletitleColumns(
-                                      e,
-                                      card_id,
-                                      `${id_column}${id_row}`
-                                    )
+                                  defaultValue={
+                                    option[card_id][0].tablaTypeCelda
+                                      .title_columna[
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ]
                                   }
                                   placeholder={"*Titulo de columna"}
                                 ></input>
                               </div>
                               <div className="linea"></div>
                             </>
-                          )}
-                          {option[card_id][0].tablaTypeCelda.celda[
-                            option[card_id][0].tablaTypeCelda.type.indexOf(
-                              parseInt(`${id_column}${id_row}`)
-                            )
-                          ] === "Título" && (
-                            <div className="celda_title">
-                              <div className="header_title">
-                                <input
-                                  type="text"
-                                  className={"celda_title_inputt"}
-                                  name={parseInt(`${id_row}${id_column}`)}
-                                  onChange={(e) =>
-                                    handletitleCelda(
-                                      e,
-                                      card_id,
-                                      `${id_column}${id_row}`
-                                    )
-                                  }
-                                  placeholder={"*Titulo de la celda"}
-                                ></input>
-                              </div>
-                              <div className="linea"></div>
-                            </div>
                           )}
                           {option[card_id][0].tablaTypeCelda.celda[
                             option[card_id][0].tablaTypeCelda.type.indexOf(
@@ -875,11 +974,55 @@ export const DocumentMasterView = () => {
                             )
                           ] === "Imagen" && (
                             <div className="imagen_container">
-                              <img
-                                className="imagen"
-                                src="https://intersindicalaragon.org/wp-content/uploads/icono-facebook.png"
-                                alt="texto descriptivo"
-                              />
+                              <div className="input_container_img">
+                                <input
+                                  className="input_img"
+                                  accept=".png, .jpg, .jpeg"
+                                  type="file"
+                                  onChange={(e) =>
+                                    converterFileBase64Table(
+                                      e,
+                                      card_id,
+                                      parseInt(`${id_column}${id_row}`)
+                                    )
+                                  }
+                                ></input>
+                                {option[card_id][0].tablaTypeCelda
+                                  .typeCeldaInfo[0][
+                                  option[
+                                    card_id
+                                  ][0].tablaTypeCelda.type.indexOf(
+                                    parseInt(`${id_column}${id_row}`)
+                                  )
+                                ].img === null
+                                  ? "Cargar Imagen"
+                                  : "Cambiar imagen"}
+                              </div>
+                              <div className="container_img">
+                                {option[card_id][0].tablaTypeCelda
+                                  .typeCeldaInfo[0][
+                                  option[
+                                    card_id
+                                  ][0].tablaTypeCelda.type.indexOf(
+                                    parseInt(`${id_column}${id_row}`)
+                                  )
+                                ].img !== null && (
+                                  <img
+                                    className="imagen"
+                                    src={
+                                      option[card_id][0].tablaTypeCelda
+                                        .typeCeldaInfo[0][
+                                        option[
+                                          card_id
+                                        ][0].tablaTypeCelda.type.indexOf(
+                                          parseInt(`${id_column}${id_row}`)
+                                        )
+                                      ].img
+                                    }
+                                    alt="texto descriptivo"
+                                  />
+                                )}
+                              </div>
                             </div>
                           )}
                           {option[card_id][0].tablaTypeCelda.celda[
@@ -904,11 +1047,46 @@ export const DocumentMasterView = () => {
                                 ></input>
                               </div>
                               <div className="imagen_container">
-                                <img
-                                  className="imagen"
-                                  src="https://intersindicalaragon.org/wp-content/uploads/icono-facebook.png"
-                                  alt="texto descriptivo"
-                                />
+                                <div className="input_container_img_title">
+                                  <input
+                                    className="input_img"
+                                    accept=".png, .jpg, .jpeg"
+                                    type="file"
+                                    onChange={(e) =>
+                                      converterFileBase64Table(
+                                        e,
+                                        card_id,
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    }
+                                  ></input>
+                                  {option[card_id][0].img === undefined
+                                    ? "Cargar Imagen"
+                                    : "Cambiar imagen"}
+                                </div>
+                                {option[card_id][0].tablaTypeCelda
+                                  .typeCeldaInfo[0][
+                                  option[
+                                    card_id
+                                  ][0].tablaTypeCelda.type.indexOf(
+                                    parseInt(`${id_column}${id_row}`)
+                                  )
+                                ].img !== null && (
+                                  <img
+                                    className="imagenes"
+                                    src={
+                                      option[card_id][0].tablaTypeCelda
+                                        .typeCeldaInfo[0][
+                                        option[
+                                          card_id
+                                        ][0].tablaTypeCelda.type.indexOf(
+                                          parseInt(`${id_column}${id_row}`)
+                                        )
+                                      ].img
+                                    }
+                                    alt="texto descriptivo"
+                                  />
+                                )}
                               </div>
                             </div>
                           )}
@@ -974,7 +1152,7 @@ export const DocumentMasterView = () => {
                                 <input
                                   type="text"
                                   autoComplete="off"
-                                  className={"celda_title_inputt"}
+                                  className={"celda_title_inputt1"}
                                   name={parseInt(`${id_row}${id_column}`)}
                                   onChange={(e) =>
                                     handleLink(
@@ -988,7 +1166,7 @@ export const DocumentMasterView = () => {
                                 <input
                                   type="text"
                                   autoComplete="off"
-                                  className={"celda_title_inputt"}
+                                  className={"celda_title_inputt2"}
                                   name={parseInt(`${id_row}${id_column}`)}
                                   onChange={(e) =>
                                     handleLinkDescription(
@@ -1028,6 +1206,39 @@ export const DocumentMasterView = () => {
                                     ].linkDescription
                                   }
                                 </a>
+                              </div>
+                            </div>
+                          )}
+                          {option[card_id][0].tablaTypeCelda.celda[
+                            option[card_id][0].tablaTypeCelda.type.indexOf(
+                              parseInt(`${id_column}${id_row}`)
+                            )
+                          ] === "Fecha" && (
+                            <div className="celda_title_text">
+                              <div className="header_titlee">
+                                <input
+                                  type="text"
+                                  className={"celda_title_inputt"}
+                                  name={parseInt(`${id_row}${id_column}`)}
+                                  onChange={(e) =>
+                                    handletitleCelda(
+                                      e,
+                                      card_id,
+                                      `${id_column}${id_row}`
+                                    )
+                                  }
+                                  placeholder={"*Titulo de la celda"}
+                                ></input>
+                              </div>
+                              <div className="text_body">
+                                <div className="linea"></div>
+                                <input type='date' onChange={(e) =>
+                                    handletextCelda(
+                                      e,
+                                      card_id,
+                                      `${id_column}${id_row}`
+                                    )
+                                  }></input>
                               </div>
                             </div>
                           )}

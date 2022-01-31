@@ -24,8 +24,7 @@ export const PopolProfile = ({ infoProfile, setInfoProfile, infoMenssages, setIn
   //   history.push('/translate')
   // };
   const handleProfile = ()=>{
-    history.push(`profile/${uuid}`);
-    console.log(uuid);
+    history.replace(`profile/${uuid}`);
     setInfoProfile(false);
   }
   // const handleMessage = ()=>{

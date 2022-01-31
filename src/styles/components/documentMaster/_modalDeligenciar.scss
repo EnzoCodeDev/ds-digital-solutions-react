@@ -1,23 +1,36 @@
 .document_master_index {
-    .container_input {
-        border-radius: 8px;
-        background-color: white;
-        border: 1px solid rgb(0, 0, 0);
-        margin: auto;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        width: 80%;
-        &:focus-within {
-            border: 2px solid black;
-            margin-top: -2px;
+    .container_header {
+        display: flex;
+        .type_select {
+            width: 50%;
+            .selected {
+                border: 0.5px solid black;
+                height: 30px;
+                margin-left: 25px;
+                margin-top: 15px;
+                width: 80%;
+            }
         }
-        .searchDocumentMaster {
-            border: 0px;
-            height: 35px;
-            padding: 8px;
-            width: 100%;
-            &:focus {
-                outline: none;
+        .container_input {
+            border-radius: 8px;
+            background-color: white;
+            border: 1px solid rgb(0, 0, 0);
+            margin: auto;
+            margin-top: 6px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            width: 70%;
+            &:focus-within {
+                border: 2px solid black;
+            }
+            .searchDocumentMaster {
+                border: 0px;
+                height: 35px;
+                padding: 8px;
+                width: 100%;
+                &:focus {
+                    outline: none;
+                }
             }
         }
     }
@@ -26,38 +39,34 @@
         justify-content: space-around;
         .inputCc {
             border: 0px;
-            background-color: white;
             border-bottom: 1px solid rgb(0, 0, 0);
+            box-sizing: border-box;
+            margin-bottom: 0px;
             margin: auto;
+            font-family: Arial, Helvetica, sans-serif;
             padding-top: 5px;
             padding-bottom: 5px;
             width: 40%;
-            &:focus-within {
-                border: 0px;
-                background-color: white;
+            transition: all 0.4s ease;
+            &:focus {
+                outline: none;
                 border-bottom: 1px solid rgb(0, 0, 0);
-                margin: auto;
-                padding-top: 5px;
-                padding-bottom: 5px;
-                width: 40%;
             }
         }
         .inputName {
             border: 0px;
-            background-color: white;
             border-bottom: 1px solid rgb(0, 0, 0);
+            box-sizing: border-box;
+            margin-bottom: 0px;
             margin: auto;
+            font-family: Arial, Helvetica, sans-serif;
             padding-top: 5px;
             padding-bottom: 5px;
             width: 40%;
-            &:focus-within {
-                border: 0px;
-                background-color: white;
+            transition: all 0.4s ease;
+            &:focus {
+                outline: none;
                 border-bottom: 1px solid rgb(0, 0, 0);
-                margin: auto;
-                padding-top: 5px;
-                padding-bottom: 5px;
-                width: 40%;
             }
         }
     }

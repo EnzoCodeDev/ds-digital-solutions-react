@@ -66,7 +66,6 @@ export const ViewDocumentMaster = (uuid) => {
       .then(function (response) {
         let documentMaster = response.data;
         dispatch(viewDocumentMaster(documentMaster));
-        console.log(documentMaster);
       })
       .catch(function (response) {
         console.log(response);
@@ -82,72 +81,513 @@ const viewDocumentMaster = (documentMaster) => ({
   type: types.documentViewDocumentMaster,
   payload: documentMaster,
 });
-export const DocumentMasterInfoNew = (documentHead, name, identity, option) => {
+export const DocumentMasterInfoNew = (
+  documentMasterHead,
+  dataBasic,
+  dataBasicCount,
+  aplicarState,
+  nombre,
+  identificacion,
+  option
+) => {
   return async (dispatch) => {
-    for (let i = 0; i < option.length; i++) {
-      if (option[i][0].optionValue === "Tabla") {
-        if (option[i][0].titleCard === "") {
-          Swal.fire(
-            "Falta información",
-            `Falta el titulo en una tabla`,
-            "error"
-          );
-          return;
-        }
-      }
-      if (option[i][0].optionValue === "Texto") {
-        if (option[i][0].titleCard === "") {
-          Swal.fire(
-            "Falta información",
-            `Falta el titulo en una caja texto`,
-            "error"
-          );
-          return;
-        }
-        if (option[i][0].text === "") {
-          Swal.fire(
-            "Falta información",
-            `Falta la descripcion en una caja de texto`,
-            "error"
-          );
-          return;
-        }
-      }
-      // if (option[i][0].optionValue === "Imagen") {
-      // }
-      if (option[i][0].optionValue === "Link") {
-        if (option[i][0].link === "") {
-          Swal.fire(
-            "Falta información",
-            `Falta el link en una caja texto`,
-            "error"
-          );
-          return;
-        }
-        if (option[i][0].linkDescription === "") {
-          Swal.fire(
-            "Falta información",
-            `Falta la descripcion del link en una caja de texto`,
-            "error"
-          );
-          return;
-        }
-      }
-      // if (option[i][0].optionValue === "Lista") {
-      // }
+    if (
+      dataBasic[0][0].option === "Lorem ipsum dolor" ||
+      dataBasic[0][0].option === "0"
+    ) {
+      Swal.fire("Falta el proceso", `Falta el proceso del documento`, "error");
+      return;
     }
-    //Esta es la validacion de los datos del usuario antes de enviar al backend
-    let nombre = name === "" ? null : name;
-    let identificacion = identity === "" ? null : identity;
+    if (
+      dataBasic[1][0].option === "Lorem ipsum dolor" ||
+      dataBasic[1][0].option === "0" ||
+      dataBasic[1][0].option.length === 0
+    ) {
+      Swal.fire(
+        "Falta el subproceso",
+        `Falta el subproceso del documento`,
+        "error"
+      );
+      return;
+    }
+    for (let i = 0; i < dataBasicCount.length; i++) {
+      if (dataBasic[dataBasicCount[i] - 1][0].type === "Texto") {
+        if (
+          dataBasic[dataBasicCount[i] - 1][0].info === null ||
+          dataBasic[dataBasicCount[i] - 1][0].info.trim() === ""
+        ) {
+          Swal.fire(
+            "Error",
+            "Falta la descripción de uno de los datos basicos tipo texto",
+            "error"
+          );
+          return;
+        }
+      }
+      if (dataBasic[dataBasicCount[i] - 1][0].type === "Link") {
+        if (
+          dataBasic[dataBasicCount[i] - 1][0].link === undefined ||
+          dataBasic[dataBasicCount[i] - 1][0].link.trim() === ""
+        ) {
+          Swal.fire(
+            "Error",
+            "Falta el link en uno de los datos basicos",
+            "error"
+          );
+          return;
+        }
+      }
+    }
+    if (aplicarState === "2") {
+      if (nombre.trim().length === 0) {
+        Swal.fire(
+          "Falta información del usuario",
+          `Falta el nombre del usuario para aplicar el documento`,
+          "error"
+        );
+        return;
+      }
+      if (identificacion.trim().length === 0) {
+        Swal.fire(
+          "Falta información del usuario",
+          `Falta la identificacion del usuario para aplicar el documento`,
+          "error"
+        );
+        return;
+      }
+    }
+    for (let i = 0; i < option.length; i++) {
+      if (option[i][0].optionValue !== "undefined") {
+        if (option[i][0].optionValue === "Texto") {
+          if (
+            option[i][0].textDescription === undefined ||
+            option[i][0].textDescription.trim() === ""
+          ) {
+            Swal.fire(
+              "Falta la descripción",
+              `Falta la descripción de una de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              "error"
+            );
+            return;
+          }
+        }
+        if (option[i][0].optionValue === "Imagen") {
+          if (option[i][0].img === undefined) {
+            Swal.fire(
+              "Falta la imagen",
+              `Falta cargar la imagen de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              "error"
+            );
+            return;
+          }
+        }
+        if (option[i][0].optionValue === "Link") {
+          if (
+            option[i][0].link === undefined ||
+            option[i][0].link.trim() === ""
+          ) {
+            Swal.fire(
+              "Falta el enlace",
+              `Falta el enlace del link de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              "error"
+            );
+            return;
+          }
+          if (
+            option[i][0].linkDescription === undefined ||
+            option[i][0].linkDescription.trim() === ""
+          ) {
+            Swal.fire(
+              "Falta la descripción",
+              `Falta la descripción del link de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              "error"
+            );
+            return;
+          }
+        }
+        if (option[i][0].optionValue === "Archivo") {
+          if (option[i][0].archivo === undefined) {
+            Swal.fire(
+              "Falta el archivo",
+              `Falta el archivo de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              "error"
+            );
+            return;
+          }
+        }
+        if (option[i][0].optionValue === "Fecha") {
+          if (
+            option[i][0].date === undefined ||
+            option[i][0].date.trim() === ""
+          ) {
+            Swal.fire(
+              "Falta la fecha",
+              `Falta la fecha de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              "error"
+            );
+            return;
+          }
+        }
+        //Logica para la tabla no le falte ni un solo dato es un poco compleja por la parte dinamica
+        if (option[i][0].optionValue === "Tabla") {
+          //Cuantas columnas hay
+          let arrayTable = [];
+          for (let c = 1; c < option[i][0].tabla.column.length + 1; c++) {
+            //cuantas filas hay
+            for (let r = 1; r < option[i][0].tabla.row.length + 1; r++) {
+              //Validar  celda tipo titulo texto
+              if (
+                option[i][0].tablaTypeCelda.celda[
+                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                ] === "Título texto"
+              ) {
+                if (
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].titleCelda === null ||
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].titleCelda.trim() === ""
+                ) {
+                  Swal.fire(
+                    "Falta el titulo",
+                    `Falta el titulo de una de la(s) celdas`,
+                    "error"
+                  );
+                  return;
+                }
+                if (
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].textDescription === null ||
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].textDescription.trim() === ""
+                ) {
+                  Swal.fire(
+                    "Falta la descripción",
+                    `Falta la descripción de una de la(s) celdas`,
+                    "error"
+                  );
+                  return;
+                }
+                arrayTable.push({
+                  type: "Título texto",
+                  index: parseInt(`${r}${c}`),
+                  titleCelda:
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].titleCelda,
+                  textDescription:
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].textDescription,
+                });
+              }
+              //Validar celda tipo imagen
+              if (
+                option[i][0].tablaTypeCelda.celda[
+                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                ] === "Imagen"
+              ) {
+                if (
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].img === null ||
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].img.trim() === ""
+                ) {
+                  Swal.fire(
+                    "Falta el imagen",
+                    `Falta la imagen en una de la(s) celdas`,
+                    "error"
+                  );
+                  return;
+                }
+                arrayTable.push({
+                  type: "Imagen",
+                  index: parseInt(`${r}${c}`),
+                  img: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].img,
+                  img_extesion: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].img_extension,
+                });
+              }
+              //Validar celda tipo titulo imagen
+              if (
+                option[i][0].tablaTypeCelda.celda[
+                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                ] === "Imagen título"
+              ) {
+                if (
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].titleCelda === null ||
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].titleCelda.trim() === ""
+                ) {
+                  Swal.fire(
+                    "Falta el titulo",
+                    `Falta el titulo de una de la(s) celdas tipo titulo imagen`,
+                    "error"
+                  );
+                  return;
+                }
+                if (
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].img === null ||
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].img.trim() === ""
+                ) {
+                  Swal.fire(
+                    "Falta la imagen",
+                    `Falta la imagen de una de la(s) celdas`,
+                    "error"
+                  );
+                  return;
+                }
+                arrayTable.push({
+                  type: "Imagen titulo",
+                  index: parseInt(`${r}${c}`),
+                  titleCelda:
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].titleCelda,
+                  img: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].img,
+                  img_extesion: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].img_extension,
+                });
+              }
+              //validar celda tipo link
+              if (
+                option[i][0].tablaTypeCelda.celda[
+                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                ] === "Link"
+              ) {
+                if (
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].link === null ||
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].link.trim() === ""
+                ) {
+                  Swal.fire(
+                    "Falta el enlace",
+                    `Falta el enlace en una de la(s) celdas`,
+                    "error"
+                  );
+                  return;
+                }
+                if (
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].linkDescription === null ||
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].linkDescription.trim() === ""
+                ) {
+                  Swal.fire(
+                    "Falta la descripción",
+                    `Falta la descripción de un enlace de una de la(s) celdas`,
+                    "error"
+                  );
+                  return;
+                }
+                arrayTable.push({
+                  type: "link",
+                  index: parseInt(`${r}${c}`),
+                  link: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].link,
+                  linkDescription:
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].linkDescription,
+                });
+              }
+              //Validar celda tipo fecha
+              if (
+                option[i][0].tablaTypeCelda.celda[
+                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                ] === "Fecha"
+              ) {
+                if (
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].titleCelda === null ||
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].titleCelda.trim() === ""
+                ) {
+                  Swal.fire(
+                    "Falta el titulo",
+                    `Falta el titulo de una de la(s) celdas tipo fecha`,
+                    "error"
+                  );
+                  return;
+                }
+                if (
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].textDescription === null ||
+                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].textDescription.trim() === ""
+                ) {
+                  Swal.fire(
+                    "Falta la fecha",
+                    `Falta la fecha de una de la(s) celdas`,
+                    "error"
+                  );
+                  return;
+                }
+                arrayTable.push({
+                  type: "fecha",
+                  index: parseInt(`${r}${c}`),
+                  titleCelda:
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].titleCelda,
+                  fecha:
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].textDescription,
+                });
+              }
+              if (
+                option[i][0].tablaTypeCelda.celda[
+                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                ] === "Lista"
+              ) {
+                console.log(
+                  option[i][0].tablaTypeCelda.lista[
+                    option[i][0].tablaTypeCelda.type.indexOf(
+                      parseInt(`${r}${c}`)
+                    )
+                  ].length
+                );
+                // for (
+                //   let i = 1;
+                //   i <
+                //   option[i][0].tablaTypeCelda.lista[
+                //     option[i][0].tablaTypeCelda.type.indexOf(
+                //       parseInt(`${r}${c}`)
+                //     )
+                //   ].length;
+                //   i++
+                // ) {
+                //   if(option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                //     option[i][0].tablaTypeCelda.type.indexOf(
+                //       parseInt(`${r}${c}`)
+                //     )
+                //   ].lista[i] === null || option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                //     option[i][0].tablaTypeCelda.type.indexOf(
+                //       parseInt(`${r}${c}`)
+                //     )
+                //   ].lista[i].trim() === ''){
+                //     Swal.fire(
+                //       "Falta información en la lista",
+                //       `Falta información en una de las listas de una de la(s) celdas`,
+                //       "error"
+                //     );
+                //     return;
+                //   }
+                // }
+              }
+            }
+          }
+          option[i][0].tablasValue = arrayTable;
+        }
+      }
+    }
+    //Datos del usuario
+    let name = aplicarState === "1" ? null : nombre;
+    let identity = aplicarState === "1" ? null : identificacion;
+    //Datos del proceso y sub proceso
+    let proceso = dataBasic[0][0].option;
+    let subProceso = dataBasic[1][0].option;
     let token = localStorage.getItem("token_bearer");
     axios
       .post(
-        `${baseUrl}/datos/store `,
+        `${baseUrl}/datos/store`,
         {
-          documentHead,
-          nombre,
-          identificacion,
+          documentMasterHead,
+          dataBasic,
+          dataBasicCount,
+          aplicarState,
+          name,
+          identity,
           option,
+          proceso,
+          subProceso,
         },
         {
           //En la peticion post se tuvo que enviar estos encabezados ya que no los queria recibir

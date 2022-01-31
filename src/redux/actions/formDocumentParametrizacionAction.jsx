@@ -65,7 +65,7 @@ export const NewDocumetMaster = (
     ) {
       Swal.fire("Error", "Falta informacion del formulario", "error");
       return;
-    };
+    }
     //Validacion de los titulos de la tarjetas
     for (let i = 0; i < optionTarget.length; i++) {
       if (optionTarget[i][0].optionValue !== "undefined") {
@@ -76,19 +76,27 @@ export const NewDocumetMaster = (
             "error"
           );
           return;
-        };
-      };
-    };
+        }
+        if (optionTarget[i][0].text.length === 0) {
+          Swal.fire(
+            "Error",
+            `Falta la descripcion del item en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+            "error"
+          );
+          return;
+        }
+      }
+    }
     //Validacion de los datos del proceso
     if (process_option.trim().length === 0) {
       Swal.fire("Error", "Por favor selecciona un proceso", "error");
       return;
-    };
+    }
     //Validacion de los datos del proceso
     if (sub_process_option.trim().length === 0) {
       Swal.fire("Error", "Por favor selecciona un Subproceso", "error");
       return;
-    };
+    }
     //Validacion de los datos basicos
     for (let i = 0; i < dataBasicCount.length; i++) {
       if (dataBasic[dataBasicCount[i] - 1][0].title.trim() === "") {
@@ -98,7 +106,7 @@ export const NewDocumetMaster = (
           "error"
         );
         return;
-      };
+      }
       if (dataBasic[dataBasicCount[i] - 1][0].type === "Link") {
         if (dataBasic[dataBasicCount[i] - 1][0].info === null) {
           Swal.fire(
@@ -107,7 +115,7 @@ export const NewDocumetMaster = (
             "error"
           );
           return;
-        };
+        }
         if (dataBasic[dataBasicCount[i] - 1][0].info.trim() === "") {
           Swal.fire(
             "Error",
@@ -115,9 +123,9 @@ export const NewDocumetMaster = (
             "error"
           );
           return;
-        };
-      };
-    };
+        }
+      }
+    }
     const data_basic = [...dataBasic];
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario
@@ -214,7 +222,7 @@ export const UpdateDocumentMaster = (
     ) {
       Swal.fire("Error", "Falta informacion del formulario", "error");
       return;
-    };
+    }
     //Validacion de los titulos de la tarjetas
     for (let i = 0; i < optionTarget.length; i++) {
       if (optionTarget[i][0].optionValue !== "undefined") {
@@ -226,18 +234,28 @@ export const UpdateDocumentMaster = (
           );
           return;
         };
+        if (optionTarget[i][0].optionValue !== "Tabla") {
+          if (optionTarget[i][0].text.length === 0) {
+            Swal.fire(
+              "Error",
+              `Falta la descripcion del item en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+              "error"
+            );
+            return;
+          };
+        };
       };
-    };
+    }
     //Validacion de los datos del proceso
     if (process_option.trim().length === 0) {
       Swal.fire("Error", "Por favor selecciona un proceso", "error");
       return;
-    };
+    }
     //Validacion de los datos del proceso
     if (sub_process_option.trim().length === 0) {
       Swal.fire("Error", "Por favor selecciona un Subproceso", "error");
       return;
-    };
+    }
     //Validacion de los datos basicos
     for (let i = 0; i < dataBasicCount.length; i++) {
       if (dataBasic[dataBasicCount[i] - 1][0].title.trim() === "") {
@@ -247,7 +265,7 @@ export const UpdateDocumentMaster = (
           "error"
         );
         return;
-      };
+      }
       if (dataBasic[dataBasicCount[i] - 1][0].type === "Link") {
         if (dataBasic[dataBasicCount[i] - 1][0].info === null) {
           Swal.fire(
@@ -256,7 +274,7 @@ export const UpdateDocumentMaster = (
             "error"
           );
           return;
-        };
+        }
         if (dataBasic[dataBasicCount[i] - 1][0].info.trim() === "") {
           Swal.fire(
             "Error",
@@ -264,9 +282,9 @@ export const UpdateDocumentMaster = (
             "error"
           );
           return;
-        };
-      };
-    };
+        }
+      }
+    }
     const data_basic = [...dataBasic];
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario

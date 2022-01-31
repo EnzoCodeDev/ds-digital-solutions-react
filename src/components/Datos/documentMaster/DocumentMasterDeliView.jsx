@@ -95,11 +95,16 @@ export const DocumentMasterDeliView = () => {
   const { img_header } = useSelector((state) => state.auth);
   const documentMasterHead = documentMaster.DocumentMasterHead;
   const documentMasterInfo = documentMaster.DocumentMasterInfo;
+  const proceso =
+    documentMaster.proceso === undefined ? "" : documentMaster.proceso.process;
+  const subProceso =
+    documentMaster.Sub_proceso === undefined
+      ? ""
+      : documentMaster.Sub_proceso.subProceso;
   //Renderizado de los datos basicos de la aplicacion si vienen en el dispacth
   useEffect(() => {
     let array = [];
-    if (documentMasterHead.data_basic === null) {
-    } else {
+    if (documentMasterHead.data_basic !== null) {
       array.push(...JSON.parse(documentMasterHead.data_basic));
       setDataBasicCount(JSON.parse(documentMasterHead.position_data_basic));
       setDataBasic([...array]);
@@ -214,7 +219,7 @@ export const DocumentMasterDeliView = () => {
                 DocumentMasterBody.type_celda !== null
                   ? DocumentMasterBody.type_celda
                   : JSON.stringify(["0", "Título"]),
-              typeCeldaInfo: JSON.parse(arrayInfo[0].card_info_table),
+              // typeCeldaInfo: JSON.parse(arrayInfo[0].card_info_table),
             },
           },
         ]);
@@ -324,26 +329,20 @@ export const DocumentMasterDeliView = () => {
                   <h6 className="celda_title_inputt">{"Proceso"}</h6>
                 </div>
                 <div className="text_body">
-                  {documentMasterHead.process_type === "Texto" ? (
-                    <>
-                      <div className="linea1"></div>
-                      <p>{documentMasterHead.process_description} </p>
-                    </>
-                  ) : (
-                    <>
-                      <div className="linea2"></div>
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={`${documentMasterHead.process_description}`}
-                      >
-                        {documentMasterHead.process_description}{" "}
-                      </a>
-                    </>
-                  )}
+                  <div className="linea3"></div>
+                  <p>{proceso} </p>
                 </div>
               </div>
-              {dataBasicCount.map((proceso_id) => (
+              <div className="celda_title_text">
+                <div className="header_titlee">
+                  <h6 className="celda_title_inputt">{"Sub proceso"}</h6>
+                </div>
+                <div className="text_body">
+                  <div className="linea3"></div>
+                  <p>{subProceso} </p>
+                </div>
+              </div>
+              {/* {dataBasicCount.map((proceso_id) => (
                 <div key={proceso_id} className="celda_title_text">
                   <div className="header_titlee">
                     <h6 className="celda_title_inputt">
@@ -377,7 +376,7 @@ export const DocumentMasterDeliView = () => {
                     </div>
                   )}
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>
@@ -387,7 +386,68 @@ export const DocumentMasterDeliView = () => {
               <h6 className="titleColumn">{option[card_id][0].titleCard}</h6>
             )}
             <div className="tabla-container ">
-              {option[card_id][0].optionValue === "Tabla" && (
+              {option[card_id][0].optionValue === "Texto" && (
+                <div className="container_text">
+                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                  <div className="container_sub_text">
+                    <div className="subContainer">
+                      <h6 className="text">{option[card_id][0].text}</h6>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {option[card_id][0].optionValue === "Link" && (
+                <div className="container_link">
+                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                  <div className="container_sub_link">
+                    <div className="subContainer">
+                      <a
+                        target="_blank"
+                        className="title"
+                        rel="noopener noreferrer"
+                        href={option[card_id][0].link}
+                      >
+                        {option[card_id][0].linkDescription}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {option[card_id][0].optionValue === "Imagen" && (
+                <div className="container_imagen_previous">
+                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                  <div className="container_imagen_sub_previous">
+                    <img
+                      className="imagen"
+                      src={option[card_id][0].img}
+                      alt="texto descriptivo"
+                    />
+                  </div>
+                </div>
+              )}
+              {option[card_id][0].optionValue === "Archivo" && (
+                <div className="container_archivo">
+                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                  <div className="container_sub_archivo">
+                    <div className="subContainer">
+                      <a
+                        target="_blank"
+                        className="title"
+                        rel="noopener noreferrer"
+                        href={option[card_id][0].archivo}
+                      >
+                        {option[card_id][0].descripcionArchivo}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {option[card_id][0].optionValue === "Lista" && (
+                <div>
+                  <h1>{`lista${card_id}`}</h1>
+                </div>
+              )}
+              {/* {option[card_id][0].optionValue === "Tabla" && (
                 <div className="tabla-subContainer animate__animated animate__fadeIn">
                   {option[card_id][0].tabla.row.map((id_column) => (
                     <div
@@ -619,68 +679,7 @@ export const DocumentMasterDeliView = () => {
                     </div>
                   ))}
                 </div>
-              )}
-              {option[card_id][0].optionValue === "Texto" && (
-                <div className="container_text">
-                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
-                  <div className="container_sub_text">
-                    <div className="subContainer">
-                      <h6 className="text">{option[card_id][0].text}</h6>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {option[card_id][0].optionValue === "Link" && (
-                <div className="container_link">
-                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
-                  <div className="container_sub_link">
-                    <div className="subContainer">
-                      <a
-                        target="_blank"
-                        className="title"
-                        rel="noopener noreferrer"
-                        href={option[card_id][0].link}
-                      >
-                        {option[card_id][0].linkDescription}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {option[card_id][0].optionValue === "Imagen" && (
-                <div className="container_imagen_previous">
-                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
-                  <div className="container_imagen_sub_previous">
-                    <img
-                      className="imagen"
-                      src={option[card_id][0].img}
-                      alt="texto descriptivo"
-                    />
-                  </div>
-                </div>
-              )}
-              {option[card_id][0].optionValue === "Archivo" && (
-                <div className="container_archivo">
-                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
-                  <div className="container_sub_archivo">
-                    <div className="subContainer">
-                      <a
-                        target="_blank"
-                        className="title"
-                        rel="noopener noreferrer"
-                        href={option[card_id][0].archivo}
-                      >
-                        {option[card_id][0].descripcionArchivo}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {option[card_id][0].optionValue === "Lista" && (
-                <div>
-                  <h1>{`lista${card_id}`}</h1>
-                </div>
-              )}
+              )} */}
             </div>
           </div>
         ))}

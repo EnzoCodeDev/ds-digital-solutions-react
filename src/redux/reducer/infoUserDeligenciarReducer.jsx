@@ -1,6 +1,7 @@
 import { types } from "../types/types";
 const initialState = {
   infoUser: {
+    aplicar: '1',
     name: "",
     identity: "",
   },

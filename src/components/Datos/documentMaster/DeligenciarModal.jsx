@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-modal";
 import { useHistory } from "react-router";
 import { uiCloseModal } from "../../../redux/actions/ui";
-import { InputText } from "../../mainInput/InputText";
 import { NewInfoUser } from "../../../redux/actions/infoUserDeligenciarAction";
 const customStyles = {
   content: {
@@ -23,7 +22,8 @@ export const DeligenciarModal = () => {
   const history = useHistory();
   const [identity, setIdentity] = useState("");
   const [name, setName] = useState("");
-  const [result, setResult] = useState({ documentMaster: [] });
+  const [aplicar, setAplicar] = useState("1");
+  const [result, setResult] = useState([]);
   const { modalOpen } = useSelector((state) => state.ui);
   const closeModal = () => {
     // TODO: cerrar el modal
@@ -47,11 +47,14 @@ export const DeligenciarModal = () => {
         timeout: 1500,
       })
       .then(function (response) {
-        setResult(response.data);
+        setResult(response.data.documentMaster);
       })
       .catch(function (response) {
         console.log(response);
       });
+  };
+  const handleValueAplicar = (e) => {
+    setAplicar(e.target.value);
   };
   const handleCc = (e) => {
     setIdentity(e.target.value);
@@ -60,7 +63,7 @@ export const DeligenciarModal = () => {
     setName(e.target.value);
   };
   const viewDocument = (uuid_document) => {
-    dispatch(NewInfoUser(name, identity));
+    dispatch(NewInfoUser(aplicar, name, identity));
     history.push(`/viewDocument/${uuid_document}`);
     dispatch(uiCloseModal());
   };
@@ -74,37 +77,50 @@ export const DeligenciarModal = () => {
       overlayClassName="modal-fondo"
     >
       <div className="document_master_index">
-        <div className="container_input">
-          <InputText
-            name={"inputSearch"}
-            onChange={searchDocumentMaster}
-            placeholder={"Buscar un documento para deligenciar"}
-            className={"searchDocumentMaster"}
-          />
+        <div className="container_header">
+          <div className="type_select">
+            <select onClick={handleValueAplicar} className="selected">
+              <option value="1">Aplicar documento en general</option>
+              <option value="2">Aplicar documento a un usuario</option>
+            </select>
+          </div>
+          <div className="container_input">
+            <input
+              type="text"
+              name={"inputSearch"}
+              onChange={searchDocumentMaster}
+              placeholder={"Buscar un documento para deligenciar"}
+              className={"searchDocumentMaster"}
+            />
+          </div>
         </div>
-        <div className="container_input_info">
-          <InputText
-            name={"inputCc"}
-            onChange={handleCc}
-            placeholder={"Identificación"}
-            className={"inputCc"}
-          />
-          <InputText
-            name={"inputName"}
-            onChange={handleName}
-            placeholder={"Nombre"}
-            className={"inputName"}
-          />
-        </div>
+        {aplicar === "2" && (
+          <div className="container_input_info animate__animated animate__fadeIn">
+            <input
+              type="text"
+              name={"inputCc"}
+              onChange={handleCc}
+              placeholder={"Identificación"}
+              className={"inputCc"}
+            />
+            <input
+              type="text"
+              name={"inputName"}
+              onChange={handleName}
+              placeholder={"Nombre"}
+              className={"inputName"}
+            />
+          </div>
+        )}
         <div className="container_busqueda">
           <div className="title_search">
-            {result.documentMaster[0] === undefined ? (
+            {result[0] === undefined ? (
               <h5>No se ha encontrado un dato que coincida </h5>
             ) : (
               <h5>Busqueda relacionadas</h5>
             )}
           </div>
-          {result.documentMaster.map((document) => (
+          {result.map((document) => (
             <div key={document.id} onClick={(e) => viewDocument(document.uuid)}>
               <h6>{document.format}</h6>
             </div>
