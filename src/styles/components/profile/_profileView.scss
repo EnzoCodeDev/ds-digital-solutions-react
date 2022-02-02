@@ -1,6 +1,8 @@
 .container_profile_view {
     height: 95vh;
     padding-top: 70px;
+    width: calc(100% - 65px);
+    margin-left: 65px;
     .container_sub_profile_view {
         border-radius: 10px;
         border: 1px solid black;

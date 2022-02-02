@@ -6,7 +6,8 @@
         padding-top: 72px;
         justify-content: center;
         margin: 0px;
-        width: 100vw;
+        width: calc(100% - 65px);
+        margin-left: 65px;
         .containerNewDocument {
             background-color: white;
             box-shadow: 0px 0px 3px 2px grey;

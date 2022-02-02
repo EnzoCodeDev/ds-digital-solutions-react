@@ -1,480 +1,610 @@
 .menu {
     align-items: flex-start;
     background-color: $secondColor;
+    box-shadow: 0px 0px 5px 5px grey;
     display: flex;
     flex-direction: column;
     height: 100vh;
     justify-content: flex-start;
-    left: -250px;
+    left: 0px;
     padding-top: 60px;
-    position: fixed;
+    position: absolute;
     transition: all 0.400s ease;
     top: 0;
-    overflow-x: scroll;
-    width: 250px;
+    overflow-x: hidden;
+    width: 65px;
     z-index: 10;
     &::-webkit-scrollbar {
-        display: none;
+        width: 9px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: #b3b3b3;
+        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    }
+    &::-webkit-scrollbar-thumb:active {
+        background-color: #999999;
+    }
+    &::-webkit-scrollbar-track {
+        background: $secondColor;
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track:hover {
+        background: $secondColor;
+    }
+    &::-webkit-scrollbar-track:active {
+        background: $secondColor;
     }
     &.active {
-        left: 0;
+        width: 240px;
     }
-    .container_parametrization {
-        width: 100%;
-        height: 15%;
-        margin-top: 5px;
-        .header {
-            color: #bfc1da;
-            height: 25px;
+    .container_menu {
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        .container_parametrization {
             width: 100%;
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 7px;
-            .icon {
-                margin-left: 25px;
-                font-size: 23px;
-            }
-            .maestros_title {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 15px;
-                margin-left: 10px;
-            }
-        }
-        ul {
-            color: white;
-            font-family: sans-serif;
-            font-weight: 250;
-            list-style: none;
-            margin-left: 5%;
-            padding: 0;
-            width: 100%;
-            li {
-                b {
-                    color: inherit;
-                    font-size: 13px;
-                    font-family: sans-serif;
-                    text-decoration: none;
-                    transition: all 0.2s ease;
+            .header {
+                .container_icon_principal {
+                    display: flex;
+                    height: 100%;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                    .icon {
+                        margin: 15px;
+                        font-size: 35px;
+                        color: #ffffff;
+                        &:hover {
+                            color: rgb(145, 145, 145);
+                        }
+                    }
+                    .container_content {
+                        display: flex;
+                        justify-content: space-between;
+                        color: #ffffff;
+                        height: 100%;
+                        width: 100%;
+                        margin: auto;
+                        transition: all 0.2s ease;
+                        span {
+                            font-family: Arial, Helvetica, sans-serif;
+                            color: #ffffff;
+                            margin: 5px;
+                            font-size: 13px;
+                        }
+                        .iconSubMenu {
+                            color: #ffffff;
+                            margin: 5px;
+                            transition: all 0.2s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                    }
                 }
-                .icon {
-                    float: right;
-                    margin-right: 10%;
-                    transition: all 0.5s ease;
-                    &.active {
-                        transform: rotate(90deg);
-                    }
-                    &.active {
-                        transform: rotate(90deg);
-                    }
+            }
+            .container_sub_menu {
+                display: none;
+                &.active {
+                    display: block;
                 }
                 ul {
-                    visibility: hidden;
-                    position: fixed;
-                    right: 90px;
-                    transition: right 0.2s linear 0.2s;
-                    opacity: 0;
-                    .icons {
-                        font-size: 9px;
-                    }
-                    &.active-sub-menu {
-                        transition: right 0.2s linear 0.2s;
-                        position: relative;
-                        right: 0;
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                    &.active-sub-menu2 {
-                        position: relative;
-                        visibility: visible;
-                        right: 0;
-                        transition: right 0.2s linear 0.2s;
-                        opacity: 1;
-                    }
-                }
-                &:hover {
-                    font-weight: 450;
-                    cursor: pointer;
-                    transition: all 0.2s ease;
-                }
-            }
-        }
-    }
-    .container_maestros {
-        width: 100%;
-        height: 23%;
-        margin-top: 5px;
-        .header {
-            color: #bfc1da;
-            height: 25px;
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 7px;
-            .icon {
-                margin-left: 25px;
-                font-size: 23px;
-            }
-            .maestros_title {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 15px;
-                margin-left: 55px;
-            }
-        }
-        ul {
-            color: white;
-            font-family: sans-serif;
-            font-weight: 250;
-            list-style: none;
-            margin-left: 5%;
-            padding: 0;
-            width: 100%;
-            li {
-                b {
-                    color: inherit;
-                    font-size: 13px;
+                    color: white;
                     font-family: sans-serif;
-                    text-decoration: none;
-                    transition: all 0.2s ease;
+                    font-weight: 250;
+                    list-style: none;
+                    padding: 0;
+                    margin-top: -10px;
+                    margin-bottom: -5px;
+                    width: 100%;
+                    .active {
+                        background-color: #353f50;
+                        cursor: default;
+                    }
+                    li {
+                        padding-left: 5%;
+                        padding-right: 5%;
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #353f50;
+                        }
+                        b {
+                            color: inherit;
+                            font-size: 13px;
+                            font-family: sans-serif;
+                            text-decoration: none;
+                            transition: all 0.2s ease;
+                        }
+                        .icon {
+                            float: right;
+                            margin-right: 10%;
+                            transition: all 0.5s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                    }
                 }
-                .icon {
-                    float: right;
-                    margin-right: 10%;
-                    transition: all 0.5s ease;
-                    &.active {
-                        transform: rotate(90deg);
+            }
+        }
+        .container_maestros {
+            width: 100%;
+            .header {
+                .container_icon_principal {
+                    display: flex;
+                    &:hover {
+                        cursor: pointer;
                     }
-                    &.active {
-                        transform: rotate(90deg);
+                    .icon {
+                        margin: 15px;
+                        font-size: 35px;
+                        color: #ffffff;
+                        &:hover {
+                            color: rgb(145, 145, 145);
+                            cursor: pointer;
+                        }
                     }
+                    .container_content {
+                        display: flex;
+                        justify-content: space-between;
+                        color: #ffffff;
+                        height: 100%;
+                        width: 100%;
+                        margin: auto;
+                        span {
+                            font-family: Arial, Helvetica, sans-serif;
+                            color: #ffffff;
+                            margin: 5px;
+                            font-size: 13px;
+                        }
+                        .iconSubMenu {
+                            color: #ffffff;
+                            margin: 5px;
+                            transition: all 0.2s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                    }
+                }
+            }
+            .container_sub_menu {
+                display: none;
+                &.active {
+                    display: block;
                 }
                 ul {
-                    visibility: hidden;
-                    position: fixed;
-                    right: 90px;
-                    transition: right 0.2s linear 0.2s;
-                    opacity: 0;
-                    .icons {
-                        font-size: 9px;
-                    }
-                    &.active-sub-menu {
-                        transition: right 0.2s linear 0.2s;
-                        position: relative;
-                        right: 0;
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                    &.active-sub-menu2 {
-                        position: relative;
-                        visibility: visible;
-                        right: 0;
-                        transition: right 0.2s linear 0.2s;
-                        opacity: 1;
-                    }
-                }
-                &:hover {
-                    font-weight: 450;
-                    cursor: pointer;
-                    transition: all 0.2s ease;
-                }
-            }
-        }
-    }
-    .visualizacion_container {
-        width: 100%;
-        height: 19%;
-        .header {
-            color: #bfc1da;
-            height: 25px;
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 7px;
-            .icon {
-                margin-left: 25px;
-            }
-            .visualizacion_title {
-                margin-left: 20px;
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 15px;
-            }
-        }
-        ul {
-            color: white;
-            font-family: sans-serif;
-            font-weight: 250;
-            list-style: none;
-            margin-left: 5%;
-            padding: 0;
-            width: 100%;
-            li {
-                b {
-                    color: inherit;
-                    font-size: 13px;
+                    color: white;
                     font-family: sans-serif;
-                    text-decoration: none;
+                    font-weight: 250;
+                    list-style: none;
+                    padding: 0;
+                    margin-top: -10px;
+                    margin-bottom: -5px;
+                    width: 100%;
+                    .active {
+                        background-color: #353f50;
+                        cursor: default;
+                    }
+                    li {
+                        padding-left: 5%;
+                        padding-right: 5%;
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #353f50;
+                        }
+                        b {
+                            color: inherit;
+                            font-size: 13px;
+                            font-family: sans-serif;
+                            text-decoration: none;
+                            transition: all 0.2s ease;
+                        }
+                        .icon {
+                            float: right;
+                            margin-right: 10%;
+                            transition: all 0.5s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                        ul {
+                            visibility: hidden;
+                            position: fixed;
+                            right: 90px;
+                            transition: right 0.2s linear 0.2s;
+                            opacity: 0;
+                        }
+                    }
                 }
-                .icon {
-                    float: right;
-                    margin-right: 10%;
-                    transition: all 0.5s ease;
-                    &.active {
-                        transform: rotate(90deg);
+            }
+        }
+        .visualizacion_container {
+            width: 100%;
+            .header {
+                .container_icon_principal {
+                    display: flex;
+                    &:hover {
+                        cursor: pointer;
                     }
-                    &.active {
-                        transform: rotate(90deg);
+                    .icon {
+                        margin: 15px;
+                        font-size: 35px;
+                        color: #ffffff;
+                        &:hover {
+                            color: rgb(145, 145, 145);
+                            cursor: pointer;
+                        }
                     }
+                    .container_content {
+                        display: flex;
+                        justify-content: space-between;
+                        color: #ffffff;
+                        height: 100%;
+                        width: 100%;
+                        margin: auto;
+                        span {
+                            font-family: Arial, Helvetica, sans-serif;
+                            color: #ffffff;
+                            margin: 5px;
+                            font-size: 13px;
+                        }
+                        .iconSubMenu {
+                            color: #ffffff;
+                            margin: 5px;
+                            transition: all 0.2s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                    }
+                }
+            }
+            .container_sub_menu {
+                display: none;
+                &.active {
+                    display: block;
                 }
                 ul {
-                    visibility: hidden;
-                    position: fixed;
-                    right: 90px;
-                    transition: right 0.2s linear 0.2s;
-                    opacity: 0;
-                    .icons {
-                        font-size: 9px;
-                    }
-                    &.active-sub-menu {
-                        transition: right 0.2s linear 0.2s;
-                        position: relative;
-                        right: 0;
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                    &.active-sub-menu2 {
-                        position: relative;
-                        visibility: visible;
-                        right: 0;
-                        transition: right 0.2s linear 0.2s;
-                        opacity: 1;
-                    }
-                }
-                &:hover {
-                    font-weight: 450;
-                    cursor: pointer;
-                }
-            }
-        }
-    }
-    .tareas_container {
-        width: 100%;
-        height: 12%;
-        .header {
-            color: #bfc1da;
-            height: 25px;
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 7px;
-            .icon {
-                margin-left: 25px;
-            }
-            .tareas_title {
-                margin-left: 45px;
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 15px;
-            }
-        }
-        ul {
-            color: white;
-            font-family: sans-serif;
-            font-weight: 250;
-            list-style: none;
-            margin-left: 5%;
-            padding: 0;
-            width: 100%;
-            li {
-                b {
-                    color: inherit;
-                    font-size: 13px;
+                    color: white;
                     font-family: sans-serif;
-                    text-decoration: none;
+                    font-weight: 250;
+                    list-style: none;
+                    margin-top: -10px;
+                    margin-bottom: -5px;
+                    padding: 0;
+                    width: 100%;
+                    li {
+                        padding-left: 5%;
+                        padding-right: 5%;
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #353f50;
+                        }
+                        b {
+                            color: inherit;
+                            font-size: 13px;
+                            font-family: sans-serif;
+                            text-decoration: none;
+                        }
+                        .icon {
+                            float: right;
+                            margin-right: 10%;
+                            transition: all 0.5s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                        ul {
+                            visibility: hidden;
+                            position: fixed;
+                            right: 90px;
+                            transition: right 0.2s linear 0.2s;
+                            opacity: 0;
+                            .icons {
+                                font-size: 9px;
+                            }
+                        }
+                        &:hover {
+                            font-weight: 450;
+                            cursor: pointer;
+                        }
+                    }
                 }
-                .icon {
-                    float: right;
-                    margin-right: 10%;
-                    transition: all 0.5s ease;
-                    &.active {
-                        transform: rotate(90deg);
+            }
+        }
+        .tareas_container {
+            width: 100%;
+            .header {
+                .container_icon_principal {
+                    display: flex;
+                    &:hover {
+                        cursor: pointer;
                     }
-                    &.active {
-                        transform: rotate(90deg);
+                    .icon {
+                        margin: 15px;
+                        font-size: 35px;
+                        color: #ffffff;
+                        &:hover {
+                            color: rgb(145, 145, 145);
+                            cursor: pointer;
+                        }
                     }
+                    .container_content {
+                        display: flex;
+                        justify-content: space-between;
+                        color: #ffffff;
+                        height: 100%;
+                        width: 100%;
+                        margin: auto;
+                        span {
+                            font-family: Arial, Helvetica, sans-serif;
+                            color: #ffffff;
+                            margin: 5px;
+                            font-size: 13px;
+                        }
+                        .iconSubMenu {
+                            color: #ffffff;
+                            margin: 5px;
+                            transition: all 0.2s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                    }
+                }
+            }
+            .container_sub_menu {
+                display: none;
+                &.active {
+                    display: block;
                 }
                 ul {
-                    visibility: hidden;
-                    position: fixed;
-                    right: 90px;
-                    transition: right 0.2s ease 0.2s;
-                    opacity: 0;
-                    .icons {
-                        font-size: 9px;
-                    }
-                    &.active-sub-menu {
-                        transition: right 0.2s ease 0.2s;
-                        position: relative;
-                        right: 0;
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                    &.active-sub-menu2 {
-                        position: relative;
-                        visibility: visible;
-                        right: 0;
-                        transition: right 0.2s ease 0.2s;
-                        opacity: 1;
-                    }
-                }
-                &:hover {
-                    font-weight: 450;
-                    cursor: pointer;
-                }
-            }
-        }
-    }
-    .evaluacion_container {
-        width: 100%;
-        height: 12%;
-        .header {
-            color: #bfc1da;
-            height: 25px;
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 7px;
-            .icon {
-                margin-left: 25px;
-            }
-            .evaluacion_title {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 15px;
-                margin-left: 30px;
-            }
-        }
-        ul {
-            color: white;
-            font-family: sans-serif;
-            font-weight: 250;
-            list-style: none;
-            margin-left: 5%;
-            padding: 0;
-            width: 100%;
-            li {
-                b {
-                    color: inherit;
-                    font-size: 13px;
+                    color: white;
                     font-family: sans-serif;
-                    text-decoration: none;
+                    font-weight: 250;
+                    list-style: none;
+                    margin-top: -10px;
+                    margin-bottom: -5px;
+                    padding: 0;
+                    width: 100%;
+                    li {
+                        padding-left: 5%;
+                        padding-right: 5%;
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #353f50;
+                        }
+                        b {
+                            color: inherit;
+                            font-size: 13px;
+                            font-family: sans-serif;
+                            text-decoration: none;
+                        }
+                        .icon {
+                            float: right;
+                            margin-right: 10%;
+                            transition: all 0.5s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                        ul {
+                            visibility: hidden;
+                            position: fixed;
+                            right: 90px;
+                            transition: right 0.2s ease 0.2s;
+                            opacity: 0;
+                            .icons {
+                                font-size: 9px;
+                            }
+                        }
+                        &:hover {
+                            font-weight: 450;
+                            cursor: pointer;
+                        }
+                    }
                 }
-                .icon {
-                    float: right;
-                    margin-right: 10%;
-                    transition: all 0.5s ease;
-                    &.active {
-                        transform: rotate(90deg);
+            }
+        }
+        .evaluacion_container {
+            width: 100%;
+            .header {
+                .container_icon_principal {
+                    display: flex;
+                    &:hover {
+                        cursor: pointer;
                     }
-                    &.active {
-                        transform: rotate(90deg);
+                    .icon {
+                        margin: 15px;
+                        font-size: 35px;
+                        color: #ffffff;
+                        &:hover {
+                            color: rgb(145, 145, 145);
+                            cursor: pointer;
+                        }
                     }
+                    .container_content {
+                        display: flex;
+                        justify-content: space-between;
+                        color: #ffffff;
+                        height: 100%;
+                        width: 100%;
+                        margin: auto;
+                        span {
+                            font-family: Arial, Helvetica, sans-serif;
+                            color: #ffffff;
+                            margin: 5px;
+                            font-size: 13px;
+                        }
+                        .iconSubMenu {
+                            color: #ffffff;
+                            margin: 5px;
+                            transition: all 0.2s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                    }
+                }
+                .evaluacion_title {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 15px;
+                    margin-left: 30px;
+                }
+            }
+            .container_sub_menu {
+                display: none;
+                &.active {
+                    display: block;
                 }
                 ul {
-                    visibility: hidden;
-                    position: fixed;
-                    right: 90px;
-                    transition: right 0.2s linear 0.2s;
-                    opacity: 0;
-                    .icons {
-                        font-size: 9px;
-                    }
-                    &.active-sub-menu {
-                        transition: right 0.2s linear 0.2s;
-                        position: relative;
-                        right: 0;
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                    &.active-sub-menu2 {
-                        position: relative;
-                        visibility: visible;
-                        right: 0;
-                        transition: right 0.2s linear 0.2s;
-                        opacity: 1;
-                    }
-                }
-                &:hover {
-                    font-weight: 450;
-                    cursor: pointer;
-                }
-            }
-        }
-    }
-    .accesos_container {
-        width: 100%;
-        height: 18%;
-        .header {
-            color: #bfc1da;
-            height: 25px;
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 7px;
-            .icon {
-                margin-left: 25px;
-            }
-            .accesos_title {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 15px;
-                margin-left: 40px;
-            }
-        }
-        ul {
-            color: white;
-            font-family: sans-serif;
-            font-weight: 250;
-            list-style: none;
-            margin-left: 5%;
-            padding: 0;
-            width: 100%;
-            li {
-                b {
-                    color: inherit;
-                    font-size: 13px;
+                    color: white;
                     font-family: sans-serif;
-                    text-decoration: none;
+                    font-weight: 250;
+                    list-style: none;
+                    margin-top: -10px;
+                    margin-bottom: -5px;
+                    padding: 0;
+                    width: 100%;
+                    li {
+                        padding-left: 5%;
+                        padding-right: 5%;
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #353f50;
+                        }
+                        b {
+                            color: inherit;
+                            font-size: 13px;
+                            font-family: sans-serif;
+                            text-decoration: none;
+                        }
+                        .icon {
+                            float: right;
+                            margin-right: 10%;
+                            transition: all 0.5s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                        ul {
+                            visibility: hidden;
+                            position: fixed;
+                            right: 90px;
+                            transition: right 0.2s linear 0.2s;
+                            opacity: 0;
+                            .icons {
+                                font-size: 9px;
+                            }
+                        }
+                        &:hover {
+                            font-weight: 450;
+                            cursor: pointer;
+                        }
+                    }
                 }
-                .icon {
-                    float: right;
-                    margin-right: 10%;
-                    transition: all 0.5s ease;
-                    &.active {
-                        transform: rotate(90deg);
+            }
+        }
+        .accesos_container {
+            width: 100%;
+            .header {
+                .container_icon_principal {
+                    display: flex;
+                    &:hover {
+                        cursor: pointer;
                     }
-                    &.active {
-                        transform: rotate(90deg);
+                    .icon {
+                        margin: 15px;
+                        font-size: 35px;
+                        color: #ffffff;
+                        &:hover {
+                            color: rgb(145, 145, 145);
+                            cursor: pointer;
+                        }
                     }
+                    .container_content {
+                        display: flex;
+                        justify-content: space-between;
+                        color: #ffffff;
+                        height: 100%;
+                        width: 100%;
+                        margin: auto;
+                        span {
+                            font-family: Arial, Helvetica, sans-serif;
+                            color: #ffffff;
+                            margin: 5px;
+                            font-size: 13px;
+                        }
+                        .iconSubMenu {
+                            color: #ffffff;
+                            margin: 5px;
+                            transition: all 0.2s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                    }
+                }
+            }
+            .container_sub_menu {
+                display: none;
+                &.active {
+                    display: block;
                 }
                 ul {
-                    visibility: hidden;
-                    position: fixed;
-                    right: 90px;
-                    transition: right 0.2s linear 0.2s;
-                    opacity: 0;
-                    .icons {
-                        font-size: 9px;
+                    color: white;
+                    font-family: sans-serif;
+                    font-weight: 250;
+                    list-style: none;
+                    margin-top: -10px;
+                    margin-bottom: -5px;
+                    padding: 0;
+                    width: 100%;
+                    li {
+                        padding-left: 5%;
+                        padding-right: 5%;
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #353f50;
+                        }
+                        b {
+                            color: inherit;
+                            font-size: 13px;
+                            font-family: sans-serif;
+                            text-decoration: none;
+                        }
+                        .icon {
+                            float: right;
+                            margin-right: 10%;
+                            transition: all 0.5s ease;
+                            &.active {
+                                transform: rotate(90deg);
+                            }
+                        }
+                        ul {
+                            visibility: hidden;
+                            position: fixed;
+                            right: 90px;
+                            transition: right 0.2s linear 0.2s;
+                            opacity: 0;
+                            .icons {
+                                font-size: 9px;
+                            }
+                        }
+                        &:hover {
+                            font-weight: 450;
+                            cursor: pointer;
+                        }
                     }
-                    &.active-sub-menu {
-                        transition: right 0.2s linear 0.2s;
-                        position: relative;
-                        right: 0;
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                    &.active-sub-menu2 {
-                        position: relative;
-                        visibility: visible;
-                        right: 0;
-                        transition: right 0.2s linear 0.2s;
-                        opacity: 1;
-                    }
-                }
-                &:hover {
-                    font-weight: 450;
-                    cursor: pointer;
                 }
             }
         }

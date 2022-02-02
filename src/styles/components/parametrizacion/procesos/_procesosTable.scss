@@ -1,5 +1,7 @@
 .container_table_procesos {
     padding-top: 70px;
+    width: calc(100% - 65px);
+    margin-left: 65px;
     table {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;

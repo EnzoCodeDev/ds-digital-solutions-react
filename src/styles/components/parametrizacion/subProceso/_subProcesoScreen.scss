@@ -1,5 +1,7 @@
 .container_sub_procesos {
     padding-top: 70px;
+    width: calc(100% - 70px);
+    margin-left: 65px;
     .sub_container_procesos {
         padding-top: 20px;
         .container_input_procesos {
