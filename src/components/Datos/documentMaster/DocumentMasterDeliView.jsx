@@ -825,16 +825,9 @@ export const DocumentMasterDeliView = () => {
                                     className="container_list"
                                   >
                                     <li>
-                                      <input
-                                        type="text"
-                                        state={option}
-                                        className={"celda_title_input"}
-                                        readOnly
-                                        name={`text${card_id}`}
-                                        placeholder={`Ingresa lista: ${
-                                          listCelda + 1
-                                        }`}
-                                        defaultValue={
+                                      <p>
+                                        {" "}
+                                        {
                                           option[card_id][0].tablaTypeCelda
                                             .typeCeldaInfo[0][
                                             option[
@@ -844,7 +837,7 @@ export const DocumentMasterDeliView = () => {
                                             )
                                           ].lista[listCelda]
                                         }
-                                      ></input>
+                                      </p>
                                     </li>
                                   </div>
                                 ))}

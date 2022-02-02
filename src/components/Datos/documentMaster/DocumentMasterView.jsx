@@ -1101,7 +1101,7 @@ export const DocumentMasterView = () => {
                                     className="container_list"
                                   >
                                     <li>
-                                      <input
+                                      <textarea
                                         type="text"
                                         state={option}
                                         className={"celda_title_input"}
@@ -1127,7 +1127,7 @@ export const DocumentMasterView = () => {
                                             )
                                           ].lista[listCelda]
                                         }
-                                      ></input>
+                                      ></textarea>
                                     </li>
                                   </div>
                                 ))}

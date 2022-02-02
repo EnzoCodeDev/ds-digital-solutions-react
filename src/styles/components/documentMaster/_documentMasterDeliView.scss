@@ -404,10 +404,10 @@
                     }
                     .header_title {
                         font-family: Arial, Helvetica, sans-serif;
-                        height: auto;
+                        height: 19px;
                         background-color: rgb(226, 226, 226);
                         .celda_title_input {
-                            height: 18px;
+                            height: 19px;
                             margin-top: 0px;
                             text-align: center;
                             font-size: 13px;
@@ -510,12 +510,16 @@
                         }
                     }
                     .list {
-                        margin-top: 15px;
+                        height: calc(100% - 19px);
                         margin: auto;
-                        margin-bottom: -17px;
                         padding: 0;
                         width: 100%;
                         ul {
+                            display: flex;
+                            flex-direction: column;
+                            flex-basis: auto;
+                            height: 100%;
+                            margin-bottom: 0px;
                             padding-inline-start: 0px;
                         }
                         .container_list {
@@ -523,11 +527,13 @@
                             display: flex;
                             flex-direction: column;
                             justify-content: flex-start;
+                            flex-basis: auto;
+                            height: 100%;
                             width: 100%;
                             border-bottom: 1px solid black;
                             li {
                                 margin-left: 20px;
-                                .celda_title_input {
+                                p {
                                     margin-top: 0px;
                                     text-align: start;
                                     font-size: 13px;
