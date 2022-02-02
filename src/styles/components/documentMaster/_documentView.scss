@@ -683,9 +683,6 @@
                 flex-wrap: nowrap;
                 margin: 0;
                 width: 100%;
-                &.active {
-                    height: 100%;
-                }
                 .column {
                     box-sizing: content-box;
                     border: 1px solid black;
@@ -871,9 +868,7 @@
                         }
                     }
                     .list {
-                        margin-top: 15px;
                         margin: auto;
-                        margin-bottom: -17px;
                         padding: 0;
                         width: 100%;
                         ul {
@@ -884,12 +879,13 @@
                             display: flex;
                             flex-direction: column;
                             justify-content: flex-start;
+                            height: auto;
                             width: 100%;
                             border-bottom: 1px solid black;
                             li {
                                 margin-left: 20px;
                                 .celda_title_input {
-                                    margin-top: 0px;
+                                    height: auto;
                                     text-align: start;
                                     font-size: 13px;
                                     border: 0;

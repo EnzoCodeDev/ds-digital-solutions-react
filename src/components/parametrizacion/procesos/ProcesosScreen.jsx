@@ -33,7 +33,8 @@ export const ProcesosScreen = () => {
       });
   }, [uuid, baseUrl]);
   //Guardar proceso
-  const handleSaveProceso = () => {
+  const handleSaveProceso = (e) => {
+    e.preventDefault();
     if (proceso.length < 1) {
       Swal.fire(
         "Upss...",

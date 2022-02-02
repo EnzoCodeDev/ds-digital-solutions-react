@@ -895,11 +895,7 @@ export const DocumentMasterView = () => {
                     >
                       {option[card_id][0].tabla.column.map((id_row) => (
                         <div className="column" key={id_row}>
-                          <div
-                            className={
-                              "columns " + (id_column === 1 && "active")
-                            }
-                          ></div>
+                          <div className={"columns "}></div>
                           {id_column === 1 && (
                             <>
                               <div className="header_title">
@@ -958,11 +954,7 @@ export const DocumentMasterView = () => {
                                     )
                                   }
                                   placeholder={"Descripcion"}
-                                  rows={
-                                    option[card_id][0].tabla.row.length === 1
-                                      ? "17"
-                                      : "6"
-                                  }
+                                  rows={"6"}
                                   cols={"30"}
                                 ></textarea>
                               </div>
@@ -1232,13 +1224,16 @@ export const DocumentMasterView = () => {
                               </div>
                               <div className="text_body">
                                 <div className="linea"></div>
-                                <input type='date' onChange={(e) =>
+                                <input
+                                  type="date"
+                                  onChange={(e) =>
                                     handletextCelda(
                                       e,
                                       card_id,
                                       `${id_column}${id_row}`
                                     )
-                                  }></input>
+                                  }
+                                ></input>
                               </div>
                             </div>
                           )}

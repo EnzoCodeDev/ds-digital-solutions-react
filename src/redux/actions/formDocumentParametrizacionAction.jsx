@@ -69,21 +69,36 @@ export const NewDocumetMaster = (
     //Validacion de los titulos de la tarjetas
     for (let i = 0; i < optionTarget.length; i++) {
       if (optionTarget[i][0].optionValue !== "undefined") {
-        if (optionTarget[i][0].titleCard.length === 0) {
-          Swal.fire(
-            "Error",
-            `Falta el titulo en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
-            "error"
-          );
-          return;
+        if (optionTarget[i][0].optionValue !== "Tabla") {
+          if (optionTarget[i][0].titleCard.length === 0) {
+            Swal.fire(
+              "Error",
+              `Falta el titulo en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+              "error"
+            );
+            return;
+          }
+          if (optionTarget[i][0].text.length === 0) {
+            Swal.fire(
+              "Error",
+              `Falta la descripcion del item en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+              "error"
+            );
+            return;
+          }
         }
-        if (optionTarget[i][0].text.length === 0) {
-          Swal.fire(
-            "Error",
-            `Falta la descripcion del item en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
-            "error"
-          );
-          return;
+      }
+      //Validar de que todos los titulos de la columna vengan
+      if (optionTarget[i][0].optionValue === "Tabla") {
+        for (let c = 1; c < optionTarget[i][0].tabla.column.length + 1; c++) {
+          if(optionTarget[i][0].tablaTypeCelda.title_columna[c].trim() === ''){
+            Swal.fire(
+              "Error",
+              `Falta el titulo de una de las columnas`,
+              "error"
+            );
+            return;
+          }
         }
       }
     }
@@ -108,15 +123,10 @@ export const NewDocumetMaster = (
         return;
       }
       if (dataBasic[dataBasicCount[i] - 1][0].type === "Link") {
-        if (dataBasic[dataBasicCount[i] - 1][0].info === null) {
-          Swal.fire(
-            "Error",
-            "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
-            "error"
-          );
-          return;
-        }
-        if (dataBasic[dataBasicCount[i] - 1][0].info.trim() === "") {
+        if (
+          dataBasic[dataBasicCount[i] - 1][0].info === null ||
+          dataBasic[dataBasicCount[i] - 1][0].info.trim() === ""
+        ) {
           Swal.fire(
             "Error",
             "Falta la descripcion del link de uno de los datos basicos o remueve el dato basico",
@@ -126,6 +136,7 @@ export const NewDocumetMaster = (
         }
       }
     }
+
     const data_basic = [...dataBasic];
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario
@@ -233,7 +244,7 @@ export const UpdateDocumentMaster = (
             "error"
           );
           return;
-        };
+        }
         if (optionTarget[i][0].optionValue !== "Tabla") {
           if (optionTarget[i][0].text.length === 0) {
             Swal.fire(
@@ -242,9 +253,23 @@ export const UpdateDocumentMaster = (
               "error"
             );
             return;
-          };
-        };
-      };
+          }
+        }
+      }
+      //Validar de que todos los titulos de la columna vengan
+      if (optionTarget[i][0].optionValue === "Tabla") {
+        for (let c = 1; c < optionTarget[i][0].tabla.column.length + 1; c++) {
+          if(optionTarget[i][0].tablaTypeCelda.title_columna[c].trim() === ''){
+            Swal.fire(
+              "Error",
+              `Falta el titulo de una de las columnas`,
+              "error"
+            );
+            return;
+          }
+        }
+
+      }
     }
     //Validacion de los datos del proceso
     if (process_option.trim().length === 0) {
@@ -289,7 +314,7 @@ export const UpdateDocumentMaster = (
     let token = localStorage.getItem("token_bearer");
     //Validaciones de frontend para el formulario
     axios
-      .post(
+      .put(
         `${baseUrl}/parametrizacion/update/${uuid}`,
         {
           uuid,

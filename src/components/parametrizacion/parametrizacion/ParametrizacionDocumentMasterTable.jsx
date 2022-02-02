@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
 import { useHistory } from "react-router";
-import { COLUMNS } from "./columsDocumentInfo";
+import { GROUPED_COLUMNS } from "./columsDocumentInfo";
 import { Navbar } from "../../navbar/Navbar";
 import { ButtonOpen } from "../../../helpers/ButtomOpen";
 import { DocumentMasterPaginateInit } from '../../../redux/actions/formDocumentTableParametrizacionActions';
@@ -32,7 +32,7 @@ export const  ParametrizacionDocumentMasterTable = () => {
   const { current_page, last_page, total, from, to } = useSelector(
     (state) => state.document.document.meta
   );
-  const columns = useMemo(() => COLUMNS, []);
+  const columns = useMemo(() => GROUPED_COLUMNS, []);
   const data = useMemo(() => datas, [datas]);
   //Esta configuracion es propia de laravel para paginacion
   // Paginacion siguiente

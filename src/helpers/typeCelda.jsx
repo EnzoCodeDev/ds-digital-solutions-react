@@ -5,7 +5,7 @@ export const indexTypeCelda = [
   32, 33, 34, 35, 36, 37, 38, 39,
 ];
 export const typeCelda = ["0", "Título texto"];
-export const listArray = [[0]];
+export const listArray = [[0],[0]];
 export const titleColumns = [
   "",
   "",

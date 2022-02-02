@@ -329,11 +329,12 @@ export const DocumentMasterInfoNew = (
                       parseInt(`${r}${c}`)
                     )
                   ].img,
-                  img_extesion: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
-                      parseInt(`${r}${c}`)
-                    )
-                  ].img_extension,
+                  img_extesion:
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].img_extension,
                 });
               }
               //Validar celda tipo titulo imagen
@@ -394,11 +395,12 @@ export const DocumentMasterInfoNew = (
                       parseInt(`${r}${c}`)
                     )
                   ].img,
-                  img_extesion: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
-                      parseInt(`${r}${c}`)
-                    )
-                  ].img_extension,
+                  img_extesion:
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].img_extension,
                 });
               }
               //validar celda tipo link
@@ -527,40 +529,46 @@ export const DocumentMasterInfoNew = (
                   option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
                 ] === "Lista"
               ) {
-                console.log(
+                for (
+                  let l = 0;
+                  l <
                   option[i][0].tablaTypeCelda.lista[
                     option[i][0].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
-                  ].length
-                );
-                // for (
-                //   let i = 1;
-                //   i <
-                //   option[i][0].tablaTypeCelda.lista[
-                //     option[i][0].tablaTypeCelda.type.indexOf(
-                //       parseInt(`${r}${c}`)
-                //     )
-                //   ].length;
-                //   i++
-                // ) {
-                //   if(option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                //     option[i][0].tablaTypeCelda.type.indexOf(
-                //       parseInt(`${r}${c}`)
-                //     )
-                //   ].lista[i] === null || option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                //     option[i][0].tablaTypeCelda.type.indexOf(
-                //       parseInt(`${r}${c}`)
-                //     )
-                //   ].lista[i].trim() === ''){
-                //     Swal.fire(
-                //       "Falta información en la lista",
-                //       `Falta información en una de las listas de una de la(s) celdas`,
-                //       "error"
-                //     );
-                //     return;
-                //   }
-                // }
+                  ].length;
+                  l++
+                ) {
+                  if (
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].lista[i] === null ||
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].lista[i].trim() === ""
+                  ) {
+                    Swal.fire(
+                      "Falta información en la lista",
+                      `Falta información en una de las listas de una de la(s) celdas`,
+                      "error"
+                    );
+                    return;
+                  }
+                }
+                arrayTable.push({
+                  type: "lista",
+                  index: parseInt(`${r}${c}`),
+                  lista:
+                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i][0].tablaTypeCelda.type.indexOf(
+                        parseInt(`${r}${c}`)
+                      )
+                    ].lista,
+                });
               }
             }
           }

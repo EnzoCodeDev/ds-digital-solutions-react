@@ -222,7 +222,7 @@
                             font-size: 13px;
                             margin-left: 2px;
                             margin-top: 2px;
-                            width: 50%;
+                            width: 100%;
                             height: 100%;
                             outline: none;
                             font-weight: 700;
@@ -232,29 +232,30 @@
                         display: flex;
                         padding-left: 7px;
                         padding-right: 7px;
-                        width: 50%;
-                        .linea1 {
-                            background-color: red;
-                            width: 2px;
-                            height: auto;
+                        width: 100%;
+                        .procesos {
+                            border-left: 3px solid rgb(238, 255, 0);
+                            padding-left: 7px;
+                            margin-bottom: 3px;
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-size: 13px;
                         }
-                        .linea2 {
-                            background-color: blue;
-                            width: 2px;
-                            height: auto;
+                        .text_data_basics {
+                            border-left: 3px solid rgb(255, 0, 0);
+                            padding-left: 7px;
+                            margin-bottom: 3px;
+                            font-family: Arial, Helvetica, sans-serif;
+                            font-size: 13px;
                         }
-                        .linea3 {
-                            background-color: rgb(187, 255, 0);
-                            width: 2px;
-                            height: auto;
-                        }
-                        p {
+                        .text_data_date {
+                            border-left: 3px solid rgb(102, 255, 0);
                             padding-left: 7px;
                             margin-bottom: 3px;
                             font-family: Arial, Helvetica, sans-serif;
                             font-size: 13px;
                         }
                         a {
+                            border-left: 3px solid blue;
                             padding-left: 7px;
                             margin-bottom: 3px;
                             font-family: Arial, Helvetica, sans-serif;
@@ -263,6 +264,107 @@
                         }
                     }
                 }
+            }
+        }
+    }
+    .container_text {
+        width: 100%;
+        height: 100%;
+        margin-top: 4px;
+        .textt {
+            margin-bottom: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .container_sub_text {
+            width: 100%;
+            border-left: 3px solid red;
+            .subContainer {
+                .text {
+                    margin-left: 9px;
+                    font-size: 13px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+    .container_link {
+        width: 100%;
+        height: 100%;
+        margin-top: 4px;
+        .textt {
+            margin-bottom: 0px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .container_sub_link {
+            width: 100%;
+            border-left: 3px solid rgb(18, 116, 245);
+            .subContainer {
+                a {
+                    text-decoration: underline;
+                    padding-left: 5px;
+                    font-size: 13px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+    .container_archivo {
+        width: 100%;
+        margin: auto;
+        .textt {
+            margin-bottom: 0px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .container_sub_archivo {
+            width: 100%;
+            border-left: 3px solid rgb(29, 172, 24);
+            .subContainer {
+                .download_file_container {
+                    display: flex;
+                    justify-content: flex-start;
+                    span {
+                        font-size: 16px;
+                        margin-left: 10px;
+                    }
+                    .icon {
+                        margin-left: 10px;
+                        &:hover {
+                            cursor: pointer;
+                            color: rgb(0, 7, 75);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .container_imagen_previous {
+        height: 100%;
+        width: 100%;
+        margin: auto;
+        .textt {
+            margin-bottom: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .container_imagen_sub_previous {
+            height: 100%;
+            width: 80%;
+            margin: auto;
+            text-align: center;
+            .imagen {
+                margin-top: 10px;
+                width: 100%;
+                object-fit: contain;
+                max-height: 350px;
             }
         }
     }
@@ -368,14 +470,14 @@
                         }
                     }
                     .imagen_container {
-                        height: 87%;
+                        height: 100%;
                         width: 100%;
                         text-align: center;
                         .imagen {
-                            height: 100%;
-                            width: 100%;
+                            max-width: 250px;
                             object-fit: contain;
-                            max-height: 100%;
+                            max-height: 200px;
+                            margin: 8px;
                             height: auto;
                         }
                     }
@@ -395,14 +497,14 @@
                             }
                         }
                         .imagen_container {
-                            height: 80%;
+                            height: 100%;
                             width: 100%;
                             text-align: center;
                             .imagen {
-                                height: 100%;
-                                width: 100%;
+                                margin: 8px;
+                                max-width: 250px;
                                 object-fit: contain;
-                                max-height: 100%;
+                                max-height: 200px;
                                 height: auto;
                             }
                         }
@@ -473,101 +575,6 @@
                         }
                     }
                 }
-            }
-        }
-    }
-    .container_text {
-        width: 100%;
-        height: 100%;
-        margin-top: 4px;
-        .textt {
-            margin-bottom: 0px;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: 700;
-            font-size: 13px;
-        }
-        .container_sub_text {
-            width: 100%;
-            border-left: 3px solid red;
-            .subContainer {
-                .text {
-                    margin-left: 9px;
-                    font-size: 13px;
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-weight: 400;
-                }
-            }
-        }
-    }
-    .container_link {
-        width: 100%;
-        height: 100%;
-        margin-top: 4px;
-        .textt {
-            margin-bottom: 0px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            font-weight: 700;
-            font-size: 13px;
-        }
-        .container_sub_link {
-            width: 100%;
-            border-left: 3px solid rgb(18, 116, 245);
-            .subContainer {
-                a {
-                    text-decoration: underline;
-                    padding-left: 5px;
-                    font-size: 13px;
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-weight: 400;
-                }
-            }
-        }
-    }
-    .container_archivo {
-        width: 100%;
-        margin: auto;
-        .textt {
-            margin-bottom: 0px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            font-weight: 700;
-            font-size: 13px;
-        }
-        .container_sub_archivo {
-            width: 100%;
-            border-left: 3px solid rgb(29, 172, 24);
-            .subContainer {
-                a {
-                    color: rgb(29, 172, 24);
-                    text-decoration: underline;
-                    padding-left: 5px;
-                    font-size: 13px;
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-weight: 400;
-                }
-            }
-        }
-    }
-    .container_imagen_previous {
-        height: 100%;
-        width: 100%;
-        margin: auto;
-        .textt {
-            margin-bottom: 0px;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: 700;
-            font-size: 13px;
-        }
-        .container_imagen_sub_previous {
-            height: 100%;
-            width: 80%;
-            margin: auto;
-            text-align: center;
-            .imagen {
-                margin-top: 10px;
-                width: 100%;
-                object-fit: contain;
-                max-height: 90%;
-                max-height: 400px;
             }
         }
     }

@@ -1,153 +1,77 @@
 import { format } from "date-fns";
-export const COLUMNS = [
-  {
-    Header: "Proceso",
-    Footer: "Proceso",
-    accessor: "process_select",
-    sticky: 'left',
-  },
-  {
-    Header: "Codigo",
-    Footer: "Codigo",
-    accessor: "code",
-    sticky: 'left'
-  },
-  {
-    Header: "Formato",
-    Footer: "Formato",
-    accessor: "format",
-  },
-  {
-    Header: "Plantilla",
-    Footer: "Plantilla",
-    accessor: "template",
-  },
-  {
-    Header: "Descripción",
-    Footer: "Descripción",
-    accessor: "description",
-
-  },
-  {
-    Header: "Elaborado",
-    Footer: "Elaborado",
-    accessor: "name",
-    sticky: 'left'
-  },
-  {
-    Header: "Fecha de creación",
-    Footer: "Fecha de creación",
-    accessor: "created_at",
-    sticky: 'center',
-    Cell: ({ value }) => {
-      return format(new Date(value), "dd/MM/yyyy");
-    },
-  },
-  {
-    Header: "Ultima actualización",
-    Footer: "Ultima actualización",
-    accessor: "updated_at",
-    Cell: ({ value }) => {
-      return format(new Date(value), "dd/MM/yyyy");
-    },
-  }
-];
 export const GROUPED_COLUMNS = [
   {
-    Header: "Filtros Home page",
+    Header: "Información del documento",
     Footer: "Name",
     columns: [
-      {
-        Header: "Sistema",
-        Footer: "First name",
-        accessor: "management_system",
-        sticky: 'left'
-      },
-      {
-        Header: "Tema",
-        Footer: "Last name",
-        accessor: "theme",
-        sticky: 'left'
-      },
-    ],
-  },
-  {
-    Header: "Descripcion informacion del documento",
-    Footer: "Info",
-    columns: [
-      {
-        Header: "Proceso",
-        Footer: "Date of birth",
-        accessor: "process",
-      },
-      {
-        Header: "Titulo",
-        Footer: "Country",
-        accessor: "title",
-      },
       {
         Header: "Codigo",
-        Footer: "Phone",
+        Footer: "Codigo",
         accessor: "code",
-      },
-      {
-        Header: "Revision",
-        Footer: "Email",
-        accessor: "revision",
-      },
-    ],
-  },
-  {
-    Header: "Flujo de informacio de documento",
-    Footer: "Name",
-    columns: [
-      {
-        Header: "Elaborado",
-        Footer: "First name",
-        accessor: "elaborate",
         sticky: 'left'
       },
       {
-        Header: "Revision",
-        Footer: "Last name",
-        accessor: "check",
-        sticky: 'left'
+        Header: "Formato",
+        Footer: "Formato",
+        accessor: "format",
       },
       {
-        Header: "Aprovado",
-        Footer: "Date of birth",
-        accessor: "approve",
-      },
-    ],
-  },
-  {
-    Header: "Fechas",
-    Footer: "Info",
-    columns: [
-      {
-        Header: "Frecuencia",
-        Footer: "Phone",
-        accessor: "frequencies",
+        Header: "Plantilla",
+        Footer: "Plantilla",
+        accessor: "template",
       },
       {
-        Header: "Cargue",
-        Footer: "Email",
+        Header: "Descripción",
+        Footer: "Descripción",
+        accessor: "description",
+    
+      }, 
+      {
+        Header: "Fecha de creación",
+        Footer: "Fecha de creación",
         accessor: "created_at",
+        sticky: 'center',
         Cell: ({ value }) => {
           return format(new Date(value), "dd/MM/yyyy");
         },
-    
       },
       {
-        Header: "Ultima actualizacion",
-        Footer: "Email",
-        accessor: "update_at",    
+        Header: "Ultima actualización",
+        Footer: "Ultima actualización",
+        accessor: "updated_at",
+        Cell: ({ value }) => {
+          return format(new Date(value), "dd/MM/yyyy");
+        },
+      } 
+    ],
+  },
+  {
+    Header: "Elaboro",
+    Footer: "Elaboro",
+    columns: [
+      {
+        Header: "Nombre",
+        Footer: "Nombre",
+        accessor: "name",
+        sticky: 'left'
       },
       {
-        Header: "Vencimiento",
+        Header: "Email",
         Footer: "Email",
-        accessor: "expiration",
+        accessor: "email",
+        sticky: 'left'
       },
     ],
-  }
+  },
+  {
+    Header: "Mas información",
+    Footer: "Estado",
+    columns: [
+      {
+        Header: "Estado",
+        Footer: "Estado",
+        accessor: "state_document",
+      },
+    ],
+  },
 ];

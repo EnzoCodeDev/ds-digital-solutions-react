@@ -221,8 +221,7 @@ export const ParametrizacionDocumentMasterCard = ({
     //Tambien para evitar gastar recursos en la base de datos
     let number = optionInfo[id][0].tabla.row.length * 10;
     let arrayTypeColumns = [];
-    arrayTypeColumns.push("0");
-    for (let i = 1; i <= number; i++) {
+    for (let i = 0; i <= number; i++) {
       arrayTypeColumns.push(
         optionInfo[id][0].tablaTypeCelda.celda[i] === undefined
           ? "Título texto"
@@ -232,7 +231,7 @@ export const ParametrizacionDocumentMasterCard = ({
     optionInfo[id][0].tablaTypeCelda.celda = arrayTypeColumns;
     let arrayTypeList = [];
     arrayTypeList.push([0]);
-    for (let i = 1; i <= number; i++) {
+    for (let i = 0; i <= number; i++) {
       arrayTypeList.push(
         optionInfo[id][0].tablaTypeCelda.lista[i] === undefined
           ? [0]

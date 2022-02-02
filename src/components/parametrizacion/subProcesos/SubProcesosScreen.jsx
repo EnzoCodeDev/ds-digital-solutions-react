@@ -126,7 +126,7 @@ export const SubProcesosScreen = () => {
     }
     let token = localStorage.getItem("token_bearer");
     axios
-      .post(
+      .put(
         `${baseUrl}/parametrizacion/update/subProceso/${uuid}`,
         {
           subProcesos,

@@ -32,7 +32,7 @@ export const ProcesosTabla = () => {
   useEffect(() => {
     let token = localStorage.getItem("token_bearer");
     axios
-      .get(`${baseUrl}/parametrizacion/index/process`, {
+      .get(`${baseUrl}/parametrizacion/index/process/table`, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

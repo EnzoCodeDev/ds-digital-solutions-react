@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import { Print } from "@material-ui/icons";
+import axios from "axios";
+import { GetApp } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { Navbar } from "../../navbar/Navbar";
@@ -12,6 +13,8 @@ import {
   indexTypeCelda,
 } from "../../../helpers/typeCelda";
 export const DocumentMasterDeliView = () => {
+  const baseUrl = process.env.REACT_APP_API_URL;
+  let token = localStorage.getItem("token_bearer");
   //Inicial state nuevo documento
   const inicialStateOption = [
     [
@@ -81,9 +84,10 @@ export const DocumentMasterDeliView = () => {
   const [arrayCard, setArrayCard] = useState([1]);
   //Manejo de las datas de cada tarjetas
   const [dataBasic, setDataBasic] = useState(initialStateDataBasic);
-  //Manejo del id de cada tarjeta del proceso
-  const [dataBasicCount, setDataBasicCount] = useState([]);
   //Manejo de la ultima tarjeta que se hizo
+  const [dataBasicCount, setDataBasicCount] = useState([]);
+  //Este state se hizo con el fin de soluccionar un bug que habia al cargar los datos de las tablas
+  const [cargueTable, setCargueTable] = useState(false);
   const { uuid } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -95,6 +99,10 @@ export const DocumentMasterDeliView = () => {
   const { img_header } = useSelector((state) => state.auth);
   const documentMasterHead = documentMaster.DocumentMasterHead;
   const documentMasterInfo = documentMaster.DocumentMasterInfo;
+  const documentMasterInfoTable =
+    documentMaster.DocumentMasterInfoTable === undefined
+      ? ""
+      : documentMaster.DocumentMasterInfoTable;
   const proceso =
     documentMaster.proceso === undefined ? "" : documentMaster.proceso.process;
   const subProceso =
@@ -159,6 +167,9 @@ export const DocumentMasterDeliView = () => {
               text_description: documentMasterInfo[i].text_description,
               link: documentMasterInfo[i].link,
               link_description: documentMasterInfo[i].link_description,
+              text_description_item:
+                documentMasterInfo[i].text_description_item,
+              date: documentMasterInfo[i].date,
               file: documentMasterInfo[i].file,
               file_description: documentMasterInfo[i].file_description,
               card_info_table: documentMasterInfo[i].card_info_table,
@@ -175,6 +186,11 @@ export const DocumentMasterDeliView = () => {
               arrayInfo[0].text_description === null
                 ? ""
                 : arrayInfo[0].text_description,
+            text_description_item:
+              arrayInfo[0].text_description_item === null
+                ? ""
+                : arrayInfo[0].text_description_item,
+            date: arrayInfo[0].date === null ? "" : arrayInfo[0].date,
             link: arrayInfo[0].link === null ? "" : arrayInfo[0].link,
             linkDescription:
               arrayInfo[0].link_description === null
@@ -219,7 +235,7 @@ export const DocumentMasterDeliView = () => {
                 DocumentMasterBody.type_celda !== null
                   ? DocumentMasterBody.type_celda
                   : JSON.stringify(["0", "Título"]),
-              // typeCeldaInfo: JSON.parse(arrayInfo[0].card_info_table),
+              typeCeldaInfo: JSON.parse(DocumentMasterBody.card_info_table),
             },
           },
         ]);
@@ -227,6 +243,7 @@ export const DocumentMasterDeliView = () => {
       setOption(arrayOptioValue);
       let newArray = JSON.parse(documentMaster.DocumentMasterHead.position);
       setArrayCard(newArray);
+      setCargueTable(true);
     }
     //Ignorando dependencias para que solo se llame una vez
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -239,6 +256,123 @@ export const DocumentMasterDeliView = () => {
     documentMaster.DocumentMasterBody,
     documentMaster.res,
   ]);
+  //Renderizar los datos de la tabla
+  if (cargueTable) {
+    for (let i = 0; i < option.length; i++) {
+      let optionInfo = [...option];
+      for (let t = 0; t < documentMasterInfoTable.length; t++) {
+        if (option[i][0].card_id === documentMasterInfoTable[t].id_card) {
+          if (documentMasterInfoTable[t].type_celda === "Título texto") {
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].titleCelda = documentMasterInfoTable[t].title_celda;
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].textDescription = documentMasterInfoTable[t].text_description;
+            setOption(optionInfo);
+          }
+          if (documentMasterInfoTable[t].type_celda === "Imagen") {
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].img = documentMasterInfoTable[t].img;
+            setOption(optionInfo);
+          }
+          if (documentMasterInfoTable[t].type_celda === "Imagen titulo") {
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].titleCelda = documentMasterInfoTable[t].title_celda;
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].img = documentMasterInfoTable[t].img;
+            setOption(optionInfo);
+          }
+          if (documentMasterInfoTable[t].type_celda === "link") {
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].link = documentMasterInfoTable[t].link;
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].linkDescription = documentMasterInfoTable[t].link_description;
+            setOption(optionInfo);
+          }
+          if (documentMasterInfoTable[t].type_celda === "fecha") {
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].titleCelda = documentMasterInfoTable[t].title_celda;
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].textDescription = documentMasterInfoTable[t].fecha;
+            setOption(optionInfo);
+          }
+          if (documentMasterInfoTable[t].type_celda === "lista") {
+            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
+              option[i][0].tablaTypeCelda.type.indexOf(
+                parseInt(documentMasterInfoTable[t].index_celda)
+              )
+            ].lista = JSON.parse(documentMasterInfoTable[t].lista);
+            setOption(optionInfo);
+          }
+        }
+      }
+    }
+    setCargueTable(false);
+  }
+  //Logica para descargar un archivo
+  const downloadFile = (e, title, archive) => {
+    //Obtener la extension del archivo
+    let archive_extension = archive.split("/")[0];
+    axios
+      .post(
+        `${baseUrl}/datos/download/file`,
+        {
+          archive,
+        },
+        {
+          responseType: "blob",
+          onDownloadProgress: (progressEvent) => {
+            var percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            console.log(percentCompleted);
+          },
+          //En la peticion post se tuvo que enviar estos encabezados ya que no los queria recibir
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        }
+      )
+      .then(function (response) {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${title}${archive_extension}`);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+  };
   return (
     <div>
       <Navbar />
@@ -330,7 +464,7 @@ export const DocumentMasterDeliView = () => {
                 </div>
                 <div className="text_body">
                   <div className="linea3"></div>
-                  <p>{proceso} </p>
+                  <p className="procesos">{proceso} </p>
                 </div>
               </div>
               <div className="celda_title_text">
@@ -339,10 +473,10 @@ export const DocumentMasterDeliView = () => {
                 </div>
                 <div className="text_body">
                   <div className="linea3"></div>
-                  <p>{subProceso} </p>
+                  <p className="procesos">{subProceso} </p>
                 </div>
               </div>
-              {/* {dataBasicCount.map((proceso_id) => (
+              {dataBasicCount.map((proceso_id) => (
                 <div key={proceso_id} className="celda_title_text">
                   <div className="header_titlee">
                     <h6 className="celda_title_inputt">
@@ -352,31 +486,33 @@ export const DocumentMasterDeliView = () => {
                         : `${dataBasic[proceso_id - 1][0].title}:`}
                     </h6>
                   </div>{" "}
-                  {dataBasic[proceso_id - 1][0].description.length === 0 ? (
-                    ""
-                  ) : (
+                  {dataBasic[proceso_id - 1][0].type === "Texto" && (
                     <div className="text_body">
-                      {dataBasic[proceso_id - 1][0].type === "Texto" ? (
-                        <>
-                          <div className="linea1"></div>
-                          <p>{dataBasic[proceso_id - 1][0].description}</p>
-                        </>
-                      ) : (
-                        <>
-                          <div className="linea2"></div>
-                          <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={`${dataBasic[proceso_id - 1][0].description}`}
-                          >
-                            {dataBasic[proceso_id - 1][0].description}
-                          </a>
-                        </>
-                      )}
+                      <p className="text_data_basics">
+                        {dataBasic[proceso_id - 1][0].info}
+                      </p>
+                    </div>
+                  )}
+                  {dataBasic[proceso_id - 1][0].type === "Link" && (
+                    <div className="text_body">
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={`${dataBasic[proceso_id - 1][0].link}`}
+                      >
+                        {dataBasic[proceso_id - 1][0].info}
+                      </a>
+                    </div>
+                  )}
+                  {dataBasic[proceso_id - 1][0].type === "Fecha" && (
+                    <div className="text_body">
+                      <p className="text_data_date">
+                        {dataBasic[proceso_id - 1][0].info}
+                      </p>
                     </div>
                   )}
                 </div>
-              ))} */}
+              ))}
             </div>
           </div>
         </div>
@@ -391,7 +527,9 @@ export const DocumentMasterDeliView = () => {
                   <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   <div className="container_sub_text">
                     <div className="subContainer">
-                      <h6 className="text">{option[card_id][0].text}</h6>
+                      <h6 className="text">
+                        {option[card_id][0].text_description_item}
+                      </h6>
                     </div>
                   </div>
                 </div>
@@ -430,24 +568,34 @@ export const DocumentMasterDeliView = () => {
                   <h6 className="textt">{option[card_id][0].titleCard}</h6>
                   <div className="container_sub_archivo">
                     <div className="subContainer">
-                      <a
-                        target="_blank"
-                        className="title"
-                        rel="noopener noreferrer"
-                        href={option[card_id][0].archivo}
-                      >
-                        {option[card_id][0].descripcionArchivo}
-                      </a>
+                      <div className="download_file_container">
+                        <span> Descargar archivo</span>
+                        <GetApp
+                          className="icon"
+                          onClick={(e) =>
+                            downloadFile(
+                              e,
+                              option[card_id][0].titleCard,
+                              option[card_id][0].archivo
+                            )
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
-              {option[card_id][0].optionValue === "Lista" && (
-                <div>
-                  <h1>{`lista${card_id}`}</h1>
+              {option[card_id][0].optionValue === "Fecha" && (
+                <div className="container_text">
+                  <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                  <div className="container_sub_text">
+                    <div className="subContainer">
+                      <h6 className="text">{option[card_id][0].date}</h6>
+                    </div>
+                  </div>
                 </div>
               )}
-              {/* {option[card_id][0].optionValue === "Tabla" && (
+              {option[card_id][0].optionValue === "Tabla" && (
                 <div className="tabla-subContainer animate__animated animate__fadeIn">
                   {option[card_id][0].tabla.row.map((id_column) => (
                     <div
@@ -472,13 +620,13 @@ export const DocumentMasterDeliView = () => {
                                 <h6 className={"celda_title_input"}>
                                   {
                                     option[card_id][0].tablaTypeCelda
-                                      .typeCeldaInfo[0][
+                                      .title_columna[
                                       option[
                                         card_id
                                       ][0].tablaTypeCelda.type.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
-                                    ].titleColumna
+                                    ]
                                   }
                                 </h6>
                               </div>
@@ -549,13 +697,66 @@ export const DocumentMasterDeliView = () => {
                             option[card_id][0].tablaTypeCelda.type.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
+                          ] === "Fecha" && (
+                            <div className="celda_title_text">
+                              <div className="header_titlee">
+                                <h6 className="celda_title_inputt">
+                                  {
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].titleCelda
+                                  }
+                                </h6>
+                              </div>
+                              <div className="text_body">
+                                <div className="linea"></div>
+                                <p>
+                                  {
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].textDescription
+                                  }
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                          {option[card_id][0].tablaTypeCelda.celda[
+                            option[card_id][0].tablaTypeCelda.type.indexOf(
+                              parseInt(`${id_column}${id_row}`)
+                            )
                           ] === "Imagen" && (
                             <div className="imagen_container">
-                              <img
-                                className="imagen"
-                                src="https://intersindicalaragon.org/wp-content/uploads/icono-facebook.png"
-                                alt="texto descriptivo"
-                              />
+                              {option[card_id][0].tablaTypeCelda
+                                .typeCeldaInfo[0][
+                                option[card_id][0].tablaTypeCelda.type.indexOf(
+                                  parseInt(`${id_column}${id_row}`)
+                                )
+                              ].img !== null && (
+                                <img
+                                  className="imagen"
+                                  src={
+                                    option[card_id][0].tablaTypeCelda
+                                      .typeCeldaInfo[0][
+                                      option[
+                                        card_id
+                                      ][0].tablaTypeCelda.type.indexOf(
+                                        parseInt(`${id_column}${id_row}`)
+                                      )
+                                    ].img
+                                  }
+                                  alt="texto descriptivo"
+                                />
+                              )}
                             </div>
                           )}
                           {option[card_id][0].tablaTypeCelda.celda[
@@ -579,11 +780,29 @@ export const DocumentMasterDeliView = () => {
                                 </h6>
                               </div>
                               <div className="imagen_container">
-                                <img
-                                  className="imagen"
-                                  src="https://intersindicalaragon.org/wp-content/uploads/icono-facebook.png"
-                                  alt="texto descriptivo"
-                                />
+                                {option[card_id][0].tablaTypeCelda
+                                  .typeCeldaInfo[0][
+                                  option[
+                                    card_id
+                                  ][0].tablaTypeCelda.type.indexOf(
+                                    parseInt(`${id_column}${id_row}`)
+                                  )
+                                ].img !== null && (
+                                  <img
+                                    className="imagen"
+                                    src={
+                                      option[card_id][0].tablaTypeCelda
+                                        .typeCeldaInfo[0][
+                                        option[
+                                          card_id
+                                        ][0].tablaTypeCelda.type.indexOf(
+                                          parseInt(`${id_column}${id_row}`)
+                                        )
+                                      ].img
+                                    }
+                                    alt="texto descriptivo"
+                                  />
+                                )}
                               </div>
                             </div>
                           )}
@@ -638,11 +857,7 @@ export const DocumentMasterDeliView = () => {
                             )
                           ] === "Link" && (
                             <div className="link">
-                              <div className="celda_container_link">
-                                <h6 className="celda_title_input">
-                                  Título del link:
-                                </h6>
-                              </div>
+                              <div className="celda_container_link"></div>
                               <div className="link_body">
                                 <div className="linea"></div>
                                 <a
@@ -679,7 +894,7 @@ export const DocumentMasterDeliView = () => {
                     </div>
                   ))}
                 </div>
-              )} */}
+              )}
             </div>
           </div>
         ))}
