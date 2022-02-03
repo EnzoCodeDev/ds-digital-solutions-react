@@ -14,7 +14,6 @@ import {
 } from "../../../redux/actions/formDocumentParametrizacionAction";
 import { ParametrizacionDocumentMasterCard } from "./ParametrizacionDocumentMasterCard";
 import { BtnFloat } from "../../bellboy float/btn-float";
-import { InputSelect } from "../../mainInput/InputSelect";
 import {
   typeCelda,
   infoCelda,
@@ -560,14 +559,15 @@ export const ParametrizacionDocumentMasterForm = () => {
                   <div className="container_sub_data_basic">
                     <div className="header">
                       <div className="container_select">
-                        <InputSelect
-                          id={proceso_id}
-                          onclick={handleTypeSelect}
-                          selected={dataBasic[proceso_id - 1][0].type}
-                          option={["Texto", "Link", "Fecha"]}
-                          className={"select_columns"}
-                          name={`dataBasic${proceso_id}`}
-                        />
+                        <select
+                          className="select_columns"
+                          value={dataBasic[proceso_id - 1][0].type}
+                          onChange={(e) => handleTypeSelect(e, proceso_id)}
+                        >
+                          <option>Texto</option>
+                          <option>Link</option>
+                          <option>Fecha</option>
+                        </select>
                       </div>
                     </div>
                     <div className="container_body">
@@ -586,9 +586,7 @@ export const ParametrizacionDocumentMasterForm = () => {
                             placeholder="Descripcion de la url"
                             name={`descripcion${proceso_id}`}
                             onChange={(e) => handleDescripcion(e, proceso_id)}
-                            defaultValue={
-                              dataBasic[proceso_id - 1][0].info
-                            }
+                            defaultValue={dataBasic[proceso_id - 1][0].info}
                           ></input>
                         </div>
                       )}
@@ -596,8 +594,7 @@ export const ParametrizacionDocumentMasterForm = () => {
                         <div className="container_inptut2"></div>
                       )}
                       {dataBasic[proceso_id - 1][0].type === "Fecha" && (
-                        <div className="container_inptut2">
-                        </div>
+                        <div className="container_inptut2"></div>
                       )}
                     </div>
                   </div>

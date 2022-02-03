@@ -112,6 +112,7 @@
                         &:hover {
                             cursor: pointer;
                             background-color: #353f50;
+                            font-weight: 450;
                         }
                         b {
                             color: inherit;
@@ -124,9 +125,6 @@
                             float: right;
                             margin-right: 10%;
                             transition: all 0.5s ease;
-                            &.active {
-                                transform: rotate(90deg);
-                            }
                             &.active {
                                 transform: rotate(90deg);
                             }
@@ -150,6 +148,7 @@
                         &:hover {
                             color: rgb(145, 145, 145);
                             cursor: pointer;
+                            font-weight: 450;
                         }
                     }
                     .container_content {
@@ -200,6 +199,7 @@
                         &:hover {
                             cursor: pointer;
                             background-color: #353f50;
+                            font-weight: 450;
                         }
                         b {
                             color: inherit;
@@ -288,6 +288,7 @@
                         &:hover {
                             cursor: pointer;
                             background-color: #353f50;
+                            font-weight: 450;
                         }
                         b {
                             color: inherit;
@@ -312,10 +313,6 @@
                             .icons {
                                 font-size: 9px;
                             }
-                        }
-                        &:hover {
-                            font-weight: 450;
-                            cursor: pointer;
                         }
                     }
                 }
@@ -382,6 +379,7 @@
                         &:hover {
                             cursor: pointer;
                             background-color: #353f50;
+                            font-weight: 450;
                         }
                         b {
                             color: inherit;
@@ -406,10 +404,6 @@
                             .icons {
                                 font-size: 9px;
                             }
-                        }
-                        &:hover {
-                            font-weight: 450;
-                            cursor: pointer;
                         }
                     }
                 }
@@ -481,6 +475,7 @@
                         &:hover {
                             cursor: pointer;
                             background-color: #353f50;
+                            font-weight: 450;
                         }
                         b {
                             color: inherit;
@@ -505,10 +500,6 @@
                             .icons {
                                 font-size: 9px;
                             }
-                        }
-                        &:hover {
-                            font-weight: 450;
-                            cursor: pointer;
                         }
                     }
                 }
@@ -575,6 +566,7 @@
                         &:hover {
                             cursor: pointer;
                             background-color: #353f50;
+                            font-weight: 450;
                         }
                         b {
                             color: inherit;
@@ -599,10 +591,6 @@
                             .icons {
                                 font-size: 9px;
                             }
-                        }
-                        &:hover {
-                            font-weight: 450;
-                            cursor: pointer;
                         }
                     }
                 }

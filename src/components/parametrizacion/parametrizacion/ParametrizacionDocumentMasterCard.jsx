@@ -5,8 +5,6 @@ import {
   NotInterested,
   ArrowBackIos,
 } from "@material-ui/icons";
-//importaciones de los inputs
-import { InputSelect } from "../../mainInput/InputSelect";
 //importacion de tipos de celda por defecto
 import {
   listArray,
@@ -335,21 +333,18 @@ export const ParametrizacionDocumentMasterCard = ({
                 placeholder={"Ingresa información aquí(Obligatorio)"}
                 defaultValue={option[card_id][0].titleCard}
               ></input>
-              <InputSelect
-                id={card_id}
-                className={"select"}
-                name={"optionValue"}
-                onclick={handleTarget}
-                selected={option[card_id][0].optionValue}
-                option={[
-                  "Texto",
-                  "Tabla",
-                  "Imagen",
-                  "Link",
-                  "Archivo",
-                  "Fecha",
-                ]}
-              />
+              <select
+                className="select"
+                value={option[card_id][0].optionValue}
+                onChange={(e) => handleTarget(e, card_id)}
+              >
+                <option>Texto</option>
+                <option>Tabla</option>
+                <option>Imagen</option>
+                <option>Link</option>
+                <option>Archivo</option>
+                <option>Fecha</option>
+              </select>
             </div>
             {/* Renderizar campo del texto */}
             {option[card_id][0].optionValue === "Texto" && (
@@ -442,37 +437,41 @@ export const ParametrizacionDocumentMasterCard = ({
                 <div className="columns-row animate__animated animate__fadeIn">
                   <div>
                     <span>Cuantas columnas</span>
-                    <InputSelect
-                      id={card_id}
-                      className={"select_columns"}
-                      onclick={handleTargetColumns}
-                      name={`tableColums${card_id}`}
-                      selected={
+                    <select
+                      className="select_columns"
+                      value={
                         option[card_id][0].tabla.column === null
                           ? 1
                           : option[card_id][0].tabla.column[
                               option[card_id][0].tabla.column.length - 1
                             ]
                       }
-                      option={["1", "2", "3", "4", "5"]}
-                    />
+                      onChange={(e) => handleTargetColumns(e, card_id)}
+                    >
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
                   </div>
                   <div>
                     <span>Cuantas filas</span>
-                    <InputSelect
-                      id={card_id}
-                      className={"select_row"}
-                      selected={
+                    <select
+                      className="select_row"
+                      value={
                         option[card_id][0].tabla.row === null
                           ? 1
                           : option[card_id][0].tabla.row[
                               option[card_id][0].tabla.row.length - 1
                             ]
                       }
-                      option={["1", "2", "3", "N"]}
-                      onclick={handleTargetRows}
-                      name={`tableRows${card_id}`}
-                    />
+                      onChange={(e) => handleTargetRows(e, card_id)}
+                    >
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
                   </div>
                 </div>
                 {/* Renderizar tabla */}
@@ -517,9 +516,9 @@ export const ParametrizacionDocumentMasterCard = ({
                               )}
                               <div className="celda_list animate__animated animate__fadeIn">
                                 {/* Renderizar campo del select para cada tipo de celda */}
-                                <InputSelect
-                                  id={card_id}
-                                  selected={
+                                <select
+                                  className="select_columns"
+                                  value={
                                     option[card_id][0].tablaTypeCelda.celda[
                                       option[
                                         card_id
@@ -528,20 +527,21 @@ export const ParametrizacionDocumentMasterCard = ({
                                       )
                                     ]
                                   }
-                                  className={"select_columns"}
-                                  onclick={handleFileValuesCelda}
-                                  name={`${`${id_row}${id_column}`}`}
-                                  onChange={handletableColumnsTypeValueChange}
-                                  parametro_opcional={`${id_row}${id_column}`}
-                                  option={[
-                                    "Título texto",
-                                    "Imagen",
-                                    "Imagen título",
-                                    "Lista",
-                                    "Link",
-                                    "Fecha",
-                                  ]}
-                                />
+                                  onChange={(e) =>
+                                    handleFileValuesCelda(
+                                      e,
+                                      card_id,
+                                      `${id_row}${id_column}`
+                                    )
+                                  }
+                                >
+                                  <option>Título texto</option>
+                                  <option>Imagen</option>
+                                  <option>Imagen título</option>
+                                  <option>Lista</option>
+                                  <option>Link</option>
+                                  <option>Fecha</option>
+                                </select>
                                 {option[card_id][0].tablaTypeCelda.celda[
                                   option[
                                     card_id
@@ -550,11 +550,9 @@ export const ParametrizacionDocumentMasterCard = ({
                                   )
                                 ] === "Lista" && (
                                   //cuantas listas queria el usuario por celda
-                                  <InputSelect
-                                    id={card_id}
-                                    onclick={handleSelectList}
-                                    className={"select_columns"}
-                                    selected={
+                                  <select
+                                    className="select_columns"
+                                    value={
                                       option[card_id][0].tablaTypeCelda.lista[
                                         option[
                                           card_id
@@ -571,10 +569,22 @@ export const ParametrizacionDocumentMasterCard = ({
                                         ].length - 1
                                       ] + 1
                                     }
-                                    name={`${`${id_row}${id_column}`}`}
-                                    option={["1", "2", "3", "4", "5", "6", "7"]}
-                                    parametro_opcional={`${id_row}${id_column}`}
-                                  />
+                                    onChange={(e) =>
+                                      handleSelectList(
+                                        e,
+                                        card_id,
+                                        `${id_row}${id_column}`
+                                      )
+                                    }
+                                  >
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                  </select>
                                 )}
                               </div>
                             </div>

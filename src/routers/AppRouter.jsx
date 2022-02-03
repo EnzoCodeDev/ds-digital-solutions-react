@@ -8,6 +8,8 @@ import { AuthRouter } from "./AuthRouter";
 // import { CalendarScreen } from "../components/calendary/CalendarScreen";
 import { Intro } from "../components/intro/Intro";
 import { ProfileView } from "../components/Profile/ProfileView";
+import { RolesScreen } from "../components/Roles-Permisos/RolesScreen";
+import { RoleScreenCreate } from "../components/Roles-Permisos/RoleScreenCreate";
 import { ParametrizacionDocumentMasterTable } from "../components/parametrizacion/parametrizacion/ParametrizacionDocumentMasterTable";
 import { ParametrizacionDocumentMasterForm } from "../components/parametrizacion/parametrizacion/ParametrizacionDocumentMasterForm";
 import { ProcesosTabla } from "../components/parametrizacion/procesos/ProcesosTabla";
@@ -59,6 +61,20 @@ export const AppRouter = () => {
             exact
             path="/profile/:uuid"
             component={ProfileView}
+            isAuthenticaded={checking}
+          />
+          {/* Vista de roles  */}
+          <PrivateRoute
+            exact
+            path="/roles"
+            component={RolesScreen}
+            isAuthenticaded={checking}
+          />
+          {/* Crear un role */}
+          <PrivateRoute
+            exact
+            path="/roles/create"
+            component={RoleScreenCreate}
             isAuthenticaded={checking}
           />
           {/* HomePage */}

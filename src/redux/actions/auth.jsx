@@ -143,7 +143,7 @@ export const startChecking = () => {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        localStorage.clear();
         dispatch(checkingFinish());
         localStorage.setItem('logout', 'true');
         return;
