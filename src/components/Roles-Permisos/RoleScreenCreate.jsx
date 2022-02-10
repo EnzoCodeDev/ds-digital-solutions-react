@@ -61,6 +61,46 @@ export const RoleScreenCreate = () => {
       );
       return;
     }
+    axios
+      .post(
+        `${baseUrl}/configuration/store/rol`,
+        {
+          nameRole,
+          descripcionRole,
+          permisoSelected,
+        },
+        {
+          //En la peticion post se tuvo que enviar estos encabezados ya que no los queria recibir
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json;charset=UTF-8",
+          },
+        }
+      )
+      .then(function (response) {
+        if (response.data.res === "exist") {
+          Swal.fire(
+            "Ups...",
+            `Ya existe un rol con el nombre ${nameRole}`,
+            "error"
+          );
+          return;
+        } else {
+          if (response.data.res === "ok") {
+            Swal.fire("Exito", "El rol se ha creado exitosamente", "success");
+          }
+        }
+      })
+      .catch(function (response) {
+        console.log(response);
+        Swal.fire(
+          "Los siento...",
+          `Hubo un error al crear el rol`,
+          "error"
+        );
+        return;
+      });
   };
   return (
     <div>
