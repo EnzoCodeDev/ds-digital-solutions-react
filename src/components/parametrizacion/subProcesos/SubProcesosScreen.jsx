@@ -71,7 +71,7 @@ export const SubProcesosScreen = () => {
     if (subProcesos.length < 2) {
       Swal.fire(
         "Upss...",
-        "Por favor introduce un subproceso para guardar",
+        "Por favor introduce un sub proceso para guardar",
         "error"
       );
       return;
@@ -101,7 +101,7 @@ export const SubProcesosScreen = () => {
         if (response.data.res === "new_sub_process") {
           Swal.fire(
             "Exito",
-            "El subproceso se ha creado exitosamente",
+            "El sub proceso se ha creado exitosamente",
             "success"
           );
         }

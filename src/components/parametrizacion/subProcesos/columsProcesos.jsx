@@ -29,7 +29,7 @@ export const GROUPED_COLUMNS = [
     ],
   },
   {
-    Header: "Creador del Sub proceso",
+    Header: "Creador del sub proceso",
     Footer: "Creador del Sub proceso",
     columns: [
       {
@@ -45,7 +45,7 @@ export const GROUPED_COLUMNS = [
     ],
   },
   {
-    Header: "Informacion del proceso asociado",
+    Header: "Información del proceso asociado",
     Footer: "Name",
     columns: [
       {

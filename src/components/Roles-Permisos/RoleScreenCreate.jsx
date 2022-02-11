@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useHistory } from "react-router";
 import Swal from "sweetalert2";
 import { Navbar } from "../navbar/Navbar";
 export const RoleScreenCreate = () => {
   const baseUrl = process.env.REACT_APP_API_URL;
+  const history = useHistory();
   let token = localStorage.getItem("token_bearer");
   const [nameRole, setNameRole] = useState("");
   const [descripcionRole, setDescripcionRole] = useState("");
@@ -88,7 +90,22 @@ export const RoleScreenCreate = () => {
           return;
         } else {
           if (response.data.res === "ok") {
-            Swal.fire("Exito", "El rol se ha creado exitosamente", "success");
+            console.log(response.data.role.uuid);
+            Swal.fire({
+              title: "Exito",
+              text: "El rol se ha creado exitosamente",
+              icon: "success",
+              showDenyButton: true,
+              confirmButtonText: "Continuar editando",
+              denyButtonText: `Regresar`,
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                history.push(`/roles/${response.data.role.uuid}`);
+              } else if (result.isDenied) {
+                history.push('/roles');
+              }
+            });
           }
         }
       })

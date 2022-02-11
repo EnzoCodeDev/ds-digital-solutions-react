@@ -529,36 +529,36 @@ export const DocumentMasterInfoNew = (
                   option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
                 ] === "Lista"
               ) {
-                for (
-                  let l = 0;
-                  l <
-                  option[i][0].tablaTypeCelda.lista[
-                    option[i][0].tablaTypeCelda.type.indexOf(
-                      parseInt(`${r}${c}`)
-                    )
-                  ].length;
-                  l++
-                ) {
-                  if (
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
-                        parseInt(`${r}${c}`)
-                      )
-                    ].lista[i] === null ||
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
-                        parseInt(`${r}${c}`)
-                      )
-                    ].lista[i].trim() === ""
-                  ) {
-                    Swal.fire(
-                      "Falta información en la lista",
-                      `Falta información en una de las listas de una de la(s) celdas`,
-                      "error"
-                    );
-                    return;
-                  }
-                }
+                // for (
+                //   let l = 0;
+                //   l <
+                //   option[i][0].tablaTypeCelda.lista[
+                //     option[i][0].tablaTypeCelda.type.indexOf(
+                //       parseInt(`${r}${c}`)
+                //     )
+                //   ].length;
+                //   l++
+                // ) {
+                //   if (
+                //     option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                //       option[i][0].tablaTypeCelda.type.indexOf(
+                //         parseInt(`${r}${c}`)
+                //       )
+                //     ].lista[i] === null ||
+                //     option[i][0].tablaTypeCelda.typeCeldaInfo[0][
+                //       option[i][0].tablaTypeCelda.type.indexOf(
+                //         parseInt(`${r}${c}`)
+                //       )
+                //     ].lista[i].trim() === ""
+                //   ) {
+                //     Swal.fire(
+                //       "Falta información en la lista",
+                //       `Falta información en una de las listas de una de la(s) celdas`,
+                //       "error"
+                //     );
+                //     return;
+                //   }
+                // }
                 arrayTable.push({
                   type: "lista",
                   index: parseInt(`${r}${c}`),

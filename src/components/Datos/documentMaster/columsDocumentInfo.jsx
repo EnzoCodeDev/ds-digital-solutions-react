@@ -3,7 +3,13 @@ export const COLUMNS = [
   {
     Header: "Proceso",
     Footer: "Proceso",
-    accessor: "process_description",
+    accessor: "proceso",
+    sticky: 'left',
+  },
+  {
+    Header: "Sub proceso",
+    Footer: "Sub proceso",
+    accessor: "subProceso",
     sticky: 'left',
   },
   {

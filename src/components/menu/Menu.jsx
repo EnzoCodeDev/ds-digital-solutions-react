@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 //iconos gestionados de material ui icons https://mui.com/components/material-icons/
 import {
   Code,
-  Eject,
+  // Eject,
   Error,
   Email,
   AllOut,
@@ -120,7 +120,7 @@ export function Menu({ menuOpen, setMenuOpen }) {
                 onClick={() => menuOpenSubMenu("parametrizacion")}
               />
               <div className="container_content">
-                <span className="maestros_title">PARAMETRIZACIÓN</span>
+                <span className="maestros_title">ADMINISTRACIÓN</span>
                 <ArrowRight
                   className={
                     "iconSubMenu " + (SubMenuOpenParametrizacion && "active")
@@ -151,23 +151,23 @@ export function Menu({ menuOpen, setMenuOpen }) {
                 {localStorage.getItem("pagina") === "subproceso" ? (
                   <li className="active">
                     <Subject />
-                    <b> SubProcesos</b>
+                    <b> Sub procesos</b>
                   </li>
                 ) : (
                   <li onClick={handleSubProceso}>
                     <Subject />
-                    <b> SubProcesos</b>
+                    <b> Sub procesos</b>
                   </li>
                 )}
                 {localStorage.getItem("pagina") === "parametrizacion" ? (
                   <li className="active">
                     <FormatIndentIncrease />
-                    <b> Parametrización</b>
+                    <b> Ficha de documentos</b>
                   </li>
                 ) : (
                   <li onClick={handleParametrizacion}>
                     <FormatIndentIncrease />
-                    <b> Parametrización</b>
+                    <b> Ficha de documentos</b>
                   </li>
                 )}
               </ul>
@@ -215,10 +215,10 @@ export function Menu({ menuOpen, setMenuOpen }) {
                   <Code />
                   <b> Maestro de indicadores</b>
                 </li>
-                <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
+                {/* <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
                   <Eject />
                   <b> Maestro de ejecucion</b>
-                </li>
+                </li> */}
                 <li onClick={() => setSubMenuOpen2(!SubMenuOpen2)}>
                   <MenuOpen />
                   <b> Maestro de tareas</b>

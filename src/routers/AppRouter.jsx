@@ -77,6 +77,13 @@ export const AppRouter = () => {
             component={RoleScreenCreate}
             isAuthenticaded={checking}
           />
+          {/* Editar un role */}
+          <PrivateRoute
+            exact
+            path="/roles/:uuid"
+            component={RoleScreenCreate}
+            isAuthenticaded={checking}
+          />
           {/* HomePage */}
           <PrivateRoute
             exact
