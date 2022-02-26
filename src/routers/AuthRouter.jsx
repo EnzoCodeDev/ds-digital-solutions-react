@@ -1,6 +1,6 @@
 import React from 'react';
-import { LoginScreen } from '../components/Auth/LoginScreen';
-import { RegisterScreen } from '../components/Auth/RegisterScreen';
+import { Login } from '../components/Auth/Login/Login';
+import { Register } from '../components/Auth/register/Register';
 import { Switch, Route, Redirect } from 'react-router-dom';
 export const AuthRouter = () => {
     return (
@@ -9,12 +9,12 @@ export const AuthRouter = () => {
                     <Route
                         exact
                         path='/auth/login'
-                        component={LoginScreen}
+                        component={Login}
                     />
                     <Route
                         exact
                         path='/auth/register'
-                        component={RegisterScreen}
+                        component={Register}
                     />
                     <Redirect to='/auth/login' />
                 </Switch>

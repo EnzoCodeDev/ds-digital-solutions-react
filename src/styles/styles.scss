@@ -1,44 +1,6 @@
 //Configuraciones iniciales para node-sass
 @import './base/settings';
 @import './base/base';
-//stylos del componentes importaciones de todos los stilos parciales de scss
-//Estilos de los componentes login y registro
-@import './components/auth/registerScreen';
-@import './components/auth/loginScreen';
-//Estilos de la visualizacion de perfilida
-@import './components/profile/profileView';
-//Estilos para los roles y permisos
-@import './components/Roles-permisos/rolesCreateScreen';
-//Estilos del home como el nabvar, intro, popol y modales
-@import './components/home/intro';
-@import './components/home/navbar';
-@import './components/home/menu';
-@import './components/home/popolProfile';
-@import './components/home/popolNotification';
-@import './components/home/popolMessage.scss';
-@import './components/home/popolSistem';
-@import './components/calendar';
 @import './components/modal';
-@import './components/content';
-//Css de el translate screen 
-@import './components/translate/translate';
-//Estilos de los de la seccion del parametrizador
-//parametrizacion
-@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterCard';
-@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterForm';
-@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterFormPreviow';
-@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterTable';
-@import './components/parametrizacion/parametrizacion/parametrizacionDocumentMasterOptionTable';
-//Procesos
-@import './components/parametrizacion/procesos/procesosTable';
-@import './components/parametrizacion/procesos/procesosScreen';
-//Subprocesos
-@import './components/parametrizacion/subProceso/subProcesoScreen';
-@import './components/parametrizacion/subProceso/subProcesosTable';
-//Estilos para el css del document master
-@import './components/documentMaster/documentIndex';
-@import './components/documentMaster/documentView';
-@import './components/documentMaster/modalDeligenciar';
-@import './components/documentMaster/documentMasterDeliView';
 //Botones flotantes
 @import './components/bellboy/btn-float.scss';

@@ -1,23 +1,14 @@
 //scss se gestiona de ./styles/components/home/_navbar.scss
 import React, { useState, useEffect, useRef } from "react";
 //Los iconos son gestionados por material ui icons
-import {
-  NotificationsNoneRounded,
-  ChatOutlined,
-  Search,
-  ArrowDropDown,
-} from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { Menu } from "../menu/Menu";
-import { PopolMessage } from "../popol/popolMessage";
-import { PopolProfile } from "../popol/PopolProfile";
-import { PopolNotification } from "../popol/PopolNotificacion";
-import { PopolSistem } from "../popol/PopolSistem";
+import { NavbarIndex } from "./NavbarIndex";
 export function Navbar() {
   const history = useHistory();
-  const { name } = useSelector((state) => state.auth);
-  const { profile_photo, img_header } = useSelector((state) => state.auth);
+  const { name, profile_photo, img_header } = useSelector(
+    (state) => state.auth
+  );
   //Estado de los popol, menu y notificaciones del navbar
   const [menuOpen, setMenuOpen] = useState(false);
   const [search, setSearch] = useState(false);
@@ -88,87 +79,31 @@ export function Navbar() {
     history.push("/intro");
   };
   return (
-    <div ref={navbarRef}>
-      <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-      <PopolMessage
-        infoMenssages={infoMenssages}
-        setInfoMenssages={setInfoMenssages}
-      />
-      <PopolProfile
-        infoProfile={infoProfile}
-        setInfoProfile={setInfoProfile}
-        infoMenssages={infoMenssages}
-        setInfoMenssages={setInfoMenssages}
-      />
-      <PopolNotification
-        infoNotificacion={infoNotificacion}
-        setInfoNotificacion={setInfoNotificacion}
-      />
-      <PopolSistem
-        infoSistem={infoSistem}
-        setInfoSistem={setInfoSistem}
-        setSistem={setSistem}
-      />
-      <div className={"topbar active"} onClick={handleResetPopol}>
-        <div className="wrapper">
-          <div className="right">
-            <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-              <span className="line1"></span>
-              <span className="line2"></span>
-              <span className="line3"></span>
-            </div>
-            <div className="container_user_img_url">
-              <img className="user_img_url" alt="logo" src={img_header}></img>
-            </div>
-            <div className="container_logo">
-              <img
-                onClick={handleIntro}
-                className="logo"
-                alt="logo"
-                src="/logo/ds-digital-solutions-logo.png"
-              ></img>
-            </div>
-            <div className="container_sistema">
-              <h6>{sistem}</h6>
-            </div>
-            <div className="itemContainer_sistem" onClick={handleSistem}>
-              <div className={"icon " + (infoSistem && "active")}>
-                <ArrowDropDown />
-              </div>
-            </div>
-          </div>
-          <div className="right">
-            <div className="searchInput">
-              <input
-                className={"input " + (search && "active")}
-                placeholder="Search"
-              />
-            </div>
-            <Search className="search" onClick={() => setSearch(!search)} />
-            <div className="itemContainer" onClick={handleNotification}>
-              <NotificationsNoneRounded className="icon" />
-              <span className="iconBagne">0</span>
-            </div>
-            <div className="itemContainer" onClick={handleMessages}>
-              <ChatOutlined className="icon" />
-              <span className="iconMessage">0</span>
-            </div>
-            <div className="itemContainer">
-              <div className="imgContainer">
-                <img src={profile_photo} alt="profile_photo" />
-              </div>
-            </div>
-            <div className="itemContainer">
-              <span>{name}</span>
-            </div>
-            <div className="itemContainer" onClick={handleInfo}>
-              <div className={"icon " + (infoProfile && "active")}>
-                <ArrowDropDown />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <NavbarIndex
+      name={name}
+      sistem={sistem}
+      search={search}
+      menuOpen={menuOpen}
+      setSearch={setSearch}
+      navbarRef={navbarRef}
+      setSistem={setSistem}
+      infoSistem={infoSistem}
+      handleInfo={handleInfo}
+      img_header={img_header}
+      setMenuOpen={setMenuOpen}
+      handleIntro={handleIntro}
+      infoProfile={infoProfile}
+      handleSistem={handleSistem}
+      infoMenssages={infoMenssages}
+      setInfoSistem={setInfoSistem}
+      profile_photo={profile_photo}
+      setInfoProfile={setInfoProfile}
+      handleMessages={handleMessages}
+      handleResetPopol={handleResetPopol}
+      infoNotificacion={infoNotificacion}
+      setInfoMenssages={setInfoMenssages}
+      handleNotification={handleNotification}
+      setInfoNotificacion={setInfoNotificacion}
+    />
   );
 }

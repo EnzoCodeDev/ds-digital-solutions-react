@@ -9,6 +9,7 @@ import { CalendarModal } from "./CalendarModal";
 import { uiOpenModal } from "../../redux/actions/ui";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "moment/locale/es";
+import './calendar.scss';
 import {
   eventSetActive,
   eventClearActiveEvent,

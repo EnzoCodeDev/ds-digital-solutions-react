@@ -6,20 +6,20 @@ import { PublicRoute } from "./routerPermission/PublicRoute";
 import { startChecking } from "../redux/actions/auth";
 import { AuthRouter } from "./AuthRouter";
 // import { CalendarScreen } from "../components/calendary/CalendarScreen";
-import { Intro } from "../components/intro/Intro";
-import { ProfileView } from "../components/Profile/ProfileView";
-import { RolesScreen } from "../components/Roles-Permisos/RolesScreen";
-import { RoleScreenCreate } from "../components/Roles-Permisos/RoleScreenCreate";
-import { ParametrizacionDocumentMasterTable } from "../components/parametrizacion/parametrizacion/ParametrizacionDocumentMasterTable";
-import { ParametrizacionDocumentMasterForm } from "../components/parametrizacion/parametrizacion/ParametrizacionDocumentMasterForm";
-import { ProcesosTabla } from "../components/parametrizacion/procesos/ProcesosTabla";
-import { ProcesosScreen } from "../components/parametrizacion/procesos/ProcesosScreen";
-import { SubProcesosTabla } from "../components/parametrizacion/subProcesos/SubProcesosTabla";
-import { SubProcesosScreen } from "../components/parametrizacion/subProcesos/SubProcesosScreen";
-import { DocumentMasterIndex } from "../components/Datos/documentMaster/DocumentMasterIndex";
-import { DocumentMasterView } from "../components/Datos/documentMaster/DocumentMasterView";
-import { DocumentMasterDeliView } from "../components/Datos/documentMaster/DocumentMasterDeliView";
-import { TranslateScreen } from "../components/translate/TranslateScreen";
+import { Dasboard } from "../components/dasboard/Dasboard";
+import { ProfileView } from "../components/profile/Profile";
+import { RolesTabla } from "../components/Roles-Permisos/roleTable/RolesTabla";
+import { RoleForm } from "../components/Roles-Permisos/roleForm/RoleForm";
+import { DocumentTable } from "../components/administracion/documentTab/documentTable/documentTable/DocumentTable";
+import { DocumentForm } from "../components/administracion/documentTab/documentFormParameterization/documentForm/DocumentForm";
+import { ProcesosTabla } from "../components/administracion/procesos/procesosTabla/ProcesosTabla";
+import { ProcesosForm } from "../components/administracion/procesos/procesosForm/ProcesosForm";
+import { SubProcesosTabla } from "../components/administracion/subProcesos/subProcesosTable/SubProcesosTabla";
+import { SubProcesosForm } from "../components/administracion/subProcesos/subProcesosForm/SubProcesosForm";
+import { DocumentTableDeli } from "../components/Datos/masterInformation/documentTable/documentTable/DocumentTableDeli";
+import { DocumentView } from "../components/Datos/masterInformation/documentView/DocumentView";
+import { DocumentFormDeli } from "../components/Datos/masterInformation/documentForm/DocumentFormDeli";
+import { Translate } from "../components/translate/Translate";
 export const AppRouter = () => {
   const dispatch = useDispatch();
   const { checking } = useSelector((state) => state.auth);
@@ -53,7 +53,7 @@ export const AppRouter = () => {
           <PrivateRoute
             exact
             path="/translate"
-            component={TranslateScreen}
+            component={Translate}
             isAuthenticaded={checking}
           />
           {/* vista a configuracion del perfil del usuario */}
@@ -67,28 +67,28 @@ export const AppRouter = () => {
           <PrivateRoute
             exact
             path="/roles"
-            component={RolesScreen}
+            component={RolesTabla}
             isAuthenticaded={checking}
           />
           {/* Crear un role */}
           <PrivateRoute
             exact
             path="/roles/create"
-            component={RoleScreenCreate}
+            component={RoleForm}
             isAuthenticaded={checking}
           />
           {/* Editar un role */}
           <PrivateRoute
             exact
             path="/roles/:uuid"
-            component={RoleScreenCreate}
+            component={RoleForm}
             isAuthenticaded={checking}
           />
           {/* HomePage */}
           <PrivateRoute
             exact
             path="/intro"
-            component={Intro}
+            component={Dasboard}
             isAuthenticaded={checking}
           />
           {/* Parametrizacion */}
@@ -108,14 +108,14 @@ export const AppRouter = () => {
           <PrivateRoute
             exact
             path="/procesosCreate"
-            component={ProcesosScreen}
+            component={ProcesosForm}
             isAuthenticaded={checking}
           />
           {/* vista editar */}
           <PrivateRoute
             exact
             path="/procesosEdit/:uuid"
-            component={ProcesosScreen}
+            component={ProcesosForm}
             isAuthenticaded={checking}
           />
           {/*
@@ -134,14 +134,14 @@ export const AppRouter = () => {
           <PrivateRoute
             exact
             path="/subProcesosCreate"
-            component={SubProcesosScreen}
+            component={SubProcesosForm}
             isAuthenticaded={checking}
           />
           {/* vista editar */}
           <PrivateRoute
             exact
             path="/SubprocesosEdit/:uuid"
-            component={SubProcesosScreen}
+            component={SubProcesosForm}
             isAuthenticaded={checking}
           />
           {/*
@@ -153,21 +153,21 @@ export const AppRouter = () => {
           <PrivateRoute
             exact
             path="/documentation-master-list"
-            component={ParametrizacionDocumentMasterTable}
+            component={DocumentTable}
             isAuthenticaded={checking}
           />
           {/* vista crear documento */}
           <PrivateRoute
             exact
             path="/newDocument"
-            component={ParametrizacionDocumentMasterForm}
+            component={DocumentForm}
             isAuthenticaded={checking}
           />
           {/* vista editar documento */}
           <PrivateRoute
             exact
             path="/newDocument/:uuid"
-            component={ParametrizacionDocumentMasterForm}
+            component={DocumentForm}
             isAuthenticaded={checking}
           />
           {/* Datos */}
@@ -180,21 +180,21 @@ export const AppRouter = () => {
           <PrivateRoute
             exact
             path="/documentMaster"
-            component={DocumentMasterIndex}
+            component={DocumentTableDeli}
             isAuthenticaded={checking}
           />
           {/* vista deligenciar documento */}
           <PrivateRoute
             exact
             path="/viewDocument/:uuid"
-            component={DocumentMasterView}
+            component={DocumentView}
             isAuthenticaded={checking}
           />
           {/* vista ver documento deligenciado */}
           <PrivateRoute
             exact
             path="/viewDocumentDeli/:uuid"
-            component={DocumentMasterDeliView}
+            component={DocumentFormDeli}
             isAuthenticaded={checking}
           />
           <Redirect to="/auth/login" />
