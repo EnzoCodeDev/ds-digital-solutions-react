@@ -26,33 +26,31 @@ export const DocumentCard = ({
   //Logica para agregar un nueva tarjeta
   const handleAdd = () => {
     const newArrayCard = [...arrayCard, ultime + 1];
-    const optionArray = [...option];
     setArrayCard(newArrayCard);
+    const optionArray = [...option];
     setOption([
       ...optionArray,
-      [
-        {
-          card: ultime + 1,
-          optionValue: "Texto",
-          titleCard: "",
-          text: "",
-          linkDescription: "",
-          link: "",
-          descripcionArchivo: "",
-          archivo: "",
-          img: "",
-          heigth: { state: true },
-          tabla: { column: [1], row: [1] },
-          tablaTypeCelda: {
-            title_columna: titleColumns,
-            celda: typeCelda,
-            celdaType: JSON.stringify(typeCelda),
-            type: indexTypeCelda,
-            lista: listArray,
-            typeCeldaInfo: infoCelda,
-          },
+      {
+        card: ultime + 1,
+        optionValue: "Texto",
+        titleCard: "",
+        text: "",
+        linkDescription: "",
+        link: "",
+        descripcionArchivo: "",
+        archivo: "",
+        img: "",
+        heigth: { state: true },
+        tabla: { column: [1], row: [1] },
+        tablaTypeCelda: {
+          title_columna: titleColumns,
+          celda: typeCelda,
+          celdaType: JSON.stringify(typeCelda),
+          type: indexTypeCelda,
+          lista: listArray,
+          typeCeldaInfo: infoCelda,
         },
-      ],
+      },
     ]);
     setUltime(ultime + 1);
   };
@@ -64,28 +62,26 @@ export const DocumentCard = ({
       let optionArrayy = [...option];
       let item = arrayCard.indexOf(card_id);
       arrayCard.splice(item, 1);
-      optionArrayy.splice(card_id, 1, [
-        {
-          card: "inhabilidado",
-          optionValue: "no",
-          titleCard: "no",
-          linkDescription: "",
-          link: "no",
-          descripcionArchivo: "",
-          archivo: "",
-          img: "no",
-          text: "no",
-          heigth: { state: true },
-          tabla: { column: "no", row: "no" },
-          tablaTypeCelda: {
-            title_columna: titleColumns,
-            celda: [],
-            celdaType: JSON.stringify(typeCelda),
-            type: indexTypeCelda,
-            lista: listArray,
-          },
+      optionArrayy.splice(card_id, 1, {
+        card: "inhabilidado",
+        optionValue: "no",
+        titleCard: "no",
+        linkDescription: "",
+        link: "no",
+        descripcionArchivo: "",
+        archivo: "",
+        img: "no",
+        text: "no",
+        heigth: { state: true },
+        tabla: { column: "no", row: "no" },
+        tablaTypeCelda: {
+          title_columna: titleColumns,
+          celda: [],
+          celdaType: JSON.stringify(typeCelda),
+          type: indexTypeCelda,
+          lista: listArray,
         },
-      ]);
+      });
       setOption([...optionArrayy]);
       setArrayCard([...arrayCard]);
     }
@@ -123,33 +119,33 @@ export const DocumentCard = ({
     const optionInfo = [...option];
     //Validaciones para restaurar los tipos de datos requeridos por el usuario
     if (optionValue === "Texto") {
-      optionInfo[id][0].optionValue = optionValue;
-      optionInfo[id][0].heigth.state = true;
+      optionInfo[id].optionValue = optionValue;
+      optionInfo[id].heigth.state = true;
       setOption(optionInfo);
     }
     if (optionValue === "Tabla") {
-      optionInfo[id][0].optionValue = optionValue;
-      optionInfo[id][0].heigth.state = true;
+      optionInfo[id].optionValue = optionValue;
+      optionInfo[id].heigth.state = true;
       setOption(optionInfo);
     }
     if (optionValue === "Imagen") {
-      optionInfo[id][0].optionValue = optionValue;
-      optionInfo[id][0].heigth.state = false;
+      optionInfo[id].optionValue = optionValue;
+      optionInfo[id].heigth.state = false;
       setOption(optionInfo);
     }
     if (optionValue === "Link") {
-      optionInfo[id][0].optionValue = optionValue;
-      optionInfo[id][0].heigth.state = false;
+      optionInfo[id].optionValue = optionValue;
+      optionInfo[id].heigth.state = false;
       setOption(optionInfo);
     }
     if (optionValue === "Archivo") {
-      optionInfo[id][0].optionValue = optionValue;
-      optionInfo[id][0].heigth.state = false;
+      optionInfo[id].optionValue = optionValue;
+      optionInfo[id].heigth.state = false;
       setOption(optionInfo);
     }
     if (optionValue === "Fecha") {
-      optionInfo[id][0].optionValue = optionValue;
-      optionInfo[id][0].heigth.state = false;
+      optionInfo[id].optionValue = optionValue;
+      optionInfo[id].heigth.state = false;
       setOption(optionInfo);
     }
   };
@@ -161,28 +157,28 @@ export const DocumentCard = ({
     for (let i = 1; i <= optionValue; i++) {
       arraycolumns.push(i);
     }
-    optionInfo[id][0].tabla.column = arraycolumns;
-    let number = optionInfo[id][0].tabla.row.length * 10;
+    optionInfo[id].tabla.column = arraycolumns;
+    let number = optionInfo[id].tabla.row.length * 10;
     let arrayTypeColumns = [];
     arrayTypeColumns.push("0");
     for (let i = 1; i <= number; i++) {
       arrayTypeColumns.push(
-        optionInfo[id][0].tablaTypeCelda.celda[i] === undefined
+        optionInfo[id].tablaTypeCelda.celda[i] === undefined
           ? "Título texto"
-          : optionInfo[id][0].tablaTypeCelda.celda[i]
+          : optionInfo[id].tablaTypeCelda.celda[i]
       );
     }
-    optionInfo[id][0].tablaTypeCelda.celda = arrayTypeColumns;
+    optionInfo[id].tablaTypeCelda.celda = arrayTypeColumns;
     let arrayTypeList = [];
     arrayTypeList.push([0]);
     for (let i = 1; i <= number; i++) {
       arrayTypeList.push(
-        optionInfo[id][0].tablaTypeCelda.lista[i] === undefined
+        optionInfo[id].tablaTypeCelda.lista[i] === undefined
           ? [0]
-          : optionInfo[id][0].tablaTypeCelda.lista[i]
+          : optionInfo[id].tablaTypeCelda.lista[i]
       );
     }
-    optionInfo[id][0].tablaTypeCelda.lista = arrayTypeList;
+    optionInfo[id].tablaTypeCelda.lista = arrayTypeList;
     let arrayTypeCeldaInfo = [];
     for (let i = 0; i <= number; i++) {
       arrayTypeCeldaInfo.push({
@@ -196,7 +192,7 @@ export const DocumentCard = ({
         lista: ["", "", "", "", "", "", "", "", "", ""],
       });
     }
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo = [arrayTypeCeldaInfo];
+    optionInfo[id].tablaTypeCelda.typeCeldaInfo = [arrayTypeCeldaInfo];
     setOption(optionInfo);
   };
   //Guardar en el state filas columnas quiere el usuario
@@ -207,32 +203,32 @@ export const DocumentCard = ({
     for (let i = 1; i <= optionValue; i++) {
       arrayRows.push(i);
     }
-    optionInfo[id][0].tabla.row = arrayRows;
+    optionInfo[id].tabla.row = arrayRows;
     //Si se van agregar mas columnas o filas en la tabla validar esta multiplicacion
     //Ya que esta multiplicacion identifica el valor de cuantas filas multiplicado por 10
     //Que es maximo de columnas si quieres mas columnas aumenta el resultado
     //Se hixo con el fin de un bug que es del recorrer los datos no dan y a la hora de guardar no guardan bien.
     //Tambien para evitar gastar recursos en la base de datos
-    let number = optionInfo[id][0].tabla.row.length * 10;
+    let number = optionInfo[id].tabla.row.length * 10;
     let arrayTypeColumns = [];
     for (let i = 0; i <= number; i++) {
       arrayTypeColumns.push(
-        optionInfo[id][0].tablaTypeCelda.celda[i] === undefined
+        optionInfo[id].tablaTypeCelda.celda[i] === undefined
           ? "Título texto"
-          : optionInfo[id][0].tablaTypeCelda.celda[i]
+          : optionInfo[id].tablaTypeCelda.celda[i]
       );
     }
-    optionInfo[id][0].tablaTypeCelda.celda = arrayTypeColumns;
+    optionInfo[id].tablaTypeCelda.celda = arrayTypeColumns;
     let arrayTypeList = [];
     arrayTypeList.push([0]);
     for (let i = 0; i <= number; i++) {
       arrayTypeList.push(
-        optionInfo[id][0].tablaTypeCelda.lista[i] === undefined
+        optionInfo[id].tablaTypeCelda.lista[i] === undefined
           ? [0]
-          : optionInfo[id][0].tablaTypeCelda.lista[i]
+          : optionInfo[id].tablaTypeCelda.lista[i]
       );
     }
-    optionInfo[id][0].tablaTypeCelda.lista = arrayTypeList;
+    optionInfo[id].tablaTypeCelda.lista = arrayTypeList;
     let arrayTypeCeldaInfo = [];
     for (let i = 0; i <= number; i++) {
       arrayTypeCeldaInfo.push({
@@ -246,18 +242,18 @@ export const DocumentCard = ({
         lista: ["", "", "", "", "", "", "", "", "", ""],
       });
     }
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo = [arrayTypeCeldaInfo];
+    optionInfo[id].tablaTypeCelda.typeCeldaInfo = [arrayTypeCeldaInfo];
     setOption(optionInfo);
   };
   //Agregar que tipo de celda quiere cada usuario
   const handleFileValuesCelda = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
     e.stopPropagation();
-    optionInfo[id][0].tablaTypeCelda.celda[
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    optionInfo[id].tablaTypeCelda.celda[
+      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ] = e.target.value;
-    optionInfo[id][0].tablaTypeCelda.celdaType = JSON.stringify([
-      ...optionInfo[id][0].tablaTypeCelda.celda,
+    optionInfo[id].tablaTypeCelda.celdaType = JSON.stringify([
+      ...optionInfo[id].tablaTypeCelda.celda,
     ]);
     setOption(optionInfo);
   };
@@ -265,20 +261,20 @@ export const DocumentCard = ({
   //Titulo principal de la tarjeta
   const handleOnChangeTitleCard = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].titleCard = e.target.value;
+    optionInfo[id].titleCard = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado del input del textearea
   const handleOnChangeText = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].text = e.target.value;
+    optionInfo[id].text = e.target.value;
     setOption(optionInfo);
   };
   //Vigila que titulo de cada columna
   const handletitleColumns = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.title_columna[
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    optionInfo[id].tablaTypeCelda.title_columna[
+      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ] = e.target.value;
     setOption(optionInfo);
   };
@@ -290,8 +286,8 @@ export const DocumentCard = ({
     for (let i = 0; i < e.target.value; i++) {
       array.push(i);
     }
-    optionInfo[id][0].tablaTypeCelda.lista[
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    optionInfo[id].tablaTypeCelda.lista[
+      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ] = array;
     setOption(optionInfo);
   };

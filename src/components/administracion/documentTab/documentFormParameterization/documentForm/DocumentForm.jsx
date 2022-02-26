@@ -49,52 +49,48 @@ export const DocumentForm = () => {
   const celdass = Object.values(tableColumnsTypeValue);
   //Inicial state del formulario cuando se va a crear nuevo
   const inicialStateOption = [
-    [
-      {
-        card: 0,
-        optionValue: "undefined",
-        titleCard: "",
-        text: "",
-        linkDescription: "",
-        link: "",
-        descripcionArchivo: "",
-        archivo: "",
-        heigth: { state: true },
-        img: "",
-        tabla: { column: [], row: [] },
-        tablaTypeCelda: {
-          title_columna: [],
-          celda: [],
-          type: [],
-          lista: [],
-          celdaType: [],
-          typeCeldaInfo: [infoCelda],
-        },
+    {
+      card: 0,
+      optionValue: "undefined",
+      titleCard: "",
+      text: "",
+      linkDescription: "",
+      link: "",
+      descripcionArchivo: "",
+      archivo: "",
+      heigth: { state: true },
+      img: "",
+      tabla: { column: [], row: [] },
+      tablaTypeCelda: {
+        title_columna: [],
+        celda: [],
+        type: [],
+        lista: [],
+        celdaType: [],
+        typeCeldaInfo: [infoCelda],
       },
-    ],
-    [
-      {
-        card: 1,
-        optionValue: "Texto",
-        titleCard: "",
-        text: "",
-        linkDescription: "",
-        link: "",
-        img: "",
-        descripcionArchivo: "",
-        archivo: "",
-        heigth: { state: true },
-        tabla: { column: [1], row: [1] },
-        tablaTypeCelda: {
-          title_columna: titleColumns,
-          celda: typeCelda,
-          type: indexTypeCelda,
-          lista: listArray,
-          celdaType: JSON.stringify(typeCelda),
-          typeCeldaInfo: [infoCelda],
-        },
+    },
+    {
+      card: 1,
+      optionValue: "Texto",
+      titleCard: "",
+      text: "",
+      linkDescription: "",
+      link: "",
+      img: "",
+      descripcionArchivo: "",
+      archivo: "",
+      heigth: { state: true },
+      tabla: { column: [1], row: [1] },
+      tablaTypeCelda: {
+        title_columna: titleColumns,
+        celda: typeCelda,
+        type: indexTypeCelda,
+        lista: listArray,
+        celdaType: JSON.stringify(typeCelda),
+        typeCeldaInfo: [infoCelda],
       },
-    ],
+    },
   ];
   //Inicial estate de los estados de la tarjetas de los datos basicos
   const initialStateDataBasic = [
@@ -307,7 +303,6 @@ export const DocumentForm = () => {
   //Renderizar los datos de la tarjeta de la aplicacion
   useEffect(() => {
     let arrayOptioValue = [
-      [
         {
           titleCard: "",
           optionValue: "undefined",
@@ -325,8 +320,7 @@ export const DocumentForm = () => {
           heigth: { state: true },
           img: "",
           card: 0,
-        },
-      ],
+        }
     ];
     if (documentMaster.res === "success_view") {
       //Renderiazado de los datos de la cabeza del formulario
@@ -335,7 +329,7 @@ export const DocumentForm = () => {
       setTemplate(documentMaster.DocumentMasterHead.template);
       setDescription(documentMaster.DocumentMasterHead.description);
       documentMaster.DocumentMasterBody.map(function (DocumentMasterBody) {
-        return arrayOptioValue.push([
+        return arrayOptioValue.push(
           {
             card: DocumentMasterBody.number_card,
             link:
@@ -396,7 +390,7 @@ export const DocumentForm = () => {
                   : [infoCelda],
             },
           },
-        ]);
+        );
       });
       setOption(arrayOptioValue);
       let newArray = JSON.parse(documentMaster.DocumentMasterHead.position);
@@ -416,37 +410,38 @@ export const DocumentForm = () => {
   ]);
   return (
     <DocumentFormIndex
-    lista={lista}
-    codigo={codigo}
-    option={option}
-    ultime={ultime}
-    preview={preview}
-    formato={formato}
-    setLista={setLista}
-    setOption={setOption}
-    arrayCard={arrayCard}
-    setUltime={setUltime}
-    dataBasic={dataBasic}
-    handleBack={handleBack}
-    handleTitle={handleTitle}
-    listaUltime={listaUltime}
-    setArrayCard={setArrayCard}
-    handleRemove={handleRemove}
-    handlePreview={handlePreview}
-    documentMaster={documentMaster}
-    dataBasicCount={dataBasicCount}
-    setListaUltime={setListaUltime}
-    handleDocument={handleDocument}
-    handleInputCode={handleInputCode}
-    handleTypeSelect={handleTypeSelect}
-    handleDescripcion={handleDescripcion}
-    handleInputFormat={handleInputFormat}
-    handleAddDataBasic={handleAddDataBasic}
-    handleSelectProceso={handleSelectProceso}
-    handleInputTemplate={handleInputTemplate}
-    handleDocumentUpdate={handleDocumentUpdate}
-    tableColumnsTypeValue={tableColumnsTypeValue}
-    handleInputDescription={handleInputDescription}
-    handletableColumnsTypeValueChange={handletableColumnsTypeValueChange}/>
+      lista={lista}
+      codigo={codigo}
+      option={option}
+      ultime={ultime}
+      preview={preview}
+      formato={formato}
+      setLista={setLista}
+      setOption={setOption}
+      arrayCard={arrayCard}
+      setUltime={setUltime}
+      dataBasic={dataBasic}
+      handleBack={handleBack}
+      handleTitle={handleTitle}
+      listaUltime={listaUltime}
+      setArrayCard={setArrayCard}
+      handleRemove={handleRemove}
+      handlePreview={handlePreview}
+      documentMaster={documentMaster}
+      dataBasicCount={dataBasicCount}
+      setListaUltime={setListaUltime}
+      handleDocument={handleDocument}
+      handleInputCode={handleInputCode}
+      handleTypeSelect={handleTypeSelect}
+      handleDescripcion={handleDescripcion}
+      handleInputFormat={handleInputFormat}
+      handleAddDataBasic={handleAddDataBasic}
+      handleSelectProceso={handleSelectProceso}
+      handleInputTemplate={handleInputTemplate}
+      handleDocumentUpdate={handleDocumentUpdate}
+      tableColumnsTypeValue={tableColumnsTypeValue}
+      handleInputDescription={handleInputDescription}
+      handletableColumnsTypeValueChange={handletableColumnsTypeValueChange}
+    />
   );
 };

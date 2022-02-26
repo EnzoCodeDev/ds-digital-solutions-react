@@ -179,12 +179,12 @@ export const DocumentPreviousIndex = ({
           {arrayCard.map((card_id) => (
             <div key={card_id}>
               <div className="tabla-container ">
-                {option[card_id][0].optionValue === "Texto" && (
+                {option[card_id].optionValue === "Texto" && (
                   <div className="container_text">
-                    {option[card_id][0].titleCard.trim().length === 0 ? (
+                    {option[card_id].titleCard.trim().length === 0 ? (
                       <h6 className="textt">Titulo del texto no introducido</h6>
                     ) : (
-                      <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                      <h6 className="textt">{option[card_id].titleCard}</h6>
                     )}
                     <div className="container_sub_text">
                       <div className="subContainer">
@@ -203,12 +203,12 @@ export const DocumentPreviousIndex = ({
                     </div>
                   </div>
                 )}
-                {option[card_id][0].optionValue === "Link" && (
+                {option[card_id].optionValue === "Link" && (
                   <div className="container_link">
-                    {option[card_id][0].titleCard.trim().length === 0 ? (
+                    {option[card_id].titleCard.trim().length === 0 ? (
                       <h6 className="textt">Titulo del link no introducido</h6>
                     ) : (
-                      <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                      <h6 className="textt">{option[card_id].titleCard}</h6>
                     )}
                     <div className="container_sub_link">
                       <div className="subContainer">
@@ -226,14 +226,14 @@ export const DocumentPreviousIndex = ({
                     </div>
                   </div>
                 )}
-                {option[card_id][0].optionValue === "Imagen" && (
+                {option[card_id].optionValue === "Imagen" && (
                   <div className="container_imagen_previous">
-                    {option[card_id][0].titleCard.trim().length === 0 ? (
+                    {option[card_id].titleCard.trim().length === 0 ? (
                       <h6 className="textt">
                         Titulo del imagen no introducido
                       </h6>
                     ) : (
-                      <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                      <h6 className="textt">{option[card_id].titleCard}</h6>
                     )}
                     <div className="container_imagen_sub_previous">
                       <img
@@ -244,14 +244,14 @@ export const DocumentPreviousIndex = ({
                     </div>
                   </div>
                 )}
-                {option[card_id][0].optionValue === "Archivo" && (
+                {option[card_id].optionValue === "Archivo" && (
                   <div className="container_archivo">
-                    {option[card_id][0].titleCard.trim().length === 0 ? (
+                    {option[card_id].titleCard.trim().length === 0 ? (
                       <h6 className="textt">
                         Titulo del archivo no introducido
                       </h6>
                     ) : (
-                      <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                      <h6 className="textt">{option[card_id].titleCard}</h6>
                     )}
                     <div className="container_sub_archivo">
                       <div className="subContainer">
@@ -271,12 +271,12 @@ export const DocumentPreviousIndex = ({
                     </div>
                   </div>
                 )}
-                {option[card_id][0].optionValue === "Fecha" && (
+                {option[card_id].optionValue === "Fecha" && (
                   <div className="container_fecha">
-                    {option[card_id][0].titleCard.trim().length === 0 ? (
+                    {option[card_id].titleCard.trim().length === 0 ? (
                       <h6 className="textt">Titulo del fecha no introducido</h6>
                     ) : (
-                      <h6 className="textt">{option[card_id][0].titleCard}</h6>
+                      <h6 className="textt">{option[card_id].titleCard}</h6>
                     )}
                     <div className="container_sub_fecha">
                       <div className="subContainer">
@@ -285,30 +285,30 @@ export const DocumentPreviousIndex = ({
                     </div>
                   </div>
                 )}
-                {option[card_id][0].optionValue === "Tabla" && (
+                {option[card_id].optionValue === "Tabla" && (
                   <div className="tabla-subContainer animate__animated animate__fadeIn">
                     <div className="header_title_tabla">
-                      {option[card_id][0].titleCard.trim().length === 0 ? (
+                      {option[card_id].titleCard.trim().length === 0 ? (
                         <h6 className="textt">
                           Titulo de tabla no introducido
                         </h6>
                       ) : (
                         <h6 className="textt">
-                          {option[card_id][0].titleCard}
+                          {option[card_id].titleCard}
                         </h6>
                       )}
                     </div>
-                    {option[card_id][0].tabla.row.map((id_column) => (
+                    {option[card_id].tabla.row.map((id_column) => (
                       <div className="row" key={id_column}>
-                        {option[card_id][0].tabla.column.map((id_row) => (
+                        {option[card_id].tabla.column.map((id_row) => (
                           <div className="column" key={id_row}>
                             <div
                               className={
                                 "columns " +
-                                (option[card_id][0].tablaTypeCelda.celda[
+                                (option[card_id].tablaTypeCelda.celda[
                                   option[
                                     card_id
-                                  ][0].tablaTypeCelda.type.indexOf(
+                                  ].tablaTypeCelda.type.indexOf(
                                     parseInt(`${id_column}${id_row}`)
                                   )
                                 ] === "Título" && "active")
@@ -318,20 +318,20 @@ export const DocumentPreviousIndex = ({
                               <>
                                 <div className="header_title">
                                   <h6 className={"celda_title_input"}>
-                                    {option[card_id][0].tablaTypeCelda
+                                    {option[card_id].tablaTypeCelda
                                       .title_columna[
                                       option[
                                         card_id
-                                      ][0].tablaTypeCelda.type.indexOf(
+                                      ].tablaTypeCelda.type.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ] === ""
                                       ? "Titulo de la columna no introducido"
-                                      : option[card_id][0].tablaTypeCelda
+                                      : option[card_id].tablaTypeCelda
                                           .title_columna[
                                           option[
                                             card_id
-                                          ][0].tablaTypeCelda.type.indexOf(
+                                          ].tablaTypeCelda.type.indexOf(
                                             parseInt(`${id_column}${id_row}`)
                                           )
                                         ]}
@@ -340,8 +340,8 @@ export const DocumentPreviousIndex = ({
                                 <div className="linea"></div>
                               </>
                             )}
-                            {option[card_id][0].tablaTypeCelda.celda[
-                              option[card_id][0].tablaTypeCelda.type.indexOf(
+                            {option[card_id].tablaTypeCelda.celda[
+                              option[card_id].tablaTypeCelda.type.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Título texto" && (
@@ -362,8 +362,8 @@ export const DocumentPreviousIndex = ({
                                 </div>
                               </div>
                             )}
-                            {option[card_id][0].tablaTypeCelda.celda[
-                              option[card_id][0].tablaTypeCelda.type.indexOf(
+                            {option[card_id].tablaTypeCelda.celda[
+                              option[card_id].tablaTypeCelda.type.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Imagen" && (
@@ -375,8 +375,8 @@ export const DocumentPreviousIndex = ({
                                 />
                               </div>
                             )}
-                            {option[card_id][0].tablaTypeCelda.celda[
-                              option[card_id][0].tablaTypeCelda.type.indexOf(
+                            {option[card_id].tablaTypeCelda.celda[
+                              option[card_id].tablaTypeCelda.type.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Imagen título" && (
@@ -395,17 +395,17 @@ export const DocumentPreviousIndex = ({
                                 </div>
                               </div>
                             )}
-                            {option[card_id][0].tablaTypeCelda.celda[
-                              option[card_id][0].tablaTypeCelda.type.indexOf(
+                            {option[card_id].tablaTypeCelda.celda[
+                              option[card_id].tablaTypeCelda.type.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Lista" && (
                               <div className="list">
                                 <ul>
-                                  {option[card_id][0].tablaTypeCelda.lista[
+                                  {option[card_id].tablaTypeCelda.lista[
                                     option[
                                       card_id
-                                    ][0].tablaTypeCelda.type.indexOf(
+                                    ].tablaTypeCelda.type.indexOf(
                                       parseInt(`${id_column}${id_row}`)
                                     )
                                   ].map((listCelda) => (
@@ -419,8 +419,8 @@ export const DocumentPreviousIndex = ({
                                 </ul>
                               </div>
                             )}
-                            {option[card_id][0].tablaTypeCelda.celda[
-                              option[card_id][0].tablaTypeCelda.type.indexOf(
+                            {option[card_id].tablaTypeCelda.celda[
+                              option[card_id].tablaTypeCelda.type.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Link" && (
@@ -446,8 +446,8 @@ export const DocumentPreviousIndex = ({
                                 </div>
                               </div>
                             )}
-                            {option[card_id][0].tablaTypeCelda.celda[
-                              option[card_id][0].tablaTypeCelda.type.indexOf(
+                            {option[card_id].tablaTypeCelda.celda[
+                              option[card_id].tablaTypeCelda.type.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Fecha" && (

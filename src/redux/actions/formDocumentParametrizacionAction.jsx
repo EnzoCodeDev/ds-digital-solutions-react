@@ -68,20 +68,20 @@ export const NewDocumetMaster = (
     }
     //Validacion de los titulos de la tarjetas
     for (let i = 0; i < optionTarget.length; i++) {
-      if (optionTarget[i][0].optionValue !== "undefined") {
-        if (optionTarget[i][0].optionValue !== "Tabla") {
-          if (optionTarget[i][0].titleCard.length === 0) {
+      if (optionTarget[i].optionValue !== "undefined") {
+        if (optionTarget[i].optionValue !== "Tabla") {
+          if (optionTarget[i].titleCard.length === 0) {
             Swal.fire(
               "Error",
-              `Falta el titulo en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+              `Falta el titulo en la tarjeta tipo ${optionTarget[i].optionValue}`,
               "error"
             );
             return;
           }
-          if (optionTarget[i][0].text.length === 0) {
+          if (optionTarget[i].text.length === 0) {
             Swal.fire(
               "Error",
-              `Falta la descripcion del item en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+              `Falta la descripcion del item en la tarjeta tipo ${optionTarget[i].optionValue}`,
               "error"
             );
             return;
@@ -89,9 +89,9 @@ export const NewDocumetMaster = (
         }
       }
       //Validar de que todos los titulos de la columna vengan
-      if (optionTarget[i][0].optionValue === "Tabla") {
-        for (let c = 1; c < optionTarget[i][0].tabla.column.length + 1; c++) {
-          if(optionTarget[i][0].tablaTypeCelda.title_columna[c].trim() === ''){
+      if (optionTarget[i].optionValue === "Tabla") {
+        for (let c = 1; c < optionTarget[i].tabla.column.length + 1; c++) {
+          if(optionTarget[i].tablaTypeCelda.title_columna[c].trim() === ''){
             Swal.fire(
               "Error",
               `Falta el titulo de una de las columnas`,
@@ -236,20 +236,20 @@ export const UpdateDocumentMaster = (
     }
     //Validacion de los titulos de la tarjetas
     for (let i = 0; i < optionTarget.length; i++) {
-      if (optionTarget[i][0].optionValue !== "undefined") {
-        if (optionTarget[i][0].titleCard.length === 0) {
+      if (optionTarget[i].optionValue !== "undefined") {
+        if (optionTarget[i].titleCard.length === 0) {
           Swal.fire(
             "Error",
-            `Falta el titulo en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+            `Falta el titulo en la tarjeta tipo ${optionTarget[i].optionValue}`,
             "error"
           );
           return;
         }
-        if (optionTarget[i][0].optionValue !== "Tabla") {
-          if (optionTarget[i][0].text.length === 0) {
+        if (optionTarget[i].optionValue !== "Tabla") {
+          if (optionTarget[i].text.length === 0) {
             Swal.fire(
               "Error",
-              `Falta la descripcion del item en la tarjeta tipo ${optionTarget[i][0].optionValue}`,
+              `Falta la descripcion del item en la tarjeta tipo ${optionTarget[i].optionValue}`,
               "error"
             );
             return;
@@ -257,9 +257,9 @@ export const UpdateDocumentMaster = (
         }
       }
       //Validar de que todos los titulos de la columna vengan
-      if (optionTarget[i][0].optionValue === "Tabla") {
-        for (let c = 1; c < optionTarget[i][0].tabla.column.length + 1; c++) {
-          if(optionTarget[i][0].tablaTypeCelda.title_columna[c].trim() === ''){
+      if (optionTarget[i].optionValue === "Tabla") {
+        for (let c = 1; c < optionTarget[i].tabla.column.length + 1; c++) {
+          if(optionTarget[i].tablaTypeCelda.title_columna[c].trim() === ''){
             Swal.fire(
               "Error",
               `Falta el titulo de una de las columnas`,

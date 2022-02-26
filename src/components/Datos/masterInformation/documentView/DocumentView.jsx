@@ -18,56 +18,52 @@ export const DocumentView = () => {
   let token = localStorage.getItem("token_bearer");
   //Inicial state nuevo documento
   const inicialStateOption = [
-    [
-      {
-        card: "inhabilidado",
-        optionValue: "undefined",
-        titleCard: "",
-        text: "",
-        linkDescription: "",
-        link: "",
-        descripcionArchivo: "",
-        archivo: "",
-        archivo_extesion: "",
-        heigth: { state: true },
-        img: "",
-        img_extesion: "",
-        tabla: { column: [], row: [] },
-        tablaTypeCelda: {
-          title_columna: [],
-          celda: [],
-          type: [],
-          lista: [],
-          celdaType: [],
-          typeCeldaInfo: [infoCelda],
-        },
+    {
+      card: "inhabilidado",
+      optionValue: "undefined",
+      titleCard: "",
+      text: "",
+      linkDescription: "",
+      link: "",
+      descripcionArchivo: "",
+      archivo: "",
+      archivo_extesion: "",
+      heigth: { state: true },
+      img: "",
+      img_extesion: "",
+      tabla: { column: [], row: [] },
+      tablaTypeCelda: {
+        title_columna: [],
+        celda: [],
+        type: [],
+        lista: [],
+        celdaType: [],
+        typeCeldaInfo: [infoCelda],
       },
-    ],
-    [
-      {
-        card: 1,
-        optionValue: "Texto",
-        titleCard: "",
-        text: "",
-        linkDescription: "",
-        link: "",
-        img: "",
-        img_extesion: "",
-        descripcionArchivo: "",
-        archivo: "",
-        archivo_extesion: "",
-        heigth: { state: true },
-        tabla: { column: [1], row: [1] },
-        tablaTypeCelda: {
-          title_columna: titleColumns,
-          celda: ["0", "Título"],
-          type: indexTypeCelda,
-          lista: listArray,
-          celdaType: ["0", "Título"],
-          typeCeldaInfo: [infoCelda],
-        },
+    },
+    {
+      card: 1,
+      optionValue: "Texto",
+      titleCard: "",
+      text: "",
+      linkDescription: "",
+      link: "",
+      img: "",
+      img_extesion: "",
+      descripcionArchivo: "",
+      archivo: "",
+      archivo_extesion: "",
+      heigth: { state: true },
+      tabla: { column: [1], row: [1] },
+      tablaTypeCelda: {
+        title_columna: titleColumns,
+        celda: ["0", "Título"],
+        type: indexTypeCelda,
+        lista: listArray,
+        celdaType: ["0", "Título"],
+        typeCeldaInfo: [infoCelda],
       },
-    ],
+    },
   ];
   //Inicial estate de los estados de la tarjetas de los datos basicos
   const initialStateDataBasic = [
@@ -142,92 +138,87 @@ export const DocumentView = () => {
   //Renderizar los datos de la tarjeta de la aplicacion
   useEffect(() => {
     let arrayOptioValue = [
-      [
-        {
-          titleCard: "",
-          optionValue: "undefined",
-          text: "",
-          tabla: { column: [], row: [] },
-          tablaTypeCelda: {
-            title_columna: [],
-            celda: [],
-            type: [],
-            lista: [],
-            celdaType: [],
-            typeCeldaInfo: [],
-          },
-          linkTitle: "",
-          link: "",
-          heigth: { state: true },
-          img: "",
-          card: 0,
-          card_id: 0,
+      {
+        titleCard: "",
+        optionValue: "undefined",
+        text: "",
+        tabla: { column: [], row: [] },
+        tablaTypeCelda: {
+          title_columna: [],
+          celda: [],
+          type: [],
+          lista: [],
+          celdaType: [],
+          typeCeldaInfo: [],
         },
-      ],
+        linkTitle: "",
+        link: "",
+        heigth: { state: true },
+        img: "",
+        card: 0,
+        card_id: 0,
+      },
     ];
     if (documentMaster.res) {
       //Renderiazado de los datos del las targetas del documento
       documentMaster.DocumentMasterBody.map(function (DocumentMasterBody) {
-        return arrayOptioValue.push([
-          {
-            card_id: DocumentMasterBody.id,
-            card: DocumentMasterBody.number_card,
-            link:
-              DocumentMasterBody.link === null ? "" : DocumentMasterBody.link,
-            linkDescription:
-              DocumentMasterBody.link_description === null
-                ? ""
-                : DocumentMasterBody.link_description,
-            archivo:
-              DocumentMasterBody.file === null ? "" : DocumentMasterBody.file,
-            descripcionArchivo:
-              DocumentMasterBody.file_description === null
-                ? ""
-                : DocumentMasterBody.file_description,
-            img:
-              DocumentMasterBody.image === null ? "" : DocumentMasterBody.image,
-            heigth: { state: true },
-            titleCard: DocumentMasterBody.title_card,
-            optionValue: DocumentMasterBody.select_value,
-            text:
-              DocumentMasterBody.text_description === null
-                ? ""
-                : DocumentMasterBody.text_description,
-            tabla: {
-              column:
-                JSON.parse(DocumentMasterBody.columns) === null
-                  ? [1]
-                  : JSON.parse(DocumentMasterBody.columns),
-              row:
-                JSON.parse(DocumentMasterBody.row) === null
-                  ? [1]
-                  : JSON.parse(DocumentMasterBody.row),
-            },
-            tablaTypeCelda: {
-              title_columna:
-                DocumentMasterBody.title_columns !== null
-                  ? JSON.parse(DocumentMasterBody.title_columns)
-                  : titleColumns,
-              celda:
-                DocumentMasterBody.type_celda !== null
-                  ? JSON.parse(DocumentMasterBody.type_celda)
-                  : ["0", "Título"],
-              type:
-                DocumentMasterBody.identity_data_position !== null
-                  ? JSON.parse(DocumentMasterBody.identity_data_position)
-                  : indexTypeCelda,
-              lista:
-                DocumentMasterBody.list_value_celda !== null
-                  ? JSON.parse(DocumentMasterBody.list_value_celda)
-                  : null,
-              celdaType:
-                DocumentMasterBody.type_celda !== null
-                  ? DocumentMasterBody.type_celda
-                  : JSON.stringify(["0", "Título"]),
-              typeCeldaInfo: JSON.parse(DocumentMasterBody.card_info_table),
-            },
+        return arrayOptioValue.push({
+          card_id: DocumentMasterBody.id,
+          card: DocumentMasterBody.number_card,
+          link: DocumentMasterBody.link === null ? "" : DocumentMasterBody.link,
+          linkDescription:
+            DocumentMasterBody.link_description === null
+              ? ""
+              : DocumentMasterBody.link_description,
+          archivo:
+            DocumentMasterBody.file === null ? "" : DocumentMasterBody.file,
+          descripcionArchivo:
+            DocumentMasterBody.file_description === null
+              ? ""
+              : DocumentMasterBody.file_description,
+          img:
+            DocumentMasterBody.image === null ? "" : DocumentMasterBody.image,
+          heigth: { state: true },
+          titleCard: DocumentMasterBody.title_card,
+          optionValue: DocumentMasterBody.select_value,
+          text:
+            DocumentMasterBody.text_description === null
+              ? ""
+              : DocumentMasterBody.text_description,
+          tabla: {
+            column:
+              JSON.parse(DocumentMasterBody.columns) === null
+                ? [1]
+                : JSON.parse(DocumentMasterBody.columns),
+            row:
+              JSON.parse(DocumentMasterBody.row) === null
+                ? [1]
+                : JSON.parse(DocumentMasterBody.row),
           },
-        ]);
+          tablaTypeCelda: {
+            title_columna:
+              DocumentMasterBody.title_columns !== null
+                ? JSON.parse(DocumentMasterBody.title_columns)
+                : titleColumns,
+            celda:
+              DocumentMasterBody.type_celda !== null
+                ? JSON.parse(DocumentMasterBody.type_celda)
+                : ["0", "Título"],
+            type:
+              DocumentMasterBody.identity_data_position !== null
+                ? JSON.parse(DocumentMasterBody.identity_data_position)
+                : indexTypeCelda,
+            lista:
+              DocumentMasterBody.list_value_celda !== null
+                ? JSON.parse(DocumentMasterBody.list_value_celda)
+                : null,
+            celdaType:
+              DocumentMasterBody.type_celda !== null
+                ? DocumentMasterBody.type_celda
+                : JSON.stringify(["0", "Título"]),
+            typeCeldaInfo: JSON.parse(DocumentMasterBody.card_info_table),
+          },
+        });
       });
       setOption(arrayOptioValue);
       let newArray = JSON.parse(documentMaster.DocumentMasterHead.position);
@@ -323,19 +314,19 @@ export const DocumentView = () => {
   //Vigilar los estados de los input de descripcion del texto
   const handleOnChangeText = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].textDescription = e.target.value;
+    optionInfo[id].textDescription = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado del input del link descripcion
   const handleDescripcionLinkChange = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].linkDescription = e.target.value;
+    optionInfo[id].linkDescription = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado del input link
   const handleOnchangeLink = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].link = e.target.value;
+    optionInfo[id].link = e.target.value;
     setOption(optionInfo);
   };
   //Convertir imagen a base 64
@@ -361,8 +352,8 @@ export const DocumentView = () => {
       reader.readAsDataURL(archive);
       reader.onload = function () {
         let base64 = reader.result;
-        optionInfo[id][0].img = base64;
-        optionInfo[id][0].img_extesion =
+        optionInfo[id].img = base64;
+        optionInfo[id].img_extesion =
           extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
         setOption(optionInfo);
       };
@@ -392,9 +383,9 @@ export const DocumentView = () => {
       reader.onload = function () {
         let base64 = reader.result;
         //Archivo
-        optionInfo[id][0].archivo = base64;
+        optionInfo[id].archivo = base64;
         //Extension
-        optionInfo[id][0].archivo_extesion =
+        optionInfo[id].archivo_extesion =
           extensiones_permitidas[extensiones_permitidas.indexOf(extension)];
         setOption(optionInfo);
       };
@@ -403,46 +394,46 @@ export const DocumentView = () => {
   //Vigilar el estado de la tarjeta tipo fecha
   const handleDate = (e, id) => {
     let optionInfo = [...option];
-    optionInfo[id][0].date = e.target.value;
+    optionInfo[id].date = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado de cada titulo de cada celda
   const handletitleCelda = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    optionInfo[id].tablaTypeCelda.typeCeldaInfo[0][
+      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ].titleCelda = e.target.value;
     setOption(optionInfo);
   };
   //vigilar el estado del text de cada celda
   const handletextCelda = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    optionInfo[id].tablaTypeCelda.typeCeldaInfo[0][
+      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ].textDescription = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado de cada de cada lista de la celda
   const handleOnChangeTextList = (e, id, listCelda, parametro_opcional) => {
     let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    optionInfo[id].tablaTypeCelda.typeCeldaInfo[0][
+      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ].lista[listCelda] = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado del link de cada celda
   const handleLink = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    optionInfo[id].tablaTypeCelda.typeCeldaInfo[0][
+      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ].link = e.target.value;
     setOption(optionInfo);
   };
   //Vigilar el estado de cada descripcion del link de cada celda
   const handleLinkDescription = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
-    optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-      option[id][0].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+    optionInfo[id].tablaTypeCelda.typeCeldaInfo[0][
+      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ].linkDescription = e.target.value;
     setOption(optionInfo);
   };
@@ -468,13 +459,13 @@ export const DocumentView = () => {
       reader.readAsDataURL(archive);
       reader.onload = function () {
         let base64 = reader.result;
-        optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-          option[id][0].tablaTypeCelda.type.indexOf(
+        optionInfo[id].tablaTypeCelda.typeCeldaInfo[0][
+          option[id].tablaTypeCelda.type.indexOf(
             parseInt(parametro_opcional)
           )
         ].img = base64;
-        optionInfo[id][0].tablaTypeCelda.typeCeldaInfo[0][
-          option[id][0].tablaTypeCelda.type.indexOf(
+        optionInfo[id].tablaTypeCelda.typeCeldaInfo[0][
+          option[id].tablaTypeCelda.type.indexOf(
             parseInt(parametro_opcional)
           )
         ].img_extension =

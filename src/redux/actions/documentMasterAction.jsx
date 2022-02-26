@@ -157,98 +157,98 @@ export const DocumentMasterInfoNew = (
       }
     }
     for (let i = 0; i < option.length; i++) {
-      if (option[i][0].optionValue !== "undefined") {
-        if (option[i][0].optionValue === "Texto") {
+      if (option[i].optionValue !== "undefined") {
+        if (option[i].optionValue === "Texto") {
           if (
-            option[i][0].textDescription === undefined ||
-            option[i][0].textDescription.trim() === ""
+            option[i].textDescription === undefined ||
+            option[i].textDescription.trim() === ""
           ) {
             Swal.fire(
               "Falta la descripción",
-              `Falta la descripción de una de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              `Falta la descripción de una de una de la(s) cajas tipo ${option[i].optionValue}`,
               "error"
             );
             return;
           }
         }
-        if (option[i][0].optionValue === "Imagen") {
-          if (option[i][0].img === undefined) {
+        if (option[i].optionValue === "Imagen") {
+          if (option[i].img === undefined) {
             Swal.fire(
               "Falta la imagen",
-              `Falta cargar la imagen de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              `Falta cargar la imagen de una de la(s) cajas tipo ${option[i].optionValue}`,
               "error"
             );
             return;
           }
         }
-        if (option[i][0].optionValue === "Link") {
+        if (option[i].optionValue === "Link") {
           if (
-            option[i][0].link === undefined ||
-            option[i][0].link.trim() === ""
+            option[i].link === undefined ||
+            option[i].link.trim() === ""
           ) {
             Swal.fire(
               "Falta el enlace",
-              `Falta el enlace del link de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              `Falta el enlace del link de una de la(s) cajas tipo ${option[i].optionValue}`,
               "error"
             );
             return;
           }
           if (
-            option[i][0].linkDescription === undefined ||
-            option[i][0].linkDescription.trim() === ""
+            option[i].linkDescription === undefined ||
+            option[i].linkDescription.trim() === ""
           ) {
             Swal.fire(
               "Falta la descripción",
-              `Falta la descripción del link de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              `Falta la descripción del link de una de la(s) cajas tipo ${option[i].optionValue}`,
               "error"
             );
             return;
           }
         }
-        if (option[i][0].optionValue === "Archivo") {
-          if (option[i][0].archivo === undefined) {
+        if (option[i].optionValue === "Archivo") {
+          if (option[i].archivo === undefined) {
             Swal.fire(
               "Falta el archivo",
-              `Falta el archivo de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              `Falta el archivo de una de la(s) cajas tipo ${option[i].optionValue}`,
               "error"
             );
             return;
           }
         }
-        if (option[i][0].optionValue === "Fecha") {
+        if (option[i].optionValue === "Fecha") {
           if (
-            option[i][0].date === undefined ||
-            option[i][0].date.trim() === ""
+            option[i].date === undefined ||
+            option[i].date.trim() === ""
           ) {
             Swal.fire(
               "Falta la fecha",
-              `Falta la fecha de una de la(s) cajas tipo ${option[i][0].optionValue}`,
+              `Falta la fecha de una de la(s) cajas tipo ${option[i].optionValue}`,
               "error"
             );
             return;
           }
         }
         //Logica para la tabla no le falte ni un solo dato es un poco compleja por la parte dinamica
-        if (option[i][0].optionValue === "Tabla") {
+        if (option[i].optionValue === "Tabla") {
           //Cuantas columnas hay
           let arrayTable = [];
-          for (let c = 1; c < option[i][0].tabla.column.length + 1; c++) {
+          for (let c = 1; c < option[i].tabla.column.length + 1; c++) {
             //cuantas filas hay
-            for (let r = 1; r < option[i][0].tabla.row.length + 1; r++) {
+            for (let r = 1; r < option[i].tabla.row.length + 1; r++) {
               //Validar  celda tipo titulo texto
               if (
-                option[i][0].tablaTypeCelda.celda[
-                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                option[i].tablaTypeCelda.celda[
+                  option[i].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
                 ] === "Título texto"
               ) {
                 if (
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].titleCelda === null ||
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].titleCelda.trim() === ""
@@ -261,13 +261,13 @@ export const DocumentMasterInfoNew = (
                   return;
                 }
                 if (
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].textDescription === null ||
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].textDescription.trim() === ""
@@ -283,14 +283,14 @@ export const DocumentMasterInfoNew = (
                   type: "Título texto",
                   index: parseInt(`${r}${c}`),
                   titleCelda:
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
+                    option[i].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i].tablaTypeCelda.type.indexOf(
                         parseInt(`${r}${c}`)
                       )
                     ].titleCelda,
                   textDescription:
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
+                    option[i].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i].tablaTypeCelda.type.indexOf(
                         parseInt(`${r}${c}`)
                       )
                     ].textDescription,
@@ -298,18 +298,18 @@ export const DocumentMasterInfoNew = (
               }
               //Validar celda tipo imagen
               if (
-                option[i][0].tablaTypeCelda.celda[
-                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                option[i].tablaTypeCelda.celda[
+                  option[i].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
                 ] === "Imagen"
               ) {
                 if (
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].img === null ||
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].img.trim() === ""
@@ -324,14 +324,14 @@ export const DocumentMasterInfoNew = (
                 arrayTable.push({
                   type: "Imagen",
                   index: parseInt(`${r}${c}`),
-                  img: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  img: option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].img,
                   img_extesion:
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
+                    option[i].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i].tablaTypeCelda.type.indexOf(
                         parseInt(`${r}${c}`)
                       )
                     ].img_extension,
@@ -339,18 +339,18 @@ export const DocumentMasterInfoNew = (
               }
               //Validar celda tipo titulo imagen
               if (
-                option[i][0].tablaTypeCelda.celda[
-                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                option[i].tablaTypeCelda.celda[
+                  option[i].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
                 ] === "Imagen título"
               ) {
                 if (
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].titleCelda === null ||
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].titleCelda.trim() === ""
@@ -363,13 +363,13 @@ export const DocumentMasterInfoNew = (
                   return;
                 }
                 if (
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].img === null ||
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].img.trim() === ""
@@ -385,19 +385,19 @@ export const DocumentMasterInfoNew = (
                   type: "Imagen titulo",
                   index: parseInt(`${r}${c}`),
                   titleCelda:
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
+                    option[i].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i].tablaTypeCelda.type.indexOf(
                         parseInt(`${r}${c}`)
                       )
                     ].titleCelda,
-                  img: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  img: option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].img,
                   img_extesion:
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
+                    option[i].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i].tablaTypeCelda.type.indexOf(
                         parseInt(`${r}${c}`)
                       )
                     ].img_extension,
@@ -405,18 +405,18 @@ export const DocumentMasterInfoNew = (
               }
               //validar celda tipo link
               if (
-                option[i][0].tablaTypeCelda.celda[
-                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                option[i].tablaTypeCelda.celda[
+                  option[i].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
                 ] === "Link"
               ) {
                 if (
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].link === null ||
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].link.trim() === ""
@@ -429,13 +429,13 @@ export const DocumentMasterInfoNew = (
                   return;
                 }
                 if (
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].linkDescription === null ||
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].linkDescription.trim() === ""
@@ -450,14 +450,14 @@ export const DocumentMasterInfoNew = (
                 arrayTable.push({
                   type: "link",
                   index: parseInt(`${r}${c}`),
-                  link: option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  link: option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].link,
                   linkDescription:
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
+                    option[i].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i].tablaTypeCelda.type.indexOf(
                         parseInt(`${r}${c}`)
                       )
                     ].linkDescription,
@@ -465,18 +465,18 @@ export const DocumentMasterInfoNew = (
               }
               //Validar celda tipo fecha
               if (
-                option[i][0].tablaTypeCelda.celda[
-                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                option[i].tablaTypeCelda.celda[
+                  option[i].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
                 ] === "Fecha"
               ) {
                 if (
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].titleCelda === null ||
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].titleCelda.trim() === ""
@@ -489,13 +489,13 @@ export const DocumentMasterInfoNew = (
                   return;
                 }
                 if (
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].textDescription === null ||
-                  option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                    option[i][0].tablaTypeCelda.type.indexOf(
+                  option[i].tablaTypeCelda.typeCeldaInfo[0][
+                    option[i].tablaTypeCelda.type.indexOf(
                       parseInt(`${r}${c}`)
                     )
                   ].textDescription.trim() === ""
@@ -511,42 +511,42 @@ export const DocumentMasterInfoNew = (
                   type: "fecha",
                   index: parseInt(`${r}${c}`),
                   titleCelda:
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
+                    option[i].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i].tablaTypeCelda.type.indexOf(
                         parseInt(`${r}${c}`)
                       )
                     ].titleCelda,
                   fecha:
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
+                    option[i].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i].tablaTypeCelda.type.indexOf(
                         parseInt(`${r}${c}`)
                       )
                     ].textDescription,
                 });
               }
               if (
-                option[i][0].tablaTypeCelda.celda[
-                  option[i][0].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
+                option[i].tablaTypeCelda.celda[
+                  option[i].tablaTypeCelda.type.indexOf(parseInt(`${r}${c}`))
                 ] === "Lista"
               ) {
                 // for (
                 //   let l = 0;
                 //   l <
-                //   option[i][0].tablaTypeCelda.lista[
-                //     option[i][0].tablaTypeCelda.type.indexOf(
+                //   option[i].tablaTypeCelda.lista[
+                //     option[i].tablaTypeCelda.type.indexOf(
                 //       parseInt(`${r}${c}`)
                 //     )
                 //   ].length;
                 //   l++
                 // ) {
                 //   if (
-                //     option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                //       option[i][0].tablaTypeCelda.type.indexOf(
+                //     option[i].tablaTypeCelda.typeCeldaInfo[0][
+                //       option[i].tablaTypeCelda.type.indexOf(
                 //         parseInt(`${r}${c}`)
                 //       )
                 //     ].lista[i] === null ||
-                //     option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                //       option[i][0].tablaTypeCelda.type.indexOf(
+                //     option[i].tablaTypeCelda.typeCeldaInfo[0][
+                //       option[i].tablaTypeCelda.type.indexOf(
                 //         parseInt(`${r}${c}`)
                 //       )
                 //     ].lista[i].trim() === ""
@@ -563,8 +563,8 @@ export const DocumentMasterInfoNew = (
                   type: "lista",
                   index: parseInt(`${r}${c}`),
                   lista:
-                    option[i][0].tablaTypeCelda.typeCeldaInfo[0][
-                      option[i][0].tablaTypeCelda.type.indexOf(
+                    option[i].tablaTypeCelda.typeCeldaInfo[0][
+                      option[i].tablaTypeCelda.type.indexOf(
                         parseInt(`${r}${c}`)
                       )
                     ].lista,
@@ -572,7 +572,7 @@ export const DocumentMasterInfoNew = (
               }
             }
           }
-          option[i][0].tablasValue = arrayTable;
+          option[i].tablasValue = arrayTable;
         }
       }
     }

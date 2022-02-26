@@ -16,52 +16,48 @@ export const DocumentFormDeli = () => {
   let token = localStorage.getItem("token_bearer");
   //Inicial state nuevo documento
   const inicialStateOption = [
-    [
-      {
-        card: "inhabilidado",
-        optionValue: "undefined",
-        titleCard: "",
-        text: "",
-        linkDescription: "",
-        link: "",
-        descripcionArchivo: "",
-        archivo: "",
-        heigth: { state: true },
-        img: "",
-        tabla: { column: [], row: [] },
-        tablaTypeCelda: {
-          title_columna: [],
-          celda: [],
-          type: [],
-          lista: [],
-          celdaType: [],
-          typeCeldaInfo: [infoCelda],
-        },
+    {
+      card: "inhabilidado",
+      optionValue: "undefined",
+      titleCard: "",
+      text: "",
+      linkDescription: "",
+      link: "",
+      descripcionArchivo: "",
+      archivo: "",
+      heigth: { state: true },
+      img: "",
+      tabla: { column: [], row: [] },
+      tablaTypeCelda: {
+        title_columna: [],
+        celda: [],
+        type: [],
+        lista: [],
+        celdaType: [],
+        typeCeldaInfo: [infoCelda],
       },
-    ],
-    [
-      {
-        card: 1,
-        optionValue: "Texto",
-        titleCard: "",
-        text: "",
-        linkDescription: "",
-        link: "",
-        img: "",
-        descripcionArchivo: "",
-        archivo: "",
-        heigth: { state: true },
-        tabla: { column: [1], row: [1] },
-        tablaTypeCelda: {
-          title_columna: titleColumns,
-          celda: ["0", "Título"],
-          type: indexTypeCelda,
-          lista: listArray,
-          celdaType: ["0", "Título"],
-          typeCeldaInfo: [infoCelda],
-        },
+    },
+    {
+      card: 1,
+      optionValue: "Texto",
+      titleCard: "",
+      text: "",
+      linkDescription: "",
+      link: "",
+      img: "",
+      descripcionArchivo: "",
+      archivo: "",
+      heigth: { state: true },
+      tabla: { column: [1], row: [1] },
+      tablaTypeCelda: {
+        title_columna: titleColumns,
+        celda: ["0", "Título"],
+        type: indexTypeCelda,
+        lista: listArray,
+        celdaType: ["0", "Título"],
+        typeCeldaInfo: [infoCelda],
       },
-    ],
+    },
   ];
   //Inicial estate de los estados de la tarjetas de los datos basicos
   const initialStateDataBasic = [
@@ -126,7 +122,6 @@ export const DocumentFormDeli = () => {
   //Renderizar los datos de la tarjeta de la aplicacion
   useEffect(() => {
     let arrayOptioValue = [
-      [
         {
           titleCard: "",
           optionValue: "undefined",
@@ -147,7 +142,6 @@ export const DocumentFormDeli = () => {
           card: 0,
           card_id: 0,
         },
-      ],
     ];
     if (documentMaster.res) {
       //Renderiazado de los datos de la cabeza del formulario
@@ -176,7 +170,7 @@ export const DocumentFormDeli = () => {
             });
           }
         }
-        return arrayOptioValue.push([
+        return arrayOptioValue.push(
           {
             card_id: DocumentMasterBody.id,
             card: DocumentMasterBody.number_card,
@@ -237,7 +231,7 @@ export const DocumentFormDeli = () => {
               typeCeldaInfo: JSON.parse(DocumentMasterBody.card_info_table),
             },
           },
-        ]);
+        );
       });
       setOption(arrayOptioValue);
       let newArray = JSON.parse(documentMaster.DocumentMasterHead.position);
@@ -260,70 +254,70 @@ export const DocumentFormDeli = () => {
     for (let i = 0; i < option.length; i++) {
       let optionInfo = [...option];
       for (let t = 0; t < documentMasterInfoTable.length; t++) {
-        if (option[i][0].card_id === documentMasterInfoTable[t].id_card) {
+        if (option[i].card_id === documentMasterInfoTable[t].id_card) {
           if (documentMasterInfoTable[t].type_celda === "Título texto") {
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].titleCelda = documentMasterInfoTable[t].title_celda;
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].textDescription = documentMasterInfoTable[t].text_description;
             setOption(optionInfo);
           }
           if (documentMasterInfoTable[t].type_celda === "Imagen") {
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].img = documentMasterInfoTable[t].img;
             setOption(optionInfo);
           }
           if (documentMasterInfoTable[t].type_celda === "Imagen titulo") {
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].titleCelda = documentMasterInfoTable[t].title_celda;
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].img = documentMasterInfoTable[t].img;
             setOption(optionInfo);
           }
           if (documentMasterInfoTable[t].type_celda === "link") {
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].link = documentMasterInfoTable[t].link;
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].linkDescription = documentMasterInfoTable[t].link_description;
             setOption(optionInfo);
           }
           if (documentMasterInfoTable[t].type_celda === "fecha") {
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].titleCelda = documentMasterInfoTable[t].title_celda;
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].textDescription = documentMasterInfoTable[t].fecha;
             setOption(optionInfo);
           }
           if (documentMasterInfoTable[t].type_celda === "lista") {
-            optionInfo[i][0].tablaTypeCelda.typeCeldaInfo[0][
-              option[i][0].tablaTypeCelda.type.indexOf(
+            optionInfo[i].tablaTypeCelda.typeCeldaInfo[0][
+              option[i].tablaTypeCelda.type.indexOf(
                 parseInt(documentMasterInfoTable[t].index_celda)
               )
             ].lista = JSON.parse(documentMasterInfoTable[t].lista);

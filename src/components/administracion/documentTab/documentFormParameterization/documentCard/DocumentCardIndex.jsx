@@ -33,14 +33,14 @@ export const DocumentCardIndex = ({
         >
           <div
             className={
-              "container-card " + (option[card_id][0].heigth.state && "active")
+              "container-card " + (option[card_id].heigth.state && "active")
             }
           >
             <div className="header-card">
-              {option[card_id][0].titleCard.length === 0 ? (
+              {option[card_id].titleCard.length === 0 ? (
                 <h3>Ingresa la descripción aquí</h3>
               ) : (
-                <h3>{option[card_id][0].titleCard}</h3>
+                <h3>{option[card_id].titleCard}</h3>
               )}
             </div>
             <div className="linear"></div>
@@ -53,11 +53,11 @@ export const DocumentCardIndex = ({
                 name={`text${card_id}`}
                 onChange={(e) => handleOnChangeTitleCard(e, card_id)}
                 placeholder={"Ingresa información aquí(Obligatorio)"}
-                defaultValue={option[card_id][0].titleCard}
+                defaultValue={option[card_id].titleCard}
               ></input>
               <select
                 className="select"
-                value={option[card_id][0].optionValue}
+                value={option[card_id].optionValue}
                 onChange={(e) => handleTarget(e, card_id)}
               >
                 <option>Texto</option>
@@ -69,7 +69,7 @@ export const DocumentCardIndex = ({
               </select>
             </div>
             {/* Renderizar campo del texto */}
-            {option[card_id][0].optionValue === "Texto" && (
+            {option[card_id].optionValue === "Texto" && (
               <div className="inputText">
                 <div>
                   <span className="span2">Descripcion del item</span>
@@ -80,13 +80,13 @@ export const DocumentCardIndex = ({
                     name={`textarea${card_id}`}
                     placeholder={"Escribe el texto"}
                     onChange={(e) => handleOnChangeText(e, card_id)}
-                    defaultValue={option[card_id][0].text}
+                    defaultValue={option[card_id].text}
                   ></textarea>
                 </div>
               </div>
             )}
             {/* Renderizar campo de las imagenes*/}
-            {option[card_id][0].optionValue === "Imagen" && (
+            {option[card_id].optionValue === "Imagen" && (
               <div className="inputImg">
                 <div>
                   <span className="span2">Descripcion del item</span>
@@ -97,13 +97,13 @@ export const DocumentCardIndex = ({
                     name={`textarea${card_id}`}
                     placeholder={"Escribe el texto"}
                     onChange={(e) => handleOnChangeText(e, card_id)}
-                    defaultValue={option[card_id][0].text}
+                    defaultValue={option[card_id].text}
                   ></textarea>
                 </div>
               </div>
             )}
             {/* Renderizar campo del link*/}
-            {option[card_id][0].optionValue === "Link" && (
+            {option[card_id].optionValue === "Link" && (
               <div className="inputLink">
                 <div>
                   <span className="span2">Descripcion del item</span>
@@ -114,13 +114,13 @@ export const DocumentCardIndex = ({
                     name={`textarea${card_id}`}
                     placeholder={"Escribe el texto"}
                     onChange={(e) => handleOnChangeText(e, card_id)}
-                    defaultValue={option[card_id][0].text}
+                    defaultValue={option[card_id].text}
                   ></textarea>
                 </div>
               </div>
             )}
             {/* Renderizar campo del archivo*/}
-            {option[card_id][0].optionValue === "Archivo" && (
+            {option[card_id].optionValue === "Archivo" && (
               <div className="inputFile">
                 <div>
                   <span className="span2">Descripcion del item</span>
@@ -131,13 +131,13 @@ export const DocumentCardIndex = ({
                     name={`textarea${card_id}`}
                     placeholder={"Escribe el texto"}
                     onChange={(e) => handleOnChangeText(e, card_id)}
-                    defaultValue={option[card_id][0].text}
+                    defaultValue={option[card_id].text}
                   ></textarea>
                 </div>
               </div>
             )}
             {/* Renderizar campo del Fecha*/}
-            {option[card_id][0].optionValue === "Fecha" && (
+            {option[card_id].optionValue === "Fecha" && (
               <div className="inputFecha">
                 <div>
                   <span className="span2">Descripcion del item</span>
@@ -148,13 +148,13 @@ export const DocumentCardIndex = ({
                     name={`textarea${card_id}`}
                     placeholder={"Escribe el texto"}
                     onChange={(e) => handleOnChangeText(e, card_id)}
-                    defaultValue={option[card_id][0].text}
+                    defaultValue={option[card_id].text}
                   ></textarea>
                 </div>
               </div>
             )}
             {/* Renderizar campo del cuantas tablas y columnas*/}
-            {option[card_id][0].optionValue === "Tabla" && (
+            {option[card_id].optionValue === "Tabla" && (
               <div>
                 <div className="columns-row animate__animated animate__fadeIn">
                   <div>
@@ -162,10 +162,10 @@ export const DocumentCardIndex = ({
                     <select
                       className="select_columns"
                       value={
-                        option[card_id][0].tabla.column === null
+                        option[card_id].tabla.column === null
                           ? 1
-                          : option[card_id][0].tabla.column[
-                              option[card_id][0].tabla.column.length - 1
+                          : option[card_id].tabla.column[
+                              option[card_id].tabla.column.length - 1
                             ]
                       }
                       onChange={(e) => handleTargetColumns(e, card_id)}
@@ -182,10 +182,10 @@ export const DocumentCardIndex = ({
                     <select
                       className="select_row"
                       value={
-                        option[card_id][0].tabla.row === null
+                        option[card_id].tabla.row === null
                           ? 1
-                          : option[card_id][0].tabla.row[
-                              option[card_id][0].tabla.row.length - 1
+                          : option[card_id].tabla.row[
+                              option[card_id].tabla.row.length - 1
                             ]
                       }
                       onChange={(e) => handleTargetRows(e, card_id)}
@@ -197,12 +197,12 @@ export const DocumentCardIndex = ({
                   </div>
                 </div>
                 {/* Renderizar tabla */}
-                {option[card_id][0].optionValue === "Tabla" && (
+                {option[card_id].optionValue === "Tabla" && (
                   <div className="tabla-subContainer animate__animated animate__fadeIn">
-                    {option[card_id][0].tabla.column.map((id_column) => (
+                    {option[card_id].tabla.column.map((id_column) => (
                       <div className="row" key={id_column}>
                         <div className="rows"></div>
-                        {option[card_id][0].tabla.row.map((id_row) => (
+                        {option[card_id].tabla.row.map((id_row) => (
                           <div className="column" key={id_row}>
                             <div className="columns"></div>
                             <div className="celda_type">
@@ -213,11 +213,11 @@ export const DocumentCardIndex = ({
                                       type="text"
                                       className={"celda_title_input"}
                                       defaultValue={
-                                        option[card_id][0].tablaTypeCelda
+                                        option[card_id].tablaTypeCelda
                                           .title_columna[
                                           option[
                                             card_id
-                                          ][0].tablaTypeCelda.type.indexOf(
+                                          ].tablaTypeCelda.type.indexOf(
                                             parseInt(`${id_row}${id_column}`)
                                           )
                                         ]
@@ -241,10 +241,10 @@ export const DocumentCardIndex = ({
                                 <select
                                   className="select_columns"
                                   value={
-                                    option[card_id][0].tablaTypeCelda.celda[
+                                    option[card_id].tablaTypeCelda.celda[
                                       option[
                                         card_id
-                                      ][0].tablaTypeCelda.type.indexOf(
+                                      ].tablaTypeCelda.type.indexOf(
                                         parseInt(`${id_row}${id_column}`)
                                       )
                                     ]
@@ -264,10 +264,10 @@ export const DocumentCardIndex = ({
                                   <option>Link</option>
                                   <option>Fecha</option>
                                 </select>
-                                {option[card_id][0].tablaTypeCelda.celda[
+                                {option[card_id].tablaTypeCelda.celda[
                                   option[
                                     card_id
-                                  ][0].tablaTypeCelda.type.indexOf(
+                                  ].tablaTypeCelda.type.indexOf(
                                     parseInt(`${id_row}${id_column}`)
                                   )
                                 ] === "Lista" && (
@@ -275,17 +275,17 @@ export const DocumentCardIndex = ({
                                   <select
                                     className="select_columns"
                                     value={
-                                      option[card_id][0].tablaTypeCelda.lista[
+                                      option[card_id].tablaTypeCelda.lista[
                                         option[
                                           card_id
-                                        ][0].tablaTypeCelda.type.indexOf(
+                                        ].tablaTypeCelda.type.indexOf(
                                           parseInt(`${id_row}${id_column}`)
                                         )
                                       ][
-                                        option[card_id][0].tablaTypeCelda.lista[
+                                        option[card_id].tablaTypeCelda.lista[
                                           option[
                                             card_id
-                                          ][0].tablaTypeCelda.type.indexOf(
+                                          ].tablaTypeCelda.type.indexOf(
                                             parseInt(`${id_row}${id_column}`)
                                           )
                                         ].length - 1
