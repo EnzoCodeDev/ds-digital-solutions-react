@@ -32,9 +32,7 @@ export const DocumentCardIndex = ({
           className="container-group animate__animated animate__slideInUp"
         >
           <div
-            className={
-              "container-card " + (option[card_id].heigth.state && "active")
-            }
+            className={"container-card "}
           >
             <div className="header-card">
               {option[card_id].titleCard.length === 0 ? (

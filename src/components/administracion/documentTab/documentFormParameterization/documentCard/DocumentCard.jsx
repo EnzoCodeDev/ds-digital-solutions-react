@@ -1,27 +1,15 @@
 import React from "react";
 //Libreria de material ui para los icons
 //importacion de tipos de celda por defecto
-import {
-  listArray,
-  typeCelda,
-  infoCelda,
-  titleColumns,
-  indexTypeCelda,
-} from "../../../../../helpers/typeCelda";
+import { indexTypeCelda } from "../../../../../helpers/typeCelda";
 import { DocumentCardIndex } from "./DocumentCardIndex";
 export const DocumentCard = ({
-  lista,
   ultime,
   option,
-  setLista,
   setOption,
   arrayCard,
   setUltime,
-  listaUltime,
   setArrayCard,
-  setListaUltime,
-  tableColumnsTypeValue,
-  handletableColumnsTypeValueChange,
 }) => {
   //Logica para agregar un nueva tarjeta
   const handleAdd = () => {
@@ -35,20 +23,12 @@ export const DocumentCard = ({
         optionValue: "Texto",
         titleCard: "",
         text: "",
-        linkDescription: "",
-        link: "",
-        descripcionArchivo: "",
-        archivo: "",
-        img: "",
-        heigth: { state: true },
         tabla: { column: [1], row: [1] },
         tablaTypeCelda: {
-          title_columna: titleColumns,
-          celda: typeCelda,
-          celdaType: JSON.stringify(typeCelda),
+          title_columna: ["", ""],
+          celda: ['', 'Título texto'],
           type: indexTypeCelda,
-          lista: listArray,
-          typeCeldaInfo: infoCelda,
+          lista: [[0], [0]],
         },
       },
     ]);
@@ -64,23 +44,6 @@ export const DocumentCard = ({
       arrayCard.splice(item, 1);
       optionArrayy.splice(card_id, 1, {
         card: "inhabilidado",
-        optionValue: "no",
-        titleCard: "no",
-        linkDescription: "",
-        link: "no",
-        descripcionArchivo: "",
-        archivo: "",
-        img: "no",
-        text: "no",
-        heigth: { state: true },
-        tabla: { column: "no", row: "no" },
-        tablaTypeCelda: {
-          title_columna: titleColumns,
-          celda: [],
-          celdaType: JSON.stringify(typeCelda),
-          type: indexTypeCelda,
-          lista: listArray,
-        },
       });
       setOption([...optionArrayy]);
       setArrayCard([...arrayCard]);
@@ -112,137 +75,71 @@ export const DocumentCard = ({
       setArrayCard([...arrayCard]);
     }
   };
-  //Esta logica es para agregar el estado la opcion del formulario
-  //Y que tipo de datos y datos se han insertado
+  //Que tipo de targeta es
   const handleTarget = (e, id) => {
     let optionValue = e.target.value;
     const optionInfo = [...option];
-    //Validaciones para restaurar los tipos de datos requeridos por el usuario
-    if (optionValue === "Texto") {
-      optionInfo[id].optionValue = optionValue;
-      optionInfo[id].heigth.state = true;
-      setOption(optionInfo);
-    }
-    if (optionValue === "Tabla") {
-      optionInfo[id].optionValue = optionValue;
-      optionInfo[id].heigth.state = true;
-      setOption(optionInfo);
-    }
-    if (optionValue === "Imagen") {
-      optionInfo[id].optionValue = optionValue;
-      optionInfo[id].heigth.state = false;
-      setOption(optionInfo);
-    }
-    if (optionValue === "Link") {
-      optionInfo[id].optionValue = optionValue;
-      optionInfo[id].heigth.state = false;
-      setOption(optionInfo);
-    }
-    if (optionValue === "Archivo") {
-      optionInfo[id].optionValue = optionValue;
-      optionInfo[id].heigth.state = false;
-      setOption(optionInfo);
-    }
-    if (optionValue === "Fecha") {
-      optionInfo[id].optionValue = optionValue;
-      optionInfo[id].heigth.state = false;
-      setOption(optionInfo);
-    }
+    optionInfo[id].optionValue = optionValue;
+    setOption(optionInfo);
   };
   //Logica para agregar al estate cuantas columnas
   const handleTargetColumns = (e, id) => {
     let optionValue = e.target.value;
     let optionInfo = [...option];
-    const arraycolumns = [];
+    let arraycolumns = [];
+    let arrayTypeList = [[0]];
+    let arrayTypeCelda = ["0"];
+    let arrayTitleCelda = [""];
     for (let i = 1; i <= optionValue; i++) {
       arraycolumns.push(i);
-    }
-    optionInfo[id].tabla.column = arraycolumns;
-    let number = optionInfo[id].tabla.row.length * 10;
-    let arrayTypeColumns = [];
-    arrayTypeColumns.push("0");
-    for (let i = 1; i <= number; i++) {
-      arrayTypeColumns.push(
+      arrayTypeCelda.push(
         optionInfo[id].tablaTypeCelda.celda[i] === undefined
           ? "Título texto"
           : optionInfo[id].tablaTypeCelda.celda[i]
       );
-    }
-    optionInfo[id].tablaTypeCelda.celda = arrayTypeColumns;
-    let arrayTypeList = [];
-    arrayTypeList.push([0]);
-    for (let i = 1; i <= number; i++) {
       arrayTypeList.push(
         optionInfo[id].tablaTypeCelda.lista[i] === undefined
           ? [0]
           : optionInfo[id].tablaTypeCelda.lista[i]
       );
+      arrayTitleCelda.push(
+        optionInfo[id].tablaTypeCelda.title_columna[i] === undefined
+          ? ""
+          : optionInfo[id].tablaTypeCelda.title_columna[i]
+      );
     }
+    optionInfo[id].tabla.column = arraycolumns;
+    optionInfo[id].tablaTypeCelda.title_columna = arrayTitleCelda;
     optionInfo[id].tablaTypeCelda.lista = arrayTypeList;
-    let arrayTypeCeldaInfo = [];
-    for (let i = 0; i <= number; i++) {
-      arrayTypeCeldaInfo.push({
-        celda: "",
-        titleColumna: "",
-        titleCelda: "",
-        textDescription: "",
-        link: "",
-        linkDescription: "",
-        img: "",
-        lista: ["", "", "", "", "", "", "", "", "", ""],
-      });
-    }
-    optionInfo[id].tablaTypeCelda.typeCeldaInfo = [arrayTypeCeldaInfo];
+    optionInfo[id].tablaTypeCelda.celda = arrayTypeCelda;
     setOption(optionInfo);
   };
   //Guardar en el state filas columnas quiere el usuario
   const handleTargetRows = (e, id) => {
     let optionValue = e.target.value;
     let optionInfo = [...option];
-    const arrayRows = [];
+    let arrayRows = [];
+    let arrayTypeCelda = [];
+    let arrayTypeList = [];
     for (let i = 1; i <= optionValue; i++) {
       arrayRows.push(i);
     }
-    optionInfo[id].tabla.row = arrayRows;
-    //Si se van agregar mas columnas o filas en la tabla validar esta multiplicacion
-    //Ya que esta multiplicacion identifica el valor de cuantas filas multiplicado por 10
-    //Que es maximo de columnas si quieres mas columnas aumenta el resultado
-    //Se hixo con el fin de un bug que es del recorrer los datos no dan y a la hora de guardar no guardan bien.
-    //Tambien para evitar gastar recursos en la base de datos
-    let number = optionInfo[id].tabla.row.length * 10;
-    let arrayTypeColumns = [];
-    for (let i = 0; i <= number; i++) {
-      arrayTypeColumns.push(
+    //Manejo por almenos 20 columnas
+    for (let i = 1; i <= optionValue * 20; i++) {
+      arrayTypeCelda.push(
         optionInfo[id].tablaTypeCelda.celda[i] === undefined
           ? "Título texto"
           : optionInfo[id].tablaTypeCelda.celda[i]
       );
-    }
-    optionInfo[id].tablaTypeCelda.celda = arrayTypeColumns;
-    let arrayTypeList = [];
-    arrayTypeList.push([0]);
-    for (let i = 0; i <= number; i++) {
       arrayTypeList.push(
         optionInfo[id].tablaTypeCelda.lista[i] === undefined
           ? [0]
           : optionInfo[id].tablaTypeCelda.lista[i]
       );
     }
+    optionInfo[id].tabla.row = arrayRows;
+    optionInfo[id].tablaTypeCelda.celda = arrayTypeCelda;
     optionInfo[id].tablaTypeCelda.lista = arrayTypeList;
-    let arrayTypeCeldaInfo = [];
-    for (let i = 0; i <= number; i++) {
-      arrayTypeCeldaInfo.push({
-        celda: "",
-        titleColumna: "",
-        titleCelda: "",
-        textDescription: "",
-        link: "",
-        linkDescription: "",
-        img: "",
-        lista: ["", "", "", "", "", "", "", "", "", ""],
-      });
-    }
-    optionInfo[id].tablaTypeCelda.typeCeldaInfo = [arrayTypeCeldaInfo];
     setOption(optionInfo);
   };
   //Agregar que tipo de celda quiere cada usuario
@@ -252,9 +149,6 @@ export const DocumentCard = ({
     optionInfo[id].tablaTypeCelda.celda[
       option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
     ] = e.target.value;
-    optionInfo[id].tablaTypeCelda.celdaType = JSON.stringify([
-      ...optionInfo[id].tablaTypeCelda.celda,
-    ]);
     setOption(optionInfo);
   };
   //En estos estados tenemos el value de todos los input de este formulario

@@ -35,9 +35,7 @@ export const DocumentFormIndex = ({
     handleSelectProceso,
     handleInputTemplate,
     handleDocumentUpdate,
-    tableColumnsTypeValue,
     handleInputDescription,
-    handletableColumnsTypeValueChange,
 }) => {
   return (
     <div>
@@ -226,21 +224,12 @@ export const DocumentFormIndex = ({
           {/* Pasar propiedades para el componentes de la tarjetas */}
           <div className="animate__animated animate__slideInUp">
             <DocumentCard
-              lista={lista}
               option={option}
               ultime={ultime}
-              setLista={setLista}
               setOption={setOption}
               arrayCard={arrayCard}
               setUltime={setUltime}
-              res={documentMaster.res}
-              listaUltime={listaUltime}
               setArrayCard={setArrayCard}
-              setListaUltime={setListaUltime}
-              tableColumnsTypeValue={tableColumnsTypeValue}
-              handletableColumnsTypeValueChange={
-                handletableColumnsTypeValueChange
-              }
             />
           </div>
           <button className="save" type="submit">

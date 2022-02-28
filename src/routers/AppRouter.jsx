@@ -166,7 +166,7 @@ export const AppRouter = () => {
           {/* vista editar documento */}
           <PrivateRoute
             exact
-            path="/newDocument/:uuid"
+            path="/editDocument/:uuid"
             component={DocumentForm}
             isAuthenticaded={checking}
           />
