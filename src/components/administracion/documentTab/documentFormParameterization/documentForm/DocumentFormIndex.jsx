@@ -12,18 +12,20 @@ export const DocumentFormIndex = ({
     ultime,
     preview,
     formato,
+    dataView,
+    template,
     setLista,
     setOption,
     arrayCard,
     setUltime,
     dataBasic,
     handleBack,
+    description,
     handleTitle,
     listaUltime,
     setArrayCard,
     handleRemove,
     handlePreview,
-    documentMaster,
     dataBasicCount,
     setListaUltime,
     handleDocument,
@@ -62,13 +64,13 @@ export const DocumentFormIndex = ({
       <div className="containerNewDocument">
         <h2 className="title">
           <KeyboardBackspace className="icon" onClick={handleBack} />
-          {documentMaster.res === "success_view"
+          {dataView.res === "success_view"
             ? "Editar documento"
             : "Nuevo documento"}
         </h2>
         <div className="container-sub-title">
           <h6 className="sub-title">
-            {documentMaster.res === "success_view"
+            {dataView.res === "success_view"
               ? "Editar informacion del documento"
               : "Informacion del nuevo documento"}
           </h6>
@@ -77,7 +79,7 @@ export const DocumentFormIndex = ({
         <form
           className="formNewDocument"
           onSubmit={
-            documentMaster.res === "success_view"
+            dataView.res === "success_view"
               ? handleDocumentUpdate
               : handleDocument
           }
@@ -89,7 +91,7 @@ export const DocumentFormIndex = ({
                 name="codigo"
                 placeholder={"Codigo *"}
                 onChange={handleInputCode}
-                defaultValue={documentMaster.DocumentMasterHead.code}
+                defaultValue={codigo}
               ></input>
             </div>
             <div className="input-container">
@@ -97,7 +99,7 @@ export const DocumentFormIndex = ({
                 name="formato"
                 placeholder={"Formato *"}
                 onChange={handleInputFormat}
-                defaultValue={documentMaster.DocumentMasterHead.format}
+                defaultValue={formato}
               ></input>
             </div>
             <div className="input-container">
@@ -105,7 +107,7 @@ export const DocumentFormIndex = ({
                 name={"template"}
                 placeholder="Plantilla *"
                 onChange={handleInputTemplate}
-                defaultValue={documentMaster.DocumentMasterHead.template}
+                defaultValue={template}
               ></input>
             </div>
             <div className="input-container">
@@ -113,7 +115,7 @@ export const DocumentFormIndex = ({
                 name={"description"}
                 placeholder="Descripcion *"
                 onChange={handleInputDescription}
-                defaultValue={documentMaster.DocumentMasterHead.description}
+                defaultValue={description}
               ></input>
             </div>
           </div>
@@ -233,7 +235,7 @@ export const DocumentFormIndex = ({
             />
           </div>
           <button className="save" type="submit">
-            {documentMaster.res === "success_view" ? "Actualizar" : "Guardar"}
+            {dataView.res === "success_view" ? "Actualizar" : "Guardar"}
           </button>
         </form>
         <BtnFloat onClick={handlePreview} />

@@ -1,17 +1,18 @@
-import React from 'react'
+import React from "react";
 import moment from "moment";
-import './documentPreviow.scss';
+import { indexTypeCelda } from "../../../../../helpers/typeCelda";
+import "./documentPreviow.scss";
 export const DocumentPreviousIndex = ({
-    option,
-    codigo,
-    preview,
-    version,
-    formato,
-    dataBasic,
-    arrayCard,
-    created_at,
-    img_header,
-    dataBasicCount,
+  option,
+  codigo,
+  preview,
+  version,
+  formato,
+  dataBasic,
+  arrayCard,
+  created_at,
+  img_header,
+  dataBasicCount,
 }) => {
   return (
     <div>
@@ -293,9 +294,7 @@ export const DocumentPreviousIndex = ({
                           Titulo de tabla no introducido
                         </h6>
                       ) : (
-                        <h6 className="textt">
-                          {option[card_id].titleCard}
-                        </h6>
+                        <h6 className="textt">{option[card_id].titleCard}</h6>
                       )}
                     </div>
                     {option[card_id].tabla.row.map((id_column) => (
@@ -306,9 +305,7 @@ export const DocumentPreviousIndex = ({
                               className={
                                 "columns " +
                                 (option[card_id].tablaTypeCelda.celda[
-                                  option[
-                                    card_id
-                                  ].tablaTypeCelda.type.indexOf(
+                                  indexTypeCelda.indexOf(
                                     parseInt(`${id_column}${id_row}`)
                                   )
                                 ] === "Título" && "active")
@@ -320,18 +317,14 @@ export const DocumentPreviousIndex = ({
                                   <h6 className={"celda_title_input"}>
                                     {option[card_id].tablaTypeCelda
                                       .title_columna[
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ] === ""
                                       ? "Titulo de la columna no introducido"
                                       : option[card_id].tablaTypeCelda
                                           .title_columna[
-                                          option[
-                                            card_id
-                                          ].tablaTypeCelda.type.indexOf(
+                                          indexTypeCelda.indexOf(
                                             parseInt(`${id_column}${id_row}`)
                                           )
                                         ]}
@@ -341,7 +334,7 @@ export const DocumentPreviousIndex = ({
                               </>
                             )}
                             {option[card_id].tablaTypeCelda.celda[
-                              option[card_id].tablaTypeCelda.type.indexOf(
+                              indexTypeCelda.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Título texto" && (
@@ -363,7 +356,7 @@ export const DocumentPreviousIndex = ({
                               </div>
                             )}
                             {option[card_id].tablaTypeCelda.celda[
-                              option[card_id].tablaTypeCelda.type.indexOf(
+                              indexTypeCelda.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Imagen" && (
@@ -376,7 +369,7 @@ export const DocumentPreviousIndex = ({
                               </div>
                             )}
                             {option[card_id].tablaTypeCelda.celda[
-                              option[card_id].tablaTypeCelda.type.indexOf(
+                              indexTypeCelda.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Imagen título" && (
@@ -396,16 +389,14 @@ export const DocumentPreviousIndex = ({
                               </div>
                             )}
                             {option[card_id].tablaTypeCelda.celda[
-                              option[card_id].tablaTypeCelda.type.indexOf(
+                              indexTypeCelda.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Lista" && (
                               <div className="list">
                                 <ul>
                                   {option[card_id].tablaTypeCelda.lista[
-                                    option[
-                                      card_id
-                                    ].tablaTypeCelda.type.indexOf(
+                                    indexTypeCelda.indexOf(
                                       parseInt(`${id_column}${id_row}`)
                                     )
                                   ].map((listCelda) => (
@@ -420,7 +411,7 @@ export const DocumentPreviousIndex = ({
                               </div>
                             )}
                             {option[card_id].tablaTypeCelda.celda[
-                              option[card_id].tablaTypeCelda.type.indexOf(
+                              indexTypeCelda.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Link" && (
@@ -447,7 +438,7 @@ export const DocumentPreviousIndex = ({
                               </div>
                             )}
                             {option[card_id].tablaTypeCelda.celda[
-                              option[card_id].tablaTypeCelda.type.indexOf(
+                              indexTypeCelda.indexOf(
                                 parseInt(`${id_column}${id_row}`)
                               )
                             ] === "Fecha" && (
@@ -463,15 +454,6 @@ export const DocumentPreviousIndex = ({
                                   <p>{moment().format("LLLL")}</p>
                                 </div>
                               </div>
-                              // <div className="celda_titlea">
-                              //   <div className="header_titlea">
-                              //     <h6 className={"celda_title_inputa"}>
-                              //       Título de la fecha:
-                              //     </h6>
-                              //   </div>
-                              //   <div className="linea"></div>
-                              //   <p>{moment().format("LLLL")}</p>
-                              // </div>
                             )}
                           </div>
                         ))}
@@ -485,5 +467,5 @@ export const DocumentPreviousIndex = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

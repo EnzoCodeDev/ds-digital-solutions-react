@@ -26,8 +26,7 @@ export const DocumentCard = ({
         tabla: { column: [1], row: [1] },
         tablaTypeCelda: {
           title_columna: ["", ""],
-          celda: ['', 'Título texto'],
-          type: indexTypeCelda,
+          celda: ["", "Título texto"],
           lista: [[0], [0]],
         },
       },
@@ -90,8 +89,15 @@ export const DocumentCard = ({
     let arrayTypeList = [[0]];
     let arrayTypeCelda = ["0"];
     let arrayTitleCelda = [""];
-    for (let i = 1; i <= optionValue; i++) {
+    for (let i = 1; i <= parseInt(optionValue); i++) {
       arraycolumns.push(i);
+      arrayTitleCelda.push(
+        optionInfo[id].tablaTypeCelda.title_columna[i] === undefined
+          ? ""
+          : optionInfo[id].tablaTypeCelda.title_columna[i]
+      );
+    }
+    for (let i = 1; i <= parseInt(optionValue) * 30; i++) {
       arrayTypeCelda.push(
         optionInfo[id].tablaTypeCelda.celda[i] === undefined
           ? "Título texto"
@@ -101,11 +107,6 @@ export const DocumentCard = ({
         optionInfo[id].tablaTypeCelda.lista[i] === undefined
           ? [0]
           : optionInfo[id].tablaTypeCelda.lista[i]
-      );
-      arrayTitleCelda.push(
-        optionInfo[id].tablaTypeCelda.title_columna[i] === undefined
-          ? ""
-          : optionInfo[id].tablaTypeCelda.title_columna[i]
       );
     }
     optionInfo[id].tabla.column = arraycolumns;
@@ -121,11 +122,11 @@ export const DocumentCard = ({
     let arrayRows = [];
     let arrayTypeCelda = [];
     let arrayTypeList = [];
-    for (let i = 1; i <= optionValue; i++) {
+    for (let i = 1; i <= parseInt(optionValue) ; i++) {
       arrayRows.push(i);
     }
     //Manejo por almenos 20 columnas
-    for (let i = 1; i <= optionValue * 20; i++) {
+    for (let i = 1; i <= parseInt(optionValue) * 20; i++) {
       arrayTypeCelda.push(
         optionInfo[id].tablaTypeCelda.celda[i] === undefined
           ? "Título texto"
@@ -142,16 +143,6 @@ export const DocumentCard = ({
     optionInfo[id].tablaTypeCelda.lista = arrayTypeList;
     setOption(optionInfo);
   };
-  //Agregar que tipo de celda quiere cada usuario
-  const handleFileValuesCelda = (e, id, parametro_opcional) => {
-    let optionInfo = [...option];
-    e.stopPropagation();
-    optionInfo[id].tablaTypeCelda.celda[
-      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
-    ] = e.target.value;
-    setOption(optionInfo);
-  };
-  //En estos estados tenemos el value de todos los input de este formulario
   //Titulo principal de la tarjeta
   const handleOnChangeTitleCard = (e, id) => {
     let optionInfo = [...option];
@@ -164,11 +155,20 @@ export const DocumentCard = ({
     optionInfo[id].text = e.target.value;
     setOption(optionInfo);
   };
+  //Agregar que tipo de celda quiere cada usuario
+  const handleFileValuesCelda = (e, id, parametro_opcional) => {
+    let optionInfo = [...option];
+    e.stopPropagation();
+    optionInfo[id].tablaTypeCelda.celda[
+      indexTypeCelda.indexOf(parseInt(parametro_opcional))
+    ] = e.target.value;
+    setOption(optionInfo);
+  };
   //Vigila que titulo de cada columna
   const handletitleColumns = (e, id, parametro_opcional) => {
     let optionInfo = [...option];
     optionInfo[id].tablaTypeCelda.title_columna[
-      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+      indexTypeCelda.indexOf(parseInt(parametro_opcional))
     ] = e.target.value;
     setOption(optionInfo);
   };
@@ -181,7 +181,7 @@ export const DocumentCard = ({
       array.push(i);
     }
     optionInfo[id].tablaTypeCelda.lista[
-      option[id].tablaTypeCelda.type.indexOf(parseInt(parametro_opcional))
+      indexTypeCelda.indexOf(parseInt(parametro_opcional))
     ] = array;
     setOption(optionInfo);
   };

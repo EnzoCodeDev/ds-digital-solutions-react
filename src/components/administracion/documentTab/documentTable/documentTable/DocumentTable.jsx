@@ -6,7 +6,6 @@ import { useHistory } from "react-router";
 import { GROUPED_COLUMNS } from "./columsDocumentInfo";
 import { DocumentMasterPaginateInit } from "../../../../../redux/actions/formDocumentTableParametrizacionActions";
 import { DocumentMasterPaginateNavigate } from "../../../../../redux/actions/formDocumentTableParametrizacionActions";
-import { DefaultValueDocumentMaster } from "../../../../../redux/actions/formDocumentParametrizacionAction";
 import { DocumentTableIndex } from "./DocumentTableIndex";
 //Documentacion de react-table-v6
 // https://github.com/tannerlinsley/react-table/tree/v6#
@@ -14,9 +13,6 @@ export const DocumentTable = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   let datas = useSelector((state) => state.document.document.data);
-  useEffect(() => {
-    dispatch(DefaultValueDocumentMaster());
-  }, [dispatch]);
   useEffect(() => {
     dispatch(DocumentMasterPaginateInit());
   }, [dispatch]);
@@ -54,7 +50,7 @@ export const DocumentTable = () => {
   const handleTypeColumns = (rowInfo) => {
     if (rowInfo) {
       const uuid = rowInfo.original.uuid;
-      history.push(`/newDocument/${uuid}`);
+      history.push(`/editDocument/${uuid}`);
     }
   };
   return (
