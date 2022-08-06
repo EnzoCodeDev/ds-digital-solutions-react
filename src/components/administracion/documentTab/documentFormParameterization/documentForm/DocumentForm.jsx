@@ -236,7 +236,7 @@ export const DocumentForm = () => {
       setDescription(dataView.DocumentMasterHead.description);
       //renderizado de los datos de las tarjetas
       dataView.DocumentMasterBody.map(function (DocumentMasterBody) {
-        let titles = JSON.parse(DocumentMasterBody.title_columns);
+        let titles = JSON.parse(DocumentMasterBody.title_columns) || [];
         let tablas = {};
         let title = ["", "Título texto"];
         let listas = [[0], [0]];

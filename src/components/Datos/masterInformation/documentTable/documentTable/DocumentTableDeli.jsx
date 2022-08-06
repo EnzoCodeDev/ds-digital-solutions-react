@@ -5,7 +5,7 @@ import {
   DocumentMasterPaginateInit,
   DocumentMasterPaginateNavigate,
 } from "../../../../../redux/actions/documentMasterAction";
-import { DefaultValueDocumentMaster } from "../../../../../redux/actions/formDocumentParametrizacionAction";
+// import { DefaultValueDocumentMaster } from "../../../../../redux/actions/formDocumentParametrizacionAction";
 import "react-table-v6/react-table.css";
 import { COLUMNS } from "./columsDocumentInfo";
 import { uiOpenModal } from "../../../../../redux/actions/ui";
@@ -16,9 +16,9 @@ import { DocumentTableIndex } from "./DocumentTableIndex";
 export const DocumentTableDeli = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(DefaultValueDocumentMaster());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(DefaultValueDocumentMaster());
+  // }, [dispatch]);
   useEffect(() => {
     dispatch(DocumentMasterPaginateInit());
   }, [dispatch]);

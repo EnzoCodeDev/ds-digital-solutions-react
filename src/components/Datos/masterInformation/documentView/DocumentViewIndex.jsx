@@ -2,18 +2,24 @@ import React from "react";
 import moment from "moment";
 import { Help } from "@material-ui/icons";
 import { Navbar } from "../../../navbar/Navbar";
+import { indexTypeCelda } from "../../../../helpers/typeCelda";
 import "./documentView.scss";
 export const DocumentViewIndex = ({
   name,
+  codigo,
   option,
+  formato,
+  dataView,
   procesos,
   identity,
+  template,
   arrayCard,
   dataBasic,
   img_header,
   subProceso,
   handleDate,
   handleLink,
+  description,
   aplicarState,
   handleNombre,
   dataBasicCount,
@@ -24,7 +30,6 @@ export const DocumentViewIndex = ({
   handleValueDate,
   handletitleCelda,
   handleOnChangeText,
-  documentMasterHead,
   handleOnchangeLink,
   handleValueProceso,
   handleValueAplicar,
@@ -44,11 +49,11 @@ export const DocumentViewIndex = ({
         <div className="header-container">
           <div className="header-1">
             <span className="a">
-              <span className="b">Codigo:</span> {documentMasterHead.code}
+              <span className="b">Codigo:</span> {codigo}
             </span>
             <span className="a">
               <span className="b">Version:</span> Versión:{" "}
-              {documentMasterHead.version}
+              {dataView.DocumentMasterHead.version}
             </span>
             {/* <span className="a">
               <span className="b">Aprovado:</span> Documento nuevo
@@ -67,10 +72,10 @@ export const DocumentViewIndex = ({
           <div className="header-2">
             <span className="a">
               <span className="b">Fecha de creación:</span>{" "}
-              {moment(documentMasterHead.created_at).format("LLLL") ===
+              {moment(dataView.DocumentMasterHead.created_at).format("LLLL") ===
               "Fecha inválida"
                 ? moment().format("LLLL")
-                : moment(documentMasterHead.created_at).format("LLLL")}
+                : moment(dataView.DocumentMasterHead.created_at).format("LLLL")}
             </span>
           </div>
         </div>
@@ -80,22 +85,25 @@ export const DocumentViewIndex = ({
             <div className="part_1">
               <div className="codigo">
                 <div className="container_codigo">
-                  <span>Cód. {documentMasterHead.code}</span>
+                  <span>Cód. {dataView.DocumentMasterHead.code}</span>
                 </div>
               </div>
               <div className="version">
                 <div className="container_version">
-                  <span>Versión: {documentMasterHead.version}</span>
+                  <span>Versión: {dataView.DocumentMasterHead.version}</span>
                 </div>
               </div>
               <div className="date">
                 <div className="container_date">
                   <p className="span">Fecha de entrada en Vigencia: </p>
                   <span className="caducidad">
-                    {moment(documentMasterHead.created_at).format("L") ===
-                    "Fecha inválida"
+                    {moment(dataView.DocumentMasterHead.created_at).format(
+                      "L"
+                    ) === "Fecha inválida"
                       ? moment().format("LLLL")
-                      : moment(documentMasterHead.created_at).format("L")}
+                      : moment(dataView.DocumentMasterHead.created_at).format(
+                          "L"
+                        )}
                   </span>
                 </div>
               </div>
@@ -104,7 +112,7 @@ export const DocumentViewIndex = ({
               <div className="container_format">
                 <div className="container_sub_format">
                   <h5>Formato</h5>
-                  <h6>{documentMasterHead.format}</h6>
+                  <h6>{formato}</h6>
                 </div>
               </div>
             </div>
@@ -443,9 +451,7 @@ export const DocumentViewIndex = ({
                                   defaultValue={
                                     option[card_id].tablaTypeCelda
                                       .title_columna[
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ]
@@ -457,7 +463,7 @@ export const DocumentViewIndex = ({
                             </>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Título texto" && (
@@ -497,7 +503,7 @@ export const DocumentViewIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Imagen" && (
@@ -515,9 +521,8 @@ export const DocumentViewIndex = ({
                                     )
                                   }
                                 ></input>
-                                {option[card_id].tablaTypeCelda
-                                  .typeCeldaInfo[0][
-                                  option[card_id].tablaTypeCelda.type.indexOf(
+                                {option[card_id].tablaTypeCelda.typeCeldaInfo[
+                                  indexTypeCelda.indexOf(
                                     parseInt(`${id_column}${id_row}`)
                                   )
                                 ].img === null
@@ -525,9 +530,8 @@ export const DocumentViewIndex = ({
                                   : "Cambiar imagen"}
                               </div>
                               <div className="container_img">
-                                {option[card_id].tablaTypeCelda
-                                  .typeCeldaInfo[0][
-                                  option[card_id].tablaTypeCelda.type.indexOf(
+                                {option[card_id].tablaTypeCelda.typeCeldaInfo[
+                                  indexTypeCelda.indexOf(
                                     parseInt(`${id_column}${id_row}`)
                                   )
                                 ].img !== null && (
@@ -535,10 +539,8 @@ export const DocumentViewIndex = ({
                                     className="imagen"
                                     src={
                                       option[card_id].tablaTypeCelda
-                                        .typeCeldaInfo[0][
-                                        option[
-                                          card_id
-                                        ].tablaTypeCelda.type.indexOf(
+                                        .typeCeldaInfo[
+                                        indexTypeCelda.indexOf(
                                           parseInt(`${id_column}${id_row}`)
                                         )
                                       ].img
@@ -550,7 +552,7 @@ export const DocumentViewIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Imagen título" && (
@@ -588,9 +590,8 @@ export const DocumentViewIndex = ({
                                     ? "Cargar Imagen"
                                     : "Cambiar imagen"}
                                 </div>
-                                {option[card_id].tablaTypeCelda
-                                  .typeCeldaInfo[0][
-                                  option[card_id].tablaTypeCelda.type.indexOf(
+                                {option[card_id].tablaTypeCelda.typeCeldaInfo[
+                                  indexTypeCelda.indexOf(
                                     parseInt(`${id_column}${id_row}`)
                                   )
                                 ].img !== null && (
@@ -598,10 +599,8 @@ export const DocumentViewIndex = ({
                                     className="imagenes"
                                     src={
                                       option[card_id].tablaTypeCelda
-                                        .typeCeldaInfo[0][
-                                        option[
-                                          card_id
-                                        ].tablaTypeCelda.type.indexOf(
+                                        .typeCeldaInfo[
+                                        indexTypeCelda.indexOf(
                                           parseInt(`${id_column}${id_row}`)
                                         )
                                       ].img
@@ -612,15 +611,15 @@ export const DocumentViewIndex = ({
                               </div>
                             </div>
                           )}
-                          {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                         {option[card_id].tablaTypeCelda.celda[
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Lista" && (
                             <div className="list">
                               <ul>
                                 {option[card_id].tablaTypeCelda.lista[
-                                  option[card_id].tablaTypeCelda.type.indexOf(
+                                  indexTypeCelda.indexOf(
                                     parseInt(`${id_column}${id_row}`)
                                   )
                                 ].map((listCelda) => (
@@ -647,10 +646,8 @@ export const DocumentViewIndex = ({
                                         }`}
                                         defaultValue={
                                           option[card_id].tablaTypeCelda
-                                            .typeCeldaInfo[0][
-                                            option[
-                                              card_id
-                                            ].tablaTypeCelda.type.indexOf(
+                                            .typeCeldaInfo[
+                                            indexTypeCelda.indexOf(
                                               parseInt(`${id_column}${id_row}`)
                                             )
                                           ].lista[listCelda]
@@ -663,7 +660,7 @@ export const DocumentViewIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Link" && (
@@ -706,10 +703,8 @@ export const DocumentViewIndex = ({
                                   rel="noopener noreferrer"
                                   href={
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].link
@@ -717,10 +712,8 @@ export const DocumentViewIndex = ({
                                 >
                                   {
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].linkDescription
@@ -730,7 +723,7 @@ export const DocumentViewIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Fecha" && (

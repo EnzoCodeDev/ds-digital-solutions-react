@@ -3,18 +3,19 @@ import moment from "moment";
 import { GetApp } from "@material-ui/icons";
 import { Navbar } from "../../../navbar/Navbar";
 import "./documentForm.scss";
+import { indexTypeCelda } from "../../../../helpers/typeCelda";
 export const DocumentFormDeliIndex = ({
   option,
   codigo,
   formato,
-  proceso,
+  template,
+  dataView,
   arrayCard,
   dataBasic,
   img_header,
-  subProceso,
+  description,
   downloadFile,
   dataBasicCount,
-  documentMasterHead,
 }) => {
   return (
     <div>
@@ -27,7 +28,7 @@ export const DocumentFormDeliIndex = ({
             </span>
             <span className="a">
               <span className="b">Version:</span> Versión:{" "}
-              {documentMasterHead.version}
+              {dataView.DocumentMasterHead.version}
             </span>
             {/* <span className="a">
             <span className="b">Aprovado:</span> Documento nuevo
@@ -46,10 +47,10 @@ export const DocumentFormDeliIndex = ({
           <div className="header-2">
             <span className="a">
               <span className="b">Fecha de creación:</span>{" "}
-              {moment(documentMasterHead.created_at).format("LLLL") ===
+              {moment(dataView.DocumentMasterHead.created_at).format("LLLL") ===
               "Fecha inválida"
                 ? moment().format("LLLL")
-                : moment(documentMasterHead.created_at).format("LLLL")}
+                : moment(dataView.DocumentMasterHead.created_at).format("LLLL")}
             </span>
           </div>
         </div>
@@ -64,17 +65,20 @@ export const DocumentFormDeliIndex = ({
               </div>
               <div className="version">
                 <div className="container_version">
-                  <span>Versión: {documentMasterHead.version}</span>
+                  <span>Versión: {dataView.DocumentMasterHead.version}</span>
                 </div>
               </div>
               <div className="date">
                 <div className="container_date">
                   <p className="span">Fecha de entrada en Vigencia: </p>
                   <span className="caducidad">
-                    {moment(documentMasterHead.created_at).format("L") ===
-                    "Fecha inválida"
+                    {moment(dataView.DocumentMasterHead.created_at).format(
+                      "L"
+                    ) === "Fecha inválida"
                       ? moment().format("L")
-                      : moment(documentMasterHead.created_at).format("L")}
+                      : moment(dataView.DocumentMasterHead.created_at).format(
+                          "L"
+                        )}
                   </span>
                 </div>
               </div>
@@ -107,7 +111,7 @@ export const DocumentFormDeliIndex = ({
                 </div>
                 <div className="text_body">
                   <div className="linea3"></div>
-                  <p className="procesos">{proceso} </p>
+                  <p className="procesos">{} </p>
                 </div>
               </div>
               <div className="celda_title_text">
@@ -116,7 +120,7 @@ export const DocumentFormDeliIndex = ({
                 </div>
                 <div className="text_body">
                   <div className="linea3"></div>
-                  <p className="procesos">{subProceso} </p>
+                  <p className="procesos">{} </p>
                 </div>
               </div>
               {dataBasicCount.map((proceso_id) => (
@@ -240,7 +244,7 @@ export const DocumentFormDeliIndex = ({
               )}
               {option[card_id].optionValue === "Tabla" && (
                 <div className="tabla-subContainer animate__animated animate__fadeIn">
-                  {option[card_id].tabla.row.map((id_column) => (
+                  {/* {option[card_id].tabla.row.map((id_column) => (
                     <div
                       className={
                         "row " +
@@ -262,9 +266,7 @@ export const DocumentFormDeliIndex = ({
                                   {
                                     option[card_id].tablaTypeCelda
                                       .title_columna[
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ]
@@ -275,7 +277,7 @@ export const DocumentFormDeliIndex = ({
                             </>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Título" && (
@@ -284,10 +286,8 @@ export const DocumentFormDeliIndex = ({
                                 <h6 className={"celda_title_inputt"}>
                                   {
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].titleCelda
@@ -298,7 +298,7 @@ export const DocumentFormDeliIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Título texto" && (
@@ -307,10 +307,8 @@ export const DocumentFormDeliIndex = ({
                                 <h6 className="celda_title_inputt">
                                   {
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].titleCelda
@@ -322,10 +320,8 @@ export const DocumentFormDeliIndex = ({
                                 <p>
                                   {
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].textDescription
@@ -335,7 +331,7 @@ export const DocumentFormDeliIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Fecha" && (
@@ -344,10 +340,8 @@ export const DocumentFormDeliIndex = ({
                                 <h6 className="celda_title_inputt">
                                   {
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].titleCelda
@@ -359,10 +353,8 @@ export const DocumentFormDeliIndex = ({
                                 <p>
                                   {
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].textDescription
@@ -372,13 +364,13 @@ export const DocumentFormDeliIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Imagen" && (
                             <div className="imagen_container">
-                              {option[card_id].tablaTypeCelda.typeCeldaInfo[0][
-                                option[card_id].tablaTypeCelda.type.indexOf(
+                              {option[card_id].tablaTypeCelda.typeCeldaInfo[
+                                indexTypeCelda.indexOf(
                                   parseInt(`${id_column}${id_row}`)
                                 )
                               ].img !== null && (
@@ -386,10 +378,8 @@ export const DocumentFormDeliIndex = ({
                                   className="imagen"
                                   src={
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].img
@@ -400,7 +390,7 @@ export const DocumentFormDeliIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Imagen título" && (
@@ -409,10 +399,8 @@ export const DocumentFormDeliIndex = ({
                                 <h6 className="celda_title_inputtt">
                                   {
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].titleCelda
@@ -420,9 +408,8 @@ export const DocumentFormDeliIndex = ({
                                 </h6>
                               </div>
                               <div className="imagen_container">
-                                {option[card_id].tablaTypeCelda
-                                  .typeCeldaInfo[0][
-                                  option[card_id].tablaTypeCelda.type.indexOf(
+                                {option[card_id].tablaTypeCelda.typeCeldaInfo[
+                                  indexTypeCelda.indexOf(
                                     parseInt(`${id_column}${id_row}`)
                                   )
                                 ].img !== null && (
@@ -430,10 +417,8 @@ export const DocumentFormDeliIndex = ({
                                     className="imagen"
                                     src={
                                       option[card_id].tablaTypeCelda
-                                        .typeCeldaInfo[0][
-                                        option[
-                                          card_id
-                                        ].tablaTypeCelda.type.indexOf(
+                                        .typeCeldaInfo[
+                                        indexTypeCelda.indexOf(
                                           parseInt(`${id_column}${id_row}`)
                                         )
                                       ].img
@@ -445,14 +430,14 @@ export const DocumentFormDeliIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Lista" && (
                             <div className="list">
                               <ul>
                                 {option[card_id].tablaTypeCelda.lista[
-                                  option[card_id].tablaTypeCelda.type.indexOf(
+                                  indexTypeCelda.indexOf(
                                     parseInt(`${id_column}${id_row}`)
                                   )
                                 ].map((listCelda) => (
@@ -465,10 +450,8 @@ export const DocumentFormDeliIndex = ({
                                         {" "}
                                         {
                                           option[card_id].tablaTypeCelda
-                                            .typeCeldaInfo[0][
-                                            option[
-                                              card_id
-                                            ].tablaTypeCelda.type.indexOf(
+                                            .typeCeldaInfo[
+                                            indexTypeCelda.indexOf(
                                               parseInt(`${id_column}${id_row}`)
                                             )
                                           ].lista[listCelda]
@@ -481,7 +464,7 @@ export const DocumentFormDeliIndex = ({
                             </div>
                           )}
                           {option[card_id].tablaTypeCelda.celda[
-                            option[card_id].tablaTypeCelda.type.indexOf(
+                            indexTypeCelda.indexOf(
                               parseInt(`${id_column}${id_row}`)
                             )
                           ] === "Link" && (
@@ -495,10 +478,8 @@ export const DocumentFormDeliIndex = ({
                                   rel="noopener noreferrer"
                                   href={
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].link
@@ -506,10 +487,8 @@ export const DocumentFormDeliIndex = ({
                                 >
                                   {
                                     option[card_id].tablaTypeCelda
-                                      .typeCeldaInfo[0][
-                                      option[
-                                        card_id
-                                      ].tablaTypeCelda.type.indexOf(
+                                      .typeCeldaInfo[
+                                      indexTypeCelda.indexOf(
                                         parseInt(`${id_column}${id_row}`)
                                       )
                                     ].linkDescription
@@ -521,9 +500,9 @@ export const DocumentFormDeliIndex = ({
                         </div>
                       ))}
                     </div>
-                  ))}
+                  ))}*/}
                 </div>
-              )}
+              )} 
             </div>
           </div>
         ))}
